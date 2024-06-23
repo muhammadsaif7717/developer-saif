@@ -3,9 +3,9 @@ import React from 'react';
 
 const NavBar = () => {
     const links = <div className='flex flex-col lg:flex-row gap-5'>
-        <Link href={`/#`}>Protfolio</Link>
-        <Link href={`/#`}>Projects</Link>
-        <Link href={`/#`}>About</Link>
+        <Link href={`#protfolio`}>Protfolio</Link>
+        <Link href={`#projects`}>Projects</Link>
+        <Link href={`#about`}>About</Link>
     </div>
     return (
         <div className='fixed w-full'>
@@ -27,7 +27,7 @@ const NavBar = () => {
                     </ul>
                 </div>
                 <div className="navbar-end">
-                    <a className="btn btn-primary text-white rounded-full bg-orange-500 border-none" href='#'>Contact</a>
+                    <a className="btn btn-primary text-white rounded-full bg-orange-500 border-none" href='#contact'>Contact</a>
                 </div>
             </div>
         </div>

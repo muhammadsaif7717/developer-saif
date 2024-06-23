@@ -3,6 +3,9 @@ import "./globals.css";
 import Footer from "@/Components/Footer/Footer";
 import Banner from "@/Components/Banner/Banner";
 import NavBar from "@/Components/NavBar/NavBar";
+import Contact from "@/Components/Contact/Contact";
+import Projects from "@/Components/Projects/Projects";
+import About from "@/Components/About/About";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,6 +23,9 @@ export default function RootLayout({ children }) {
       <body className={`${inter.className} min-h-screen`}>
         <NavBar></NavBar>
         <Banner></Banner>
+        <Projects></Projects>
+        <About></About>
+        <Contact></Contact>
         {children}
         <Footer></Footer>
       </body>

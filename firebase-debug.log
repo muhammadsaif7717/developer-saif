@@ -1,0 +1,25 @@
+[debug] [2024-06-23T18:19:51.176Z] ----------------------------------------------------------------------
+[debug] [2024-06-23T18:19:51.178Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\shawa\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js init
+[debug] [2024-06-23T18:19:51.179Z] CLI Version:   13.11.4
+[debug] [2024-06-23T18:19:51.179Z] Platform:      win32
+[debug] [2024-06-23T18:19:51.179Z] Node Version:  v20.14.0
+[debug] [2024-06-23T18:19:51.179Z] Time:          Mon Jun 24 2024 00:19:51 GMT+0600 (Bangladesh Standard Time)
+[debug] [2024-06-23T18:19:51.179Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2024-06-23T18:19:51.229Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2024-06-23T18:19:51.230Z] > authorizing via signed-in user (muhammadsaif7717@gmail.com)
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  C:\Users\shawa\OneDrive\Desktop\SAIF'S PROJECTS\Projects\3. NEXT MileStone\developer-saif
+
+Before we get started, keep in mind:
+
+  * You are initializing within an existing Firebase project directory
+
