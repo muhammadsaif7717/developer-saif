@@ -8,8 +8,8 @@ const NavBar = () => {
         <Link href={`/#`}>About</Link>
     </div>
     return (
-        <div>
-            <div className="navbar bg-base-100">
+        <div className='fixed w-full'>
+            <div className="navbar bg-base-100 bg-opacity-50">
                 <div className="navbar-start">
                     <div className="dropdown">
                         <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -19,7 +19,7 @@ const NavBar = () => {
                             {links}
                         </ul>
                     </div>
-                    <Link href={`/`} className="btn btn-ghost text-xl">Developer Saif</Link>
+                    <Link href={`/`} className="btn btn-ghost text-xl text-orange-500">Developer Saif</Link>
                 </div>
                 <div className="navbar-center hidden lg:flex ">
                     <ul className="menu menu-horizontal px-1">
@@ -27,7 +27,7 @@ const NavBar = () => {
                     </ul>
                 </div>
                 <div className="navbar-end">
-                    <a className="btn" href='#'>Contact</a>
+                    <a className="btn btn-primary text-white rounded-full bg-orange-500 border-none" href='#'>Contact</a>
                 </div>
             </div>
         </div>

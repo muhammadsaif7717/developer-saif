@@ -1,6 +1,5 @@
 import { Fahkwang, Inter } from "next/font/google";
 import "./globals.css";
-import NavBar from "@/Components/NavBar/NavBar";
 import Footer from "@/Components/Footer/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -17,7 +16,6 @@ export default function RootLayout({ children }) {
       <link rel="icon" href="/images/logo.jpg" />
       </head>
       <body className={`${inter.className} min-h-screen`}>
-        <NavBar></NavBar>
         {children}
         <Footer></Footer>
       </body>
