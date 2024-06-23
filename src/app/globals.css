@@ -35,3 +35,9 @@ body {
 .background{
   background-image: linear-gradient(to top , rgba(0,0,0,0.5)50%,rgba(0,0,0,0.5)50%),url(/images/bg.jpg);
 }
+.projects_bg{
+  background-image: url(/images/wave.svg);
+  background-position:  center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}

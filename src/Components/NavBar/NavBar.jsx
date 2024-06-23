@@ -27,7 +27,7 @@ const NavBar = () => {
                     </ul>
                 </div>
                 <div className="navbar-end">
-                    <a className="btn btn-primary text-white rounded-full bg-orange-500 border-none" href='#contact'>Contact</a>
+                    <a className="btn btn-primary rounded-full bg-orange-500 border-none" href='#contact'>Contact</a>
                 </div>
             </div>
         </div>
