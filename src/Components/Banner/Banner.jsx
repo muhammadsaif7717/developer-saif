@@ -4,7 +4,7 @@ import React from 'react';
 
 const Banner = () => {
   return (
-    <div id='protfolio' className="h-[100vh] background bg-center bg-no-repeat bg-cover">
+    <div id='home' className="h-[100vh] background bg-center bg-no-repeat bg-cover">
       <div className="flex justify-center lg:justify-between items-center gap-5 flex-col-reverse lg:flex-row pt-20 h-full p-10">
         <div className="space-y-4">
           <h2 className="text-xl text-center lg:text-start">MD. SAIF ISLAM</h2>

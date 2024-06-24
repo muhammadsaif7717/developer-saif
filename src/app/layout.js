@@ -20,11 +20,11 @@ export default function RootLayout({ children }) {
       <head>
       <link rel="icon" href="/images/logo.jpg" />
       </head>
-      <body className={`${inter.className} min-h-screen`}>
+      <body className={`${inter.className} min-h-screen max-w-screen-xl mx-auto `}>
         <NavBar></NavBar>
         <Banner></Banner>
-        <Projects></Projects>
         <About></About>
+        <Projects></Projects>
         <Contact></Contact>
         {children}
         <Footer></Footer>

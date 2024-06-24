@@ -3,13 +3,14 @@ import React from 'react';
 
 const NavBar = () => {
     const links = <div className='flex flex-col lg:flex-row gap-5'>
-        <Link href={`#protfolio`}>Protfolio</Link>
-        <Link href={`#projects`}>Projects</Link>
+        <Link href={`#home`}>Home</Link>
         <Link href={`#about`}>About</Link>
+        <Link href={`#projects`}>Projects</Link>
+        <Link href={`#contact`}>Contact</Link>
     </div>
     return (
-        <div className='fixed w-full'>
-            <div className="navbar bg-base-100 bg-opacity-50">
+        <div>
+            <div className="navbar bg-base-100 bg-opacity-50 fixed max-w-screen-xl mx-auto  z-50 ">
                 <div className="navbar-start">
                     <div className="dropdown">
                         <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -27,7 +28,7 @@ const NavBar = () => {
                     </ul>
                 </div>
                 <div className="navbar-end">
-                    <a className="btn btn-primary rounded-full bg-orange-500 border-none" href='#contact'>Contact</a>
+                    <a className="btn btn-primary rounded-full bg-orange-500 border-none" >Sign In</a>
                 </div>
             </div>
         </div>
