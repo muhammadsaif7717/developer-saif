@@ -5,7 +5,7 @@ const Contact = () => {
     return (
         <div id='contact' className='min-h-screen flex  flex-col items-center justify-center'>
             <div className='w-full'>
-                <h1 className='text-3xl text-center font-semibold  ml-2'>Get In  Touch...</h1>
+                <h1 className='text-4xl text-center font-semibold   my-10'>Get In  Touch</h1>
                 <div className='bg-[#00283A] rounded-xl mt-5 '>
                     <form className='p-8 md:p-12 lg:p-16 flex flex-col gap-5 max-w-screen-lg mx-auto'>
                         <input type="text" name="name" placeholder='Name' className="input input-bordered bg-[#02162B] rounded-xl w-full border-none outline-none" />

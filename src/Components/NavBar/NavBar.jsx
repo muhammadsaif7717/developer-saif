@@ -1,9 +1,12 @@
+"use client";
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import React from 'react';
 
 const NavBar = () => {
+    const pathName = usePathname();
     const links = <div className='flex flex-col lg:flex-row gap-5'>
-        <Link href={`#home`}>Home</Link>
+        <Link href={`#home`} className={`${pathName === '/' && 'text-blue-400'}`}>Home</Link>
         <Link href={`#about`}>About</Link>
         <Link href={`#projects`}>Projects</Link>
         <Link href={`#contact`}>Contact</Link>
@@ -20,7 +23,7 @@ const NavBar = () => {
                             {links}
                         </ul>
                     </div>
-                    <Link href={`/`} className="btn btn-ghost text-xl text-orange-500">Developer Saif</Link>
+                    <Link href={`/`} className="btn btn-ghost text-2xl text-orange-500">Developer Saif</Link>
                 </div>
                 <div className="navbar-center hidden lg:flex ">
                     <ul className="menu menu-horizontal px-1">
@@ -28,7 +31,7 @@ const NavBar = () => {
                     </ul>
                 </div>
                 <div className="navbar-end">
-                    <a className="btn btn-primary rounded-full bg-orange-500 border-none" >Sign In</a>
+                    <a className="btn btn-primary rounded-full bg-orange-500 border-none" >Sing In</a>
                 </div>
             </div>
         </div>
