@@ -5,6 +5,7 @@ import React from 'react';
 
 const NavBar = () => {
     const pathName = usePathname();
+    console.log(pathName)
     const links = <div className='flex flex-col lg:flex-row gap-5'>
         <Link href={`#home`} className={`${pathName === '/' && 'text-blue-400'}`}>Home</Link>
         <Link href={`#about`}>About</Link>
@@ -13,7 +14,7 @@ const NavBar = () => {
     </div>
     return (
         <div>
-            <div className="navbar bg-base-100 bg-opacity-50 fixed max-w-screen-xl mx-auto  z-50 ">
+            <div className="navbar bg-base-100 bg-opacity-80 fixed max-w-screen-xl mx-auto  z-50 ">
                 <div className="navbar-start">
                     <div className="dropdown">
                         <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -23,7 +24,7 @@ const NavBar = () => {
                             {links}
                         </ul>
                     </div>
-                    <Link href={`/`} className="btn btn-ghost text-2xl text-orange-500 hover:scale-105">Developer Saif</Link>
+                    <Link href={`/`} className="btn btn-ghost text-2xl text-orange-500">Developer Saif</Link>
                 </div>
                 <div className="navbar-center hidden lg:flex ">
                     <ul className="menu menu-horizontal px-1">
@@ -31,7 +32,7 @@ const NavBar = () => {
                     </ul>
                 </div>
                 <div className="navbar-end">
-                    <a className="btn btn-primary rounded-full bg-orange-500 border-none hover:scale-105" >Sing In</a>
+                    <a className="btn btn-primary rounded-full bg-orange-500 border-none" >Sing In</a>
                 </div>
             </div>
         </div>
