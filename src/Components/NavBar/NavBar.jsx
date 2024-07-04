@@ -23,7 +23,7 @@ const NavBar = () => {
                             {links}
                         </ul>
                     </div>
-                    <Link href={`/`} className="btn btn-ghost text-2xl text-orange-500">Developer Saif</Link>
+                    <Link href={`/`} className="btn btn-ghost text-2xl text-orange-500 hover:scale-105">Developer Saif</Link>
                 </div>
                 <div className="navbar-center hidden lg:flex ">
                     <ul className="menu menu-horizontal px-1">
@@ -31,7 +31,7 @@ const NavBar = () => {
                     </ul>
                 </div>
                 <div className="navbar-end">
-                    <a className="btn btn-primary rounded-full bg-orange-500 border-none" >Sing In</a>
+                    <a className="btn btn-primary rounded-full bg-orange-500 border-none hover:scale-105" >Sing In</a>
                 </div>
             </div>
         </div>
