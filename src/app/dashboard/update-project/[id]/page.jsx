@@ -9,7 +9,7 @@ import React, { useEffect, useState } from "react";
 
 
 const UpdateProject = ({ params }) => {
-  const [project, setProject] = useState(null); // Change state to Project or null
+  const [project, setProject] = useState(null);
 
   useEffect(() => {
     const loadProject = async () => {

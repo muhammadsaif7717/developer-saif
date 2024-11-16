@@ -15,7 +15,7 @@ const Projects = async () => {
         {projects?.map((project) => (
           <div
             key={project._id}
-            className="card bg-base-100 w-full shadow-xl dark:bg-primary"
+            className="card bg-base-100 w-full h-full shadow-xl dark:bg-primary"
           >
             <div className="card-content p-6 text-black dark:text-white">
               <div className="mb-4">

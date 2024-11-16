@@ -1,25 +1,27 @@
 "use client";
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import React from 'react';
+import React, { useState } from 'react';
 import ThemeToggle from './ThemeToggle';
 
 const Navbar = () => {
     const pathName = usePathname();
     const isDashboard = pathName.startsWith("/dashboard");
 
+    const [active, setActive] = useState('home');
+
     const links = (
         <div className='dark:text-white font-semibold uppercase flex flex-col lg:flex-row gap-5'>
-            <Link href="/" className={`${pathName === '/' && 'text-blue-400'}`}>Home</Link>
-            <Link href="#about" className={`${pathName === '/#about' && 'text-blue-400'}`}>About</Link>
-            <Link href="#projects" className={`${pathName === '/#projects' && 'text-blue-400'}`}>Projects</Link>
-            <Link href="#contact" className={`${pathName === '/#contact' && 'text-blue-400'}`}>Contact</Link>
+            <Link onClick={() => setActive('home')} href="/" className={`${active === 'home' && 'text-blue-400'}`}>Home</Link>
+            <Link onClick={() => setActive('projects')} href="#projects" className={`${active === 'projects' && 'text-blue-400'}`}>Projects</Link>
+            <Link onClick={() => setActive('about')} href="#about" className={`${active === 'about' && 'text-blue-400'}`}>About</Link>
+            <Link onClick={() => setActive('contact')} href="#contact" className={`${active === 'contact' && 'text-blue-400'}`}>Contact</Link>
         </div>
     );
     return (
-        <nav>
+        <nav className='z-50'>
             {!isDashboard &&
-                <div className='flex justify-center w-full bg-base-300 dark:bg-[#00283A] bg-opacity-80 fixed'>
+                <div className='z-50 flex justify-center w-full bg-base-300 dark:bg-[#00283A]  fixed'>
                     <div className="navbar flex justify-evenly  max-w-screen-2xl mx-auto  z-50 rounded-xl">
                         <div className="navbar-start">
                             <div className="dropdown">

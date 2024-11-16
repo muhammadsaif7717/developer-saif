@@ -8,8 +8,8 @@ import ThemeToggle from '../Shared/ThemeToggle';
 
 const DashNavbar = () => {
     return (
-        <div className='flex justify-center w-full bg-base-300 dark:bg-[#00283A] '>
-            <div className="navbar flex justify-evenly ">
+        <div className='flex justify-center w-full bg-base-300 dark:bg-[#00283A] z-50'>
+            <div className="navbar flex justify-evenly z-50">
                 <div className="navbar-start">
                     <div className="dropdown">
                         <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden p-0 mr-2 scale-125 text-white">
