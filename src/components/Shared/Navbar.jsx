@@ -13,6 +13,7 @@ const Navbar = () => {
     const links = (
         <div className='dark:text-white font-semibold uppercase flex flex-col lg:flex-row gap-5'>
             <Link onClick={() => setActive('home')} href="/" className={`${active === 'home' && 'text-blue-400'}`}>Home</Link>
+            <Link onClick={() => setActive('skills')} href="#skills" className={`${active === 'skills' && 'text-blue-400'}`}>Skills</Link>
             <Link onClick={() => setActive('projects')} href="#projects" className={`${active === 'projects' && 'text-blue-400'}`}>Projects</Link>
             <Link onClick={() => setActive('about')} href="#about" className={`${active === 'about' && 'text-blue-400'}`}>About</Link>
             <Link onClick={() => setActive('contact')} href="#contact" className={`${active === 'contact' && 'text-blue-400'}`}>Contact</Link>
