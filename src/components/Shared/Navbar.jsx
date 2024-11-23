@@ -1,14 +1,15 @@
 "use client";
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import ThemeToggle from './ThemeToggle';
+import { ActiveContext } from '@/contexts/ActiveProvider';
 
 const Navbar = () => {
     const pathName = usePathname();
     const isDashboard = pathName.startsWith("/dashboard");
 
-    const [active, setActive] = useState('home');
+    const { active, setActive } = useContext(ActiveContext);
 
     const links = (
         <div className='dark:text-white font-semibold uppercase flex flex-col lg:flex-row gap-5'>
@@ -22,7 +23,7 @@ const Navbar = () => {
     return (
         <nav className='z-50'>
             {!isDashboard &&
-                <div className='z-50 flex justify-center w-full bg-base-300 dark:bg-[#00283A]  fixed'>
+                <div className='z-50 flex justify-center w-full bg-gray-200 dark:bg-[#00283A]  fixed rounded-xl'>
                     <div className="navbar flex justify-evenly  max-w-screen-2xl mx-auto  z-50 rounded-xl">
                         <div className="navbar-start">
                             <div className="dropdown">

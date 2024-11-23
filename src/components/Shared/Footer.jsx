@@ -1,27 +1,44 @@
 'use client'
+import { ActiveContext } from '@/contexts/ActiveProvider';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import React from 'react';
+import React, { useContext } from 'react';
+import { FaFacebook, FaTwitter, FaYoutube } from 'react-icons/fa';
 
 const Footer = () => {
     const pathName = usePathname();
     const isDashboard = pathName.startsWith("/dashboard");
+
+    const { active, setActive } = useContext(ActiveContext);
+
+    const links = (
+        <div className='text-black dark:text-white  uppercase flex flex-col lg:flex-row gap-5'>
+            <Link onClick={() => setActive('home')} href="/" className={`${active === 'home' && 'text-blue-400'}`}>Home</Link>
+            <Link onClick={() => setActive('skills')} href="#skills" className={`${active === 'skills' && 'text-blue-400'}`}>Skills</Link>
+            <Link onClick={() => setActive('projects')} href="#projects" className={`${active === 'projects' && 'text-blue-400'}`}>Projects</Link>
+            <Link onClick={() => setActive('about')} href="#about" className={`${active === 'about' && 'text-blue-400'}`}>About</Link>
+            <Link onClick={() => setActive('contact')} href="#contact" className={`${active === 'contact' && 'text-blue-400'}`}>Contact</Link>
+        </div>)
+
     return (
         <footer>
             {!isDashboard &&
-                <div className='flex justify-center bg-base-300 text-base-content rounded dark:bg-primary dark:text-white'>
+                <div className='flex justify-center bg-gray-200 text-base-content rounded dark:bg-primary dark:text-white'>
                     <div className="footer footer-center p-10  max-w-screen-2xl mx-auto">
-                        <nav className="grid grid-flow-col gap-4">
-                            <a href='#home' className="link link-hover">Home</a>
-                            <a href='#about' className="link link-hover">About</a>
-                            <a href='#projects' className="link link-hover">Projects</a>
-                            <a href='#contact' className="link link-hover">Contact</a>
+                        <nav className="">
+                            {links}
                         </nav>
                         <nav>
                             <div className="grid grid-flow-col gap-4">
-                                <Link target='blank' href={`https://x.com/muhammadsaif77`} ><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className="fill-current hover:scale-110"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"></path></svg></Link>
-                                <Link target='blank' href={`https://www.youtube.com/channel/UCH4scmKdKwWXeh5CUzdmddw`}><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className="fill-current hover:scale-110"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"></path></svg></Link>
-                                <Link target='blank' href={`https://www.facebook.com/muhammadsaif7717`}><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className="fill-current hover:scale-110"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"></path></svg></Link>
+                                <Link target='blank' href={`https://x.com/muhammadsaif77`} >
+                                    <FaTwitter className='text-2xl text-[#0082C4] hover:text-[#3cbbfa] hover:scale-125 duration-500' />
+                                </Link>
+                                <Link target='blank' href={`https://www.youtube.com/channel/UCH4scmKdKwWXeh5CUzdmddw`}>
+                                    <FaYoutube className='text-2xl text-[#0082C4] hover:text-[#3cbbfa] hover:scale-125 duration-500' />
+                                </Link>
+                                <Link target='blank' href={`https://www.facebook.com/muhammadsaif7717`}>
+                                    <FaFacebook className='text-2xl text-[#0082C4] hover:text-[#3cbbfa] hover:scale-125 duration-500' />
+                                </Link>
                             </div>
                         </nav>
                         <aside>

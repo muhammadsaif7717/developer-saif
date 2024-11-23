@@ -8,7 +8,7 @@ const Sidebar = () => {
     const pathName = usePathname();
     return (
 
-        <div className='bg-base-300 dark:bg-primary min-h-screen w-52 text-white flex flex-col gap-2 pt-5'>
+        <div className='bg-gray-200 dark:bg-primary min-h-screen w-52 text-white flex flex-col gap-2 pt-5'>
             <Link href={'/dashboard'} className={`dark:bg-primary  text-black dark:text-white mx-2 rounded-lg ${pathName === '/dashboard' && 'bg-base-100 dark:bg-[#474e5f]'}`}>
                 <span className='menu  font-bold flex gap-2 flex-row items-center'>
                     <GrProjects />
@@ -28,7 +28,7 @@ const Sidebar = () => {
                 </span>
             </Link>
         </div>
-        // bg-base-300 dark:bg-primary  text-black dark:text-white mx-2 rounded-lg
+        // bg-gray-200 dark:bg-primary  text-black dark:text-white mx-2 rounded-lg
 
     );
 };

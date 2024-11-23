@@ -70,12 +70,12 @@ const Skills = () => {
 
   return (
     <section id="skills" className="bg-transparent">
-      <div className="max-w-screen-2xl px-6 w-full pt-4 pb-12 mx-auto">
-        <h1 className="text-2xl md:text-3xl font-extrabold text-center uppercase py-4 md:py-8 text-zinc-200">
+      <div className="max-w-screen-2xl px-5 lg:px-0 w-full pt-4 pb-12 mx-auto">
+        <h1 className="text-2xl font-bold text-center uppercase py-4 md:pt-8 text-black dark:text-white">
           My Skills
         </h1>
 
-        <p className="my-2 text-[1rem] text-zinc-300 font-poppins tracking-wider text-center w-full md:w-3/4 mx-auto">
+        <p className="my-2 text-[1rem] text-black dark:text-white font-poppins tracking-wider text-center w-full md:w-3/4 mx-auto">
           I take your ideas and turn them into unique web projects that not only
           inspire you but also engage your audience.
         </p>
@@ -85,10 +85,10 @@ const Skills = () => {
           {skills.map((skill) => (
             <div
               key={skill.id}
-              className="flex flex-col items-center justify-center gap-4 bg-[#11152C] rounded-2xl overflow-hidden relative border-2 border-transparent hover:border-blue-400 hover:shadow-[0_0_30px_rgba(127,72,230,0.2)] duration-300 hover:scale-[1.15] transition-all p-4"
+              className="flex flex-col items-center justify-center gap-4 bg-gray-200 dark:bg-primary rounded-2xl overflow-hidden relative border-2 border-transparent hover:border-blue-400 hover:shadow-[0_0_30px_rgba(127,72,230,0.2)] duration-300 hover:scale-[1.15] transition-all p-4"
             >
               <Image height={100} width={100} src={skill.image} alt={skill.name} className="w-16" />
-              <p className="text-2xl text-center tracking-wider text-zinc-200">
+              <p className="text-2xl text-center tracking-wider text-black dark:text-white">
                 {skill.name}
               </p>
             </div>

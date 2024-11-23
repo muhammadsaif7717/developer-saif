@@ -9,13 +9,15 @@ const Projects = async () => {
   const projects = await getProjects();
 
   return (
-    <div id="projects" className="bg-base-300 dark:bg-background p-5 dark:text-white rounded-xl mt-5 flex flex-col items-center">
+    <div id="projects" className="bg-gray-200 dark:bg-background p-5 dark:text-white rounded-xl mt-5 flex flex-col items-center">
       <h1 className="uppercase font-bold text-2xl mb-5">Projects</h1>
       <div className="grid grid-cols-1 lg:grid-cols-3 items-center justify-center gap-5">
         {projects?.map((project) => (
           <div
             key={project._id}
-            className="card bg-base-100 w-full h-full shadow-xl dark:bg-primary"
+            className="card bg-base-100 w-full h-full shadow-xl dark:bg-primary 
+            overflow-hidden  border-2 border-transparent hover:border-blue-400 hover:shadow-[0_0_30px_rgba(127,72,230,0.2)] duration-300 hover:scale-[1.02] transition-all
+            "
           >
             <div className="card-content p-6 text-black dark:text-white">
               <div className="mb-4">
@@ -59,7 +61,7 @@ const Projects = async () => {
                 <Link
                   href={project.sourceCode}
                   target="_blank"
-                  className="flex-1 rounded-lg px-3 py-0 text-sm font-medium flex items-center justify-center gap-2 dark:text-white btn dark:bg-[#004E76] border-none hover:bg-[#37bcff]"
+                  className="flex-1 rounded-lg px-3 py-0 text-sm font-medium flex items-center justify-center gap-2 dark:text-white btn bg-gray-200 dark:bg-[#004E76] border-none hover:bg-gray-300 dark:hover:bg-[#004A99]"
                 >
                   <FaLink />
                   <span>Source Code</span>
@@ -67,7 +69,7 @@ const Projects = async () => {
                 <Link
                   href={project.link}
                   target="_blank"
-                  className="flex-1 rounded-lg px-3 py-0 text-sm font-medium flex items-center justify-center dark:text-white gap-2 btn dark:bg-[#004E76] border-none hover:bg-[#2fbaff]"
+                  className="flex-1 rounded-lg px-3 py-0 text-sm font-medium flex items-center justify-center dark:text-white gap-2 btn bg-gray-200 dark:bg-[#004E76] border-none hover:bg-gray-300 dark:hover:bg-[#004A99]"
                 >
                   <FaEye />
                   <span>Live Site</span>

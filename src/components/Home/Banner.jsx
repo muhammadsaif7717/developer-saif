@@ -1,19 +1,29 @@
+'use client'
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 import { IoCloudDownloadOutline } from "react-icons/io5";
+import Typewriter from 'typewriter-effect';
 
 const Banner = () => {
     return (
-        <div id='home' className="min-h-[88vh] bg-opacity-50 bg-[linear-gradient(to_top,rgba(0,0,0,0.1)50%,rgba(0,0,0,0.1)50%),url('/bg-2.jpg')] dark:bg-[linear-gradient(to_top,rgba(0,0,0,0.5)50%,rgba(0,0,0,0.5)50%),url('/bg.jpg')] bg-center bg-no-repeat bg-cover rounded-xl grid grid-cols-1 items-center justify-center">
+        <div id='home' className="min-h-[500px] md:min-h-[600px] lg:min-h-[800px] dark:bg-opacity-50 bg-gray-200 dark:bg-[linear-gradient(to_top,rgba(0,0,0,0.5)50%,rgba(0,0,0,0.5)50%),url('/bg.jpg')] bg-center bg-no-repeat bg-cover rounded-xl grid grid-cols-1 items-center justify-center">
             <div className="flex justify-center lg:justify-between items-center gap-5 flex-col-reverse lg:flex-row h-full p-10">
                 <div className="space-y-4">
                     <h2 className="text-2xl text-center lg:text-start font-bold dark:text-white">
                         MD. SAIF ISLAM
                     </h2>
-                    <h1 className="text-blue-400 text-3xl md:text-4xl lg:text-6xl text-center lg:text-start font-bold hover:scale-105">
-                        MERN Stack Developer
-                    </h1>
+                    <div className="text-blue-400 text-3xl md:text-4xl lg:text-6xl text-center lg:text-start font-bold">
+                        <Typewriter
+                            options={{
+                                strings: ['Full Stack Developer', 'MERN Stack Developer', 'Front-End Developer'],
+                                autoStart: true,
+                                loop: true,
+                                deleteSpeed: 50,
+                            }}
+                        />
+                    </div>
+
                     <p className="text-center lg:text-start dark:text-white">
                         This is Muhammad Saif. I{`'`}m a MERN Stack web application developer. This is my portfolio page. Keep learning about myself and stay connected with me.
                         <br />
