@@ -1,4 +1,4 @@
-export const dynamic = 'force-dynamic'
+export const dynamic = 'force-dynamic';
 import HomePage from '@/components/Home/HomePage';
 import React from 'react';
 

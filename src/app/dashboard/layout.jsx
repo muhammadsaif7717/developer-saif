@@ -1,7 +1,7 @@
-import DashNavbar from "@/components/Dashboard/DashNavbar";
-import Sidebar from "@/components/Dashboard/Sidebar";
+import DashNavbar from '@/components/Dashboard/DashNavbar';
+import Sidebar from '@/components/Dashboard/Sidebar';
 
-export default function RootLayout({ children }) {
+export default function DashboardLayout({ children }) {
   return (
     <div className="flex flex-col bg-base-100 dark:bg-background">
       <DashNavbar />
@@ -9,9 +9,7 @@ export default function RootLayout({ children }) {
         <div className="hidden lg:block">
           <Sidebar />
         </div>
-        <div className="w-full p-5">
-          {children}
-        </div>
+        <div className="w-full p-5">{children}</div>
       </div>
     </div>
   );

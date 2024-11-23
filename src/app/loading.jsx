@@ -1,11 +1,11 @@
 import React from 'react';
 
 const loading = () => {
-    return (
-        <div className='dark:bg-background min-h-[calc(100vh-224px)] flex items-center justify-center'>
-            <span className="loading loading-spinner loading-lg dark:text-white text-gray-300"></span>
-        </div>
-    );
+  return (
+    <div className="flex min-h-[calc(100vh-224px)] items-center justify-center dark:bg-background">
+      <span className="loading loading-spinner loading-lg text-gray-300 dark:text-white"></span>
+    </div>
+  );
 };
 
 export default loading;

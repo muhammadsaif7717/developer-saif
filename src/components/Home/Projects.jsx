@@ -1,39 +1,41 @@
-import { getProjects } from "@/lib/getProjects";
-import Link from "next/link";
-import React from "react";
-import { FaCheck, FaEye, FaLink } from "react-icons/fa";
-
-
+import { getProjects } from '@/lib/getProjects';
+import Link from 'next/link';
+import React from 'react';
+import { FaCheck, FaEye, FaLink } from 'react-icons/fa';
 
 const Projects = async () => {
   const projects = await getProjects();
 
+  // Sort projects by priority (descending order, highest priority first)
+  const sortedProjects = projects?.sort((a, b) => a.priority - b.priority);
+
   return (
-    <div id="projects" className="bg-gray-200 dark:bg-background p-5 dark:text-white rounded-xl mt-5 flex flex-col items-center">
-      <h1 className="uppercase font-bold text-2xl mb-5">Projects</h1>
-      <div className="grid grid-cols-1 lg:grid-cols-3 items-center justify-center gap-5">
-        {projects?.map((project) => (
+    <div
+      id="projects"
+      className="mt-5 flex flex-col items-center rounded-xl bg-gray-200 p-5 dark:bg-background dark:text-white"
+    >
+      <h1 className="mb-5 text-2xl font-bold uppercase">Projects</h1>
+      <div className="grid grid-cols-1 items-center justify-center gap-5 lg:grid-cols-3">
+        {sortedProjects?.map((project) => (
           <div
             key={project._id}
-            className="card bg-base-100 w-full h-full shadow-xl dark:bg-primary 
-            overflow-hidden  border-2 border-transparent hover:border-blue-400 hover:shadow-[0_0_30px_rgba(127,72,230,0.2)] duration-300 hover:scale-[1.02] transition-all
-            "
+            className="card h-full w-full overflow-hidden border-2 border-transparent bg-base-100 shadow-xl transition-all duration-300 hover:scale-[1.02] hover:border-blue-400 hover:shadow-[0_0_30px_rgba(127,72,230,0.2)] dark:bg-primary"
           >
             <div className="card-content p-6 text-black dark:text-white">
               <div className="mb-4">
-                <h2 className="text-2xl font-bold truncate">{project.name}</h2>
-                <p className="text-xl pt-2">{project.type}</p>
-                <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-green-500/20 text-green-300/90">
+                <h2 className="truncate text-2xl font-bold">{project.name}</h2>
+                <p className="pt-2 text-xl">{project.type}</p>
+                <span className="rounded-full bg-green-500/20 px-2 py-0.5 text-xs font-medium dark:text-green-300/90">
                   {project.status}
                 </span>
               </div>
               <div className="mb-4">
-                <h3 className="text-sm font-semibold mb-2">Description</h3>
+                <h3 className="mb-2 text-sm font-semibold">Description</h3>
                 <p className="text-sm">{project.description}</p>
               </div>
               <div className="mb-4">
-                <h3 className="text-sm font-semibold mb-2">Key Features</h3>
-                <ul className="text-sm space-y-1">
+                <h3 className="mb-2 text-sm font-semibold">Key Features</h3>
+                <ul className="space-y-1 text-sm">
                   {project.keyFeatures.map((keyFeature, index) => (
                     <li key={index} className="flex items-start">
                       <FaCheck />
@@ -43,25 +45,25 @@ const Projects = async () => {
                 </ul>
               </div>
               <div className="mb-4">
-                <h3 className="text-sm font-semibold mb-2">
+                <h3 className="mb-2 text-sm font-semibold">
                   Technologies & Tools
                 </h3>
                 <div className="flex flex-wrap gap-2">
                   {project.technologies.map((technology, index) => (
                     <span
                       key={index}
-                      className="px-2 py-1 rounded-full text-xs font-medium"
+                      className="rounded-full px-2 py-1 text-xs font-medium"
                     >
                       {technology}
                     </span>
                   ))}
                 </div>
               </div>
-              <div className="flex justify-between items-center gap-5">
+              <div className="flex items-center justify-between gap-5">
                 <Link
                   href={project.sourceCode}
                   target="_blank"
-                  className="flex-1 rounded-lg px-3 py-0 text-sm font-medium flex items-center justify-center gap-2 dark:text-white btn bg-gray-200 dark:bg-[#004E76] border-none hover:bg-gray-300 dark:hover:bg-[#004A99]"
+                  className="btn flex flex-1 items-center justify-center gap-2 rounded-lg border-none bg-gray-200 px-3 py-0 text-sm font-medium hover:bg-gray-300 dark:bg-[#004E76] dark:text-white dark:hover:bg-[#004A99]"
                 >
                   <FaLink />
                   <span>Source Code</span>
@@ -69,7 +71,7 @@ const Projects = async () => {
                 <Link
                   href={project.link}
                   target="_blank"
-                  className="flex-1 rounded-lg px-3 py-0 text-sm font-medium flex items-center justify-center dark:text-white gap-2 btn bg-gray-200 dark:bg-[#004E76] border-none hover:bg-gray-300 dark:hover:bg-[#004A99]"
+                  className="btn flex flex-1 items-center justify-center gap-2 rounded-lg border-none bg-gray-200 px-3 py-0 text-sm font-medium hover:bg-gray-300 dark:bg-[#004E76] dark:text-white dark:hover:bg-[#004A99]"
                 >
                   <FaEye />
                   <span>Live Site</span>

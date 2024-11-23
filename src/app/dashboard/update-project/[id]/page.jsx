@@ -1,28 +1,38 @@
-"use client";
-import { getProjectById } from "@/lib/getProjectById";
-import { getURL } from "@/lib/getURL";
-import axios from "axios";
-import React, { useEffect, useState } from "react";
-
-
-
-
+'use client';
+import { getProjectById } from '@/lib/getProjectById';
+import { getURL } from '@/lib/getURL';
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
+import React, { useEffect, useState } from 'react';
+import Swal from 'sweetalert2';
 
 const UpdateProject = ({ params }) => {
   const [project, setProject] = useState(null);
+  const [id, setId] = useState(null);
+
+  const router = useRouter();
+
+  useEffect(() => {
+    // Unwrap params asynchronously
+    const unwrapParams = async () => {
+      const resolvedParams = await params; // Await promise if needed
+      setId(resolvedParams.id);
+    };
+
+    unwrapParams();
+  }, [params]);
 
   useEffect(() => {
     const loadProject = async () => {
       try {
-        const res = await getProjectById(params.id);
+        const res = await getProjectById(id);
         setProject(res);
       } catch (error) {
         console.log(error);
       }
     };
     loadProject();
-  });
-
+  }, [id]);
 
   const handleUpdate = async (e) => {
     e.preventDefault();
@@ -33,13 +43,13 @@ const UpdateProject = ({ params }) => {
       type: formData.type.value,
       priority: parseInt(formData.priority.value),
       status: formData.status.value,
-      images: formData.images.value.split(",").map((image) => image.trim()),
+      images: formData.images.value.split(',').map((image) => image.trim()),
       description: formData.description.value,
       keyFeatures: formData.keyFeatures.value
-        .split(",")
+        .split(',')
         .map((feature) => feature.trim()),
       technologies: formData.technologies.value
-        .split(",")
+        .split(',')
         .map((tech) => tech.trim()),
       sourceCode: formData.sourceCode.value,
       link: formData.link.value,
@@ -52,8 +62,15 @@ const UpdateProject = ({ params }) => {
         updatedProject
       );
       if (res.data.res) {
-        alert("Project updated successfully");
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Project updated successfully',
+          showConfirmButton: false,
+          timer: 1500,
+        });
         formData.reset();
+        router.push('/dashboard/manage-projects');
       }
     } catch (error) {
       console.log(error);
@@ -61,17 +78,17 @@ const UpdateProject = ({ params }) => {
   };
 
   return (
-    <div className="min-h-[95vh] flex flex-col items-center justify-center w-full">
-      <h2 className="text-start lg:text-center w-full text-lg lg:text-2xl font-bold dark:text-white">
+    <div className="flex min-h-[95vh] w-full flex-col items-center justify-center">
+      <h2 className="w-full text-start text-lg font-bold dark:text-white lg:text-center lg:text-2xl">
         Update Project
       </h2>
       <form
         onSubmit={handleUpdate}
-        className="border rounded-xl p-4 lg:p-10 w-full lg:w-8/12 mt-5 lg:mt-10 dark:bg-primary border-none"
+        className="mt-5 w-full rounded-xl border border-none p-4 dark:bg-primary lg:mt-10 lg:w-8/12 lg:p-10"
       >
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+        <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
           <div className="form-control">
-            <label className="label label-text justify-start font-semibold text-sm lg:text-xl dark:text-white">
+            <label className="label label-text justify-start text-sm font-semibold dark:text-white lg:text-xl">
               Project Name <span className="text-red-500">*</span>
             </label>
             <input
@@ -84,7 +101,7 @@ const UpdateProject = ({ params }) => {
           </div>
 
           <div className="form-control">
-            <label className="label label-text justify-start font-semibold text-sm lg:text-xl dark:text-white">
+            <label className="label label-text justify-start text-sm font-semibold dark:text-white lg:text-xl">
               Type <span className="text-red-500">*</span>
             </label>
             <input
@@ -97,7 +114,7 @@ const UpdateProject = ({ params }) => {
           </div>
 
           <div className="form-control">
-            <label className="label label-text justify-start font-semibold text-sm lg:text-xl dark:text-white">
+            <label className="label label-text justify-start text-sm font-semibold dark:text-white lg:text-xl">
               Priority <span className="text-red-500">*</span>
             </label>
             <input
@@ -110,7 +127,7 @@ const UpdateProject = ({ params }) => {
           </div>
 
           <div className="form-control">
-            <label className="label label-text justify-start font-semibold text-sm lg:text-xl dark:text-white">
+            <label className="label label-text justify-start text-sm font-semibold dark:text-white lg:text-xl">
               Status <span className="text-red-500">*</span>
             </label>
             <select
@@ -128,21 +145,21 @@ const UpdateProject = ({ params }) => {
           </div>
 
           <div className="form-control">
-            <label className="label label-text justify-start font-semibold text-sm lg:text-xl dark:text-white">
-              Images URL (comma-separated){" "}
+            <label className="label label-text justify-start text-sm font-semibold dark:text-white lg:text-xl">
+              Images URL (comma-separated){' '}
               <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
               name="images"
               className="input input-bordered dark:bg-background"
-              defaultValue={project?.images.join(",")}
+              defaultValue={project?.images.join(',')}
               required
             />
           </div>
 
           <div className="form-control">
-            <label className="label label-text justify-start font-semibold text-sm lg:text-xl dark:text-white">
+            <label className="label label-text justify-start text-sm font-semibold dark:text-white lg:text-xl">
               Description <span className="text-red-500">*</span>
             </label>
             <textarea
@@ -154,35 +171,35 @@ const UpdateProject = ({ params }) => {
           </div>
 
           <div className="form-control">
-            <label className="label label-text justify-start font-semibold text-sm lg:text-xl dark:text-white">
-              Key Features (comma-separated){" "}
+            <label className="label label-text justify-start text-sm font-semibold dark:text-white lg:text-xl">
+              Key Features (comma-separated){' '}
               <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
               name="keyFeatures"
               className="input input-bordered dark:bg-background"
-              defaultValue={project?.keyFeatures.join(",")}
+              defaultValue={project?.keyFeatures.join(',')}
               required
             />
           </div>
 
           <div className="form-control">
-            <label className="label label-text justify-start font-semibold text-sm lg:text-xl dark:text-white">
-              Technologies (comma-separated){" "}
+            <label className="label label-text justify-start text-sm font-semibold dark:text-white lg:text-xl">
+              Technologies (comma-separated){' '}
               <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
               name="technologies"
               className="input input-bordered dark:bg-background"
-              defaultValue={project?.technologies.join(",")}
+              defaultValue={project?.technologies.join(',')}
               required
             />
           </div>
 
           <div className="form-control">
-            <label className="label label-text justify-start font-semibold text-sm lg:text-xl dark:text-white">
+            <label className="label label-text justify-start text-sm font-semibold dark:text-white lg:text-xl">
               Source Code Link <span className="text-red-500">*</span>
             </label>
             <input
@@ -195,7 +212,7 @@ const UpdateProject = ({ params }) => {
           </div>
 
           <div className="form-control">
-            <label className="label label-text justify-start font-semibold text-sm lg:text-xl dark:text-white">
+            <label className="label label-text justify-start text-sm font-semibold dark:text-white lg:text-xl">
               Project Link <span className="text-red-500">*</span>
             </label>
             <input
@@ -208,10 +225,10 @@ const UpdateProject = ({ params }) => {
           </div>
         </div>
 
-        <div className="form-control w-full mt-5">
+        <div className="form-control mt-5 w-full">
           <button
             type="submit"
-            className="btn text-white border-none bg-[#49b9f1] hover:bg-[#3987ad]"
+            className="btn border-none bg-[#49b9f1] text-white hover:bg-[#3987ad]"
           >
             Update Project
           </button>
