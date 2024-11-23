@@ -12,7 +12,7 @@ const Footer = () => {
   const { active, setActive } = useContext(ActiveContext);
 
   const links = (
-    <div className="flex flex-col gap-5 uppercase dark:text-white lg:flex-row">
+    <div className="flex flex-wrap items-center justify-center gap-5 uppercase dark:text-white">
       <Link
         onClick={() => setActive('home')}
         href="/"

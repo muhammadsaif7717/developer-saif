@@ -11,12 +11,12 @@ const Banner = () => {
       id="home"
       className="grid min-h-[500px] grid-cols-1 items-center justify-center rounded-xl bg-gray-200 bg-cover bg-center bg-no-repeat dark:bg-opacity-50 dark:bg-[linear-gradient(to_top,rgba(0,0,0,0.5)50%,rgba(0,0,0,0.5)50%),url('/bg.jpg')] md:min-h-[600px] lg:min-h-[800px]"
     >
-      <div className="flex h-full flex-col-reverse items-center justify-center gap-5 p-10 lg:flex-row lg:justify-between">
+      <div className="flex h-full flex-col-reverse items-center justify-center gap-5 p-5 md:p-10 lg:flex-row lg:justify-between">
         <div className="space-y-4">
-          <h2 className="text-center text-2xl font-bold dark:text-white lg:text-start">
+          <h2 className="text-center text-lg font-bold dark:text-white md:text-2xl lg:text-start">
             MD. SAIF ISLAM
           </h2>
-          <div className="text-center text-3xl font-bold text-blue-400 md:text-4xl lg:text-start lg:text-6xl">
+          <div className="text-center text-2xl font-bold text-blue-400 md:text-4xl lg:text-start lg:text-6xl">
             <Typewriter
               options={{
                 strings: [
@@ -31,7 +31,7 @@ const Banner = () => {
             />
           </div>
 
-          <p className="text-center dark:text-white lg:text-start">
+          <p className="text-center text-xs dark:text-white md:text-lg lg:text-start">
             This is Muhammad Saif. I{`'`}m a MERN Stack web application
             developer. This is my portfolio page. Keep learning about myself and
             stay connected with me.
@@ -46,7 +46,7 @@ const Banner = () => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <button className="btn btn-primary rounded-full border-none bg-orange-500 text-white hover:scale-105">
+              <button className="btn btn-primary rounded-full border-none bg-[#0082C4] text-white duration-200 hover:scale-105 hover:bg-[#3cbbfa]">
                 Download Resume{' '}
                 <IoCloudDownloadOutline className="text-3xl font-bold" />
               </button>

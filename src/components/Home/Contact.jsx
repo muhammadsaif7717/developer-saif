@@ -106,7 +106,7 @@ const Contact = () => {
           </div>
 
           <div className="mt-4 flex w-full items-center justify-center gap-4 md:mt-6 lg:justify-start">
-            <ul className="flex items-center justify-center space-x-4">
+            <ul className="flex flex-wrap items-center justify-center gap-6">
               <li>
                 <Link
                   href="https://drive.usercontent.google.com/download?id=1bI07nOE949lIj5kUNtlEAKhIqo_sMt5w&export=download&authuser=0&confirm=t&uuid=8558bd91-87cf-4b27-9a7f-97195f7ed006&at=APZUnTXVDpPcCqfjJpsBcaY4hQYy:1720077436011"
@@ -153,7 +153,7 @@ const Contact = () => {
                   </button>
                 </Link>
               </li>
-              <li>
+              <li className="flex gap-6">
                 <Link
                   href="https://www.linkedin.com/in/mdsaifislam77"
                   target="_blank"
@@ -161,8 +161,6 @@ const Contact = () => {
                 >
                   <FaLinkedinIn className="text-4xl" />
                 </Link>
-              </li>
-              <li>
                 <Link
                   href="https://github.com/muhammadsaif7717"
                   target="_blank"
