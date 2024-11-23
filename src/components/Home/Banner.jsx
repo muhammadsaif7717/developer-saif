@@ -9,7 +9,7 @@ const Banner = () => {
   return (
     <div
       id="home"
-      className="grid min-h-[500px] grid-cols-1 items-center justify-center rounded-xl bg-gray-200 bg-cover bg-center bg-no-repeat dark:bg-opacity-50 dark:bg-[linear-gradient(to_top,rgba(0,0,0,0.5)50%,rgba(0,0,0,0.5)50%),url('/bg.jpg')] md:min-h-[600px] lg:min-h-[800px]"
+      className="grid min-h-[450px] grid-cols-1 items-center justify-center rounded-xl bg-gray-200 bg-cover bg-center bg-no-repeat dark:bg-opacity-50 dark:bg-[linear-gradient(to_top,rgba(0,0,0,0.5)50%,rgba(0,0,0,0.5)50%),url('/bg.jpg')] md:min-h-[600px] lg:min-h-[800px]"
     >
       <div className="flex h-full flex-col-reverse items-center justify-center gap-5 p-5 md:p-10 lg:flex-row lg:justify-between">
         <div className="space-y-4">
@@ -59,7 +59,7 @@ const Banner = () => {
             width={1080}
             alt="Saif Islam's profile image"
             src="/Saif.png"
-            className="mx-auto w-2/5 scale-75 rounded-full hover:scale-90 md:w-64 lg:w-3/5"
+            className="mx-auto w-56 scale-75 rounded-full hover:scale-90 md:w-64 lg:w-3/5"
             priority
           />
         </div>

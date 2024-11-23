@@ -117,7 +117,7 @@ const AllProjects = () => {
                   className="btn flex flex-1 items-center justify-center gap-2 rounded-lg border-none bg-base-100 px-3 py-0 text-sm font-medium hover:bg-gray-300 dark:bg-[#004E76] dark:text-white dark:hover:bg-[#004A99]"
                 >
                   <FaLink />
-                  <span>Source Code</span>
+                  <span>Source</span>
                 </Link>
                 <Link
                   href={project.link}
@@ -125,7 +125,7 @@ const AllProjects = () => {
                   className="btn flex flex-1 items-center justify-center gap-2 rounded-lg border-none bg-base-100 px-3 py-0 text-sm font-medium hover:bg-gray-300 dark:bg-[#004E76] dark:text-white dark:hover:bg-[#004A99]"
                 >
                   <FaEye />
-                  <span>Live Site</span>
+                  <span>Visit</span>
                 </Link>
               </div>
               <div className="mt-5 flex items-center justify-between gap-5">
