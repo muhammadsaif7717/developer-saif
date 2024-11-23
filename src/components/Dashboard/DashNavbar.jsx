@@ -1,12 +1,15 @@
 'use client';
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
+import React, { useState } from 'react';
 import logo from '../../../public/logo.png';
 import Sidebar from './Sidebar';
 import ThemeToggle from '../Shared/ThemeToggle';
+import { MdClose } from 'react-icons/md';
+import { TiThMenu } from 'react-icons/ti';
 
 const DashNavbar = () => {
+  const [opened, setOpened] = useState(false);
   return (
     <div className="z-50 flex w-full justify-center bg-gray-200 dark:bg-[#00283A]">
       <div className="navbar z-50 flex justify-evenly">
@@ -15,28 +18,20 @@ const DashNavbar = () => {
             <div
               tabIndex={0}
               role="button"
-              className="btn btn-ghost mr-2 scale-125 p-0 text-white lg:hidden"
+              className="btn btn-ghost mr-2 scale-125 border-none p-3 text-white outline-none lg:hidden"
+              onClick={() => setOpened(!opened)}
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5 text-black dark:text-white"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h8m-8 6h16"
-                />
-              </svg>
+              {opened ? (
+                <MdClose className="text-lg font-extrabold text-black dark:text-white" />
+              ) : (
+                <TiThMenu className="text-lg text-black dark:text-white" />
+              )}
             </div>
             <ul
               tabIndex={0}
               className="menu dropdown-content menu-sm -left-5 z-[1]"
             >
-              <Sidebar />
+              {opened && <Sidebar />}
             </ul>
           </div>
           <Link
