@@ -22,31 +22,38 @@ const Footer = () => {
       </Link>
       <Link
         onClick={() => setActive('skills')}
-        href="#skills"
+        href="/#skills"
         className={`hover:scale-110 ${active === 'skills' && 'text-blue-400'}`}
       >
         Skills
       </Link>
       <Link
         onClick={() => setActive('projects')}
-        href="#projects"
+        href="/#projects"
         className={`hover:scale-110 ${active === 'projects' && 'text-blue-400'}`}
       >
         Projects
       </Link>
       <Link
         onClick={() => setActive('about')}
-        href="#about"
+        href="/#about"
         className={`hover:scale-110 ${active === 'about' && 'text-blue-400'}`}
       >
         About
       </Link>
       <Link
         onClick={() => setActive('contact')}
-        href="#contact"
+        href="/#contact"
         className={`hover:scale-110 ${active === 'contact' && 'text-blue-400'}`}
       >
         Contact
+      </Link>
+      <Link
+        onClick={() => setActive('blogs')}
+        href="/blogs"
+        className={`hover:scale-110 ${active === 'blogs' && 'text-blue-400'}`}
+      >
+        Blogs
       </Link>
     </div>
   );

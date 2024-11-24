@@ -18,38 +18,45 @@ const Navbar = () => {
     <div className="flex flex-col gap-5 font-semibold uppercase dark:text-white lg:flex-row">
       <Link
         onClick={() => setActive('home')}
-        href="/"
+        href="/#banner"
         className={`hover:scale-110 ${active === 'home' && 'text-blue-400'}`}
       >
         Home
       </Link>
       <Link
         onClick={() => setActive('skills')}
-        href="#skills"
+        href="/#skills"
         className={`hover:scale-110 ${active === 'skills' && 'text-blue-400'}`}
       >
         Skills
       </Link>
       <Link
         onClick={() => setActive('projects')}
-        href="#projects"
+        href="/#projects"
         className={`hover:scale-110 ${active === 'projects' && 'text-blue-400'}`}
       >
         Projects
       </Link>
       <Link
         onClick={() => setActive('about')}
-        href="#about"
+        href="/#about"
         className={`hover:scale-110 ${active === 'about' && 'text-blue-400'}`}
       >
         About
       </Link>
       <Link
         onClick={() => setActive('contact')}
-        href="#contact"
+        href="/#contact"
         className={`hover:scale-110 ${active === 'contact' && 'text-blue-400'}`}
       >
         Contact
+      </Link>
+      <Link
+        onClick={() => setActive('blogs')}
+        href="/blogs"
+        className={`hover:scale-110 ${active === 'blogs' && 'text-blue-400'}`}
+      >
+        Blogs
       </Link>
     </div>
   );
@@ -81,7 +88,7 @@ const Navbar = () => {
                 </ul>
               </div>
               <Link
-                href={`/`}
+                href={`/#banner`}
                 className="btn btn-ghost ml-2 p-0 text-2xl font-bold duration-200 hover:scale-105 hover:bg-transparent lg:m-0"
               >
                 <cite className="text-primary dark:text-white">Developer</cite>

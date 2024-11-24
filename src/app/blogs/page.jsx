@@ -1,0 +1,53 @@
+import { getBlogs } from '@/lib/getBlogs';
+import Image from 'next/image';
+import Link from 'next/link';
+
+const BlogsPage = async () => {
+  const blogs = await getBlogs();
+
+  return (
+    <div className="mx-auto min-h-[calc(100vh-224px)] max-w-screen-2xl pb-10 pt-24 text-black dark:text-white">
+      <h1 className="mb-5 text-center text-3xl font-bold">Blogs</h1>
+      <div className="grid grid-cols-1 gap-5 p-5 md:grid-cols-2 lg:grid-cols-3">
+        {blogs?.map((blog, index) => (
+          <div
+            key={index}
+            className="card w-full rounded-2xl border-2 border-transparent bg-gray-200 transition-all duration-300 hover:scale-105 hover:border-blue-400 hover:shadow-xl dark:bg-primary"
+          >
+            <figure>
+              <Image
+                priority
+                height={1080}
+                width={1080}
+                src={blog.image}
+                alt={blog.title}
+                className="h-48 w-full object-cover"
+              />
+            </figure>
+            <div className="card-body">
+              <h2 className="card-title text-lg dark:text-white md:text-2xl">
+                {blog.title}
+              </h2>
+              <p className="text-sm md:text-lg">{blog.description}</p>
+              <p className="mt-2 text-xs text-gray-500 dark:text-gray-400 md:text-sm">
+                By {blog.author} on {blog.date}
+              </p>
+              <div className="card-actions justify-end">
+                <Link
+                  target="_blank"
+                  className="btn mt-2 flex flex-1 items-center justify-center gap-2 rounded-lg border-none bg-base-100 px-3 py-0 text-sm font-medium hover:bg-gray-300 dark:bg-[#004E76] dark:text-white dark:hover:bg-[#004A99]"
+                  href={blog.blogLink}
+                  rel="noopener noreferrer"
+                >
+                  Read More
+                </Link>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default BlogsPage;
