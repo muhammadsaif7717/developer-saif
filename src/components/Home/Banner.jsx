@@ -59,7 +59,7 @@ const Banner = () => {
             width={1080}
             alt="Saif Islam's profile image"
             src="/Saif.png"
-            className="mx-auto w-56 scale-75 rounded-[50px] border-[2.5px] border-blue-400 border-transparent bg-gray-200 p-4 transition-all duration-300 hover:scale-90 hover:shadow-[0_0_30px_rgba(127,72,230,0.2)] dark:bg-primary md:w-64 md:rounded-full lg:w-3/5"
+            className="mx-auto w-56 scale-75 rounded-[50px] border-2 border-blue-400 border-transparent bg-gray-200 p-4 transition-all duration-300 hover:scale-90 hover:shadow-[0_0_30px_rgba(127,72,230,0.2)] dark:bg-primary md:w-64 md:rounded-full lg:w-3/5"
             priority
           />
         </div>
