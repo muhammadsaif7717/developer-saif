@@ -11,7 +11,7 @@ const Banner = () => {
       id="home"
       className="grid min-h-[450px] grid-cols-1 items-center justify-center rounded-xl bg-gray-200 bg-cover bg-center bg-no-repeat dark:bg-opacity-50 dark:bg-[linear-gradient(to_top,rgba(0,0,0,0.5)50%,rgba(0,0,0,0.5)50%),url('/bg.jpg')] md:min-h-[600px] lg:min-h-[800px]"
     >
-      <div className="flex h-full flex-col-reverse items-center justify-center gap-5 p-5 md:p-10 lg:flex-row lg:justify-between">
+      <div className="flex h-full flex-col-reverse items-center justify-center gap-1 p-5 md:gap-5 md:p-10 lg:flex-row lg:justify-between">
         <div className="space-y-4">
           <h2 className="text-center text-lg font-bold dark:text-white md:text-2xl lg:text-start">
             MD. SAIF ISLAM
@@ -59,7 +59,7 @@ const Banner = () => {
             width={1080}
             alt="Saif Islam's profile image"
             src="/Saif.png"
-            className="mx-auto w-56 scale-75 rounded-[50px] border-2 border-blue-400 border-transparent bg-gray-200 p-4 transition-all duration-300 hover:scale-90 hover:shadow-[0_0_30px_rgba(127,72,230,0.2)] dark:bg-primary md:w-64 md:rounded-full lg:w-3/5"
+            className="mx-auto w-56 scale-75 rounded-[50px] border-2 border-blue-400 bg-gray-200 p-4 transition-all duration-300 hover:scale-90 hover:shadow-[0_0_30px_rgba(127,72,230,0.2)] dark:bg-primary md:w-64 md:rounded-full lg:w-3/5"
             priority
           />
         </div>
