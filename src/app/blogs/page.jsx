@@ -35,7 +35,7 @@ const BlogsPage = async () => {
               <div className="card-actions justify-end">
                 <Link
                   target="_blank"
-                  className="btn mt-2 flex flex-1 items-center justify-center gap-2 rounded-lg border-none bg-base-100 px-3 py-0 text-sm font-medium hover:bg-gray-300 dark:bg-[#004E76] dark:text-white dark:hover:bg-[#004A99]"
+                  className="btn btn-primary w-full rounded-2xl border-none bg-[#0082C4] text-white duration-200 hover:scale-105 hover:bg-gray-400 dark:bg-[#004E76] dark:text-white dark:hover:bg-[#004A99]"
                   href={blog.blogLink}
                   rel="noopener noreferrer"
                 >

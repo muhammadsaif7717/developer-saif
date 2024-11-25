@@ -46,7 +46,7 @@ const Banner = () => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <button className="btn btn-primary rounded-full border-none bg-[#0082C4] text-white duration-200 hover:scale-105 hover:bg-[#3cbbfa]">
+              <button className="btn btn-primary mb-3 rounded-full border-none bg-[#0082C4] text-white duration-200 hover:scale-105 hover:bg-[#3cbbfa] md:mb-0">
                 Download Resume{' '}
                 <IoCloudDownloadOutline className="text-3xl font-bold" />
               </button>
@@ -59,7 +59,7 @@ const Banner = () => {
             width={1080}
             alt="Saif Islam's profile image"
             src="/Saif.png"
-            className="mx-auto w-56 scale-75 rounded-full hover:scale-90 md:w-64 lg:w-3/5"
+            className="mx-auto w-56 scale-75 rounded-[50px] border-[2.5px] border-blue-400 border-transparent bg-gray-200 p-4 transition-all duration-300 hover:scale-90 hover:shadow-[0_0_30px_rgba(127,72,230,0.2)] dark:bg-primary md:w-64 md:rounded-full lg:w-3/5"
             priority
           />
         </div>
