@@ -2,9 +2,9 @@ import { getBlogs } from '@/lib/getBlogs';
 import Image from 'next/image';
 import Link from 'next/link';
 
-const BlogsPage = async () => {
-  const blogs = await getBlogs();
+const blogs = (await getBlogs()) || [];
 
+const BlogsPage = async () => {
   return (
     <div className="mx-auto min-h-[calc(100vh-224px)] max-w-screen-2xl pb-10 pt-24 text-black dark:text-white">
       <h1 className="mb-5 text-center text-3xl font-bold">Blogs</h1>
