@@ -23,7 +23,7 @@ const Contact = () => {
       className="mt-5 mb-20 lg:mb-24 flex flex-col items-center justify-center rounded-xl bg-gray-200 p-8 dark:bg-[#00283A] dark:text-white md:p-12 lg:p-16"
     >
       <div className="pb-5 lg:pb-10">
-        <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-blue-500 bg-clip-text text-transparent">GET IN TOUCH</h1>
+        <h1 className="text-2xl lg:text-3xl font-bold bg-gradient-to-r from-blue-400 to-blue-500 bg-clip-text text-transparent">GET IN TOUCH</h1>
       </div>
       <hr className="bg-gray-300" />
 

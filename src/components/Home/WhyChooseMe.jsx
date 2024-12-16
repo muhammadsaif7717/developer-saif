@@ -5,7 +5,7 @@ const WhyChooseMe = () => {
     return (
         <div className='w-full flex flex-col mt-14 md:mt-5 md:flex-row items-center gap-5 justify-between'>
             <div className="w-full md:w-1/2 space-y-5">
-                <h2 className="text-center md:text-start text-2xl font-bold uppercase bg-gradient-to-r from-blue-400 to-blue-500 bg-clip-text text-transparent ">
+                <h2 className="text-center md:text-start text-2xl lg:text-3xl font-bold uppercase bg-gradient-to-r from-blue-400 to-blue-500 bg-clip-text text-transparent ">
                     Why Choose Me
                 </h2>
                 <p>

@@ -71,7 +71,7 @@ const Skills = () => {
   return (
     <section id="skills" className="bg-transparent">
       <div className="mx-auto w-full max-w-screen-2xl px-5 pb-12 pt-4 lg:px-0">
-        <h1 className="py-4 text-center text-2xl font-bold uppercase  md:pt-8 bg-gradient-to-r from-blue-400 to-blue-500 bg-clip-text text-transparent ">
+        <h1 className="py-4 text-center text-2xl lg:text-3xl font-bold uppercase  md:pt-8 bg-gradient-to-r from-blue-400 to-blue-500 bg-clip-text text-transparent ">
           My Skills
         </h1>
 

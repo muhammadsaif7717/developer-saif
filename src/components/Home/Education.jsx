@@ -4,7 +4,7 @@ import React from 'react';
 const Education = () => {
     return (
         <div className="mt-16">
-        <h2 className="mb-8 text-center text-2xl font-bold uppercase bg-gradient-to-r from-blue-400 to-blue-500 bg-clip-text text-transparent">
+        <h2 className="mb-8 text-center text-2xl lg:text-3xl font-bold uppercase bg-gradient-to-r from-blue-400 to-blue-500 bg-clip-text text-transparent">
           Education
         </h2>
         <div className="grid grid-cols-1 items-center justify-between gap-10  md:grid-cols-2 lg:grid-cols-3">
