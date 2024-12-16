@@ -14,7 +14,7 @@ const Projects = async () => {
       id="projects"
       className="mt-5 flex flex-col items-center rounded-xl bg-gray-200 p-5 dark:bg-background dark:text-white"
     >
-      <h1 className="mb-5 text-2xl font-bold uppercase">Projects</h1>
+      <h1 className="mb-5 text-2xl font-bold uppercase bg-gradient-to-r from-blue-400 to-blue-500 bg-clip-text text-transparent">Projects</h1>
       <div className="grid grid-cols-1 items-center justify-center gap-5 lg:grid-cols-3">
         {sortedProjects?.map((project) => (
           <div

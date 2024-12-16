@@ -20,10 +20,10 @@ const Contact = () => {
   return (
     <div
       id="contact"
-      className="my-5 flex flex-col items-center justify-center rounded-xl bg-gray-200 p-8 dark:bg-[#00283A] dark:text-white md:p-12 lg:p-16"
+      className="mt-5 mb-20 lg:mb-24 flex flex-col items-center justify-center rounded-xl bg-gray-200 p-8 dark:bg-[#00283A] dark:text-white md:p-12 lg:p-16"
     >
       <div className="pb-5 lg:pb-10">
-        <h1 className="text-2xl font-bold">GET IN TOUCH</h1>
+        <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-blue-500 bg-clip-text text-transparent">GET IN TOUCH</h1>
       </div>
       <hr className="bg-gray-300" />
 
@@ -157,14 +157,14 @@ const Contact = () => {
                 <Link
                   href="https://www.linkedin.com/in/mdsaifislam77"
                   target="_blank"
-                  className="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+                  className="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-secondary"
                 >
                   <FaLinkedinIn className="text-4xl" />
                 </Link>
                 <Link
                   href="https://github.com/muhammadsaif7717"
                   target="_blank"
-                  className="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+                  className="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-secondary"
                 >
                   <FaGithub className="text-4xl" />
                 </Link>
@@ -173,7 +173,7 @@ const Contact = () => {
           </div>
         </div>
 
-        <div className="w-full">
+        <div className="w-full mt-10 lg:mt-0">
           <div className="flex flex-col items-center justify-center rounded-xl bg-gray-200 dark:bg-[#00283A] dark:text-white">
             <form
               onSubmit={handleSend}

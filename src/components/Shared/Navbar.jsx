@@ -1,65 +1,16 @@
 'use client';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import ThemeToggle from './ThemeToggle';
-import { ActiveContext } from '@/contexts/ActiveProvider';
 import { MdClose } from 'react-icons/md';
 import { TiThMenu } from 'react-icons/ti';
+import Links from './Links';
 
 const Navbar = () => {
   const pathName = usePathname();
   const isDashboard = pathName.startsWith('/dashboard');
-
   const [opened, setOpened] = useState(false);
-  const { active, setActive } = useContext(ActiveContext);
-
-  const links = (
-    <div className="flex flex-col gap-5 font-semibold uppercase dark:text-white lg:flex-row">
-      <Link
-        onClick={() => setActive('home')}
-        href="/#banner"
-        className={`hover:scale-110 ${active === 'home' && 'text-blue-400'}`}
-      >
-        Home
-      </Link>
-      <Link
-        onClick={() => setActive('skills')}
-        href="/#skills"
-        className={`hover:scale-110 ${active === 'skills' && 'text-blue-400'}`}
-      >
-        Skills
-      </Link>
-      <Link
-        onClick={() => setActive('projects')}
-        href="/#projects"
-        className={`hover:scale-110 ${active === 'projects' && 'text-blue-400'}`}
-      >
-        Projects
-      </Link>
-      <Link
-        onClick={() => setActive('about')}
-        href="/#about"
-        className={`hover:scale-110 ${active === 'about' && 'text-blue-400'}`}
-      >
-        About
-      </Link>
-      <Link
-        onClick={() => setActive('contact')}
-        href="/#contact"
-        className={`hover:scale-110 ${active === 'contact' && 'text-blue-400'}`}
-      >
-        Contact
-      </Link>
-      <Link
-        onClick={() => setActive('blogs')}
-        href="/blogs"
-        className={`hover:scale-110 ${active === 'blogs' && 'text-blue-400'}`}
-      >
-        Blogs
-      </Link>
-    </div>
-  );
 
   return (
     <nav className="z-50">
@@ -96,7 +47,9 @@ const Navbar = () => {
               </Link>
             </div>
             <div className="navbar-center hidden lg:flex">
-              <ul className="menu menu-horizontal px-1">{links}</ul>
+              <ul className="menu menu-horizontal px-1">
+                <Links/>
+              </ul>
             </div>
             <div className="navbar-end p-0">
               <ThemeToggle />
