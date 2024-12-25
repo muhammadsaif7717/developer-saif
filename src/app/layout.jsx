@@ -3,6 +3,7 @@ import './globals.css';
 import Navbar from '@/components/Shared/Navbar';
 import Footer from '@/components/Shared/Footer';
 import ActiveProvider from '@/contexts/ActiveProvider';
+import ThemeProvider from '@/contexts/ThemeProvider';
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
@@ -22,18 +23,20 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" data-theme="light">
+    <html lang="en" data-theme="light" suppressHydrationWarning className='overflow-y-scroll scrollbar-thin scrollbar-thumb-[#0082C4] scrollbar-track-blue-200 scroll-smooth'>
       <head>
         <link rel="shortcut icon" href="logo.png" type="image/x-icon" />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} bg-base-100 antialiased dark:bg-background`}
       >
-        <ActiveProvider>
-          <Navbar />
-          {children}
-          <Footer />
-        </ActiveProvider>
+        <ThemeProvider>
+          <ActiveProvider>
+            <Navbar />
+            {children}
+            <Footer />
+          </ActiveProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
