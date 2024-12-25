@@ -1,4 +1,4 @@
-export const dynamic = 'force-dynamic';
+// export const dynamic = 'force-dynamic';
 import DashboardPage from '@/components/Dashboard/DashboardPage';
 import React from 'react';
 
