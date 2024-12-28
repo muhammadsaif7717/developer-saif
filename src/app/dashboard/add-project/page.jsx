@@ -31,10 +31,7 @@ const AddProject = () => {
 
     try {
       const url = await getURL();
-      const res = await axios.post(
-        `${url}/dashboard/add-project/api`,
-        newProject
-      );
+      const res = await axios.post(`${url}/api/add-project`, newProject);
       if (res.data.res.insertedId) {
         Swal.fire({
           position: 'center',
@@ -68,7 +65,7 @@ const AddProject = () => {
             <input
               type="text"
               name="name"
-              className="input input-bordered dark:bg-background"
+              className="input input-bordered text-gray-400 dark:bg-background"
               placeholder="Project name"
               required
             />
@@ -81,7 +78,7 @@ const AddProject = () => {
             <input
               type="text"
               name="type"
-              className="input input-bordered dark:bg-background"
+              className="input input-bordered text-gray-400 dark:bg-background"
               placeholder="Type"
               required
             />
@@ -94,7 +91,7 @@ const AddProject = () => {
             <input
               type="number"
               name="priority"
-              className="input input-bordered dark:bg-background"
+              className="input input-bordered text-gray-400 dark:bg-background"
               placeholder="Type"
               required
             />
@@ -123,7 +120,7 @@ const AddProject = () => {
             <input
               type="text"
               name="images"
-              className="input input-bordered dark:bg-background"
+              className="input input-bordered text-gray-400 dark:bg-background"
               placeholder="Type"
               required
             />
@@ -135,7 +132,7 @@ const AddProject = () => {
             </label>
             <textarea
               name="description"
-              className="input input-bordered pt-2 dark:bg-background"
+              className="input input-bordered pt-2 text-gray-400 dark:bg-background"
               placeholder="Description"
               required
             />
@@ -149,7 +146,7 @@ const AddProject = () => {
             <input
               type="text"
               name="keyFeatures"
-              className="input input-bordered dark:bg-background"
+              className="input input-bordered text-gray-400 dark:bg-background"
               placeholder="Key features"
               required
             />
@@ -163,7 +160,7 @@ const AddProject = () => {
             <input
               type="text"
               name="technologies"
-              className="input input-bordered dark:bg-background"
+              className="input input-bordered text-gray-400 dark:bg-background"
               placeholder="Technologies"
               required
             />
@@ -176,7 +173,7 @@ const AddProject = () => {
             <input
               type="text"
               name="sourceCode"
-              className="input input-bordered dark:bg-background"
+              className="input input-bordered text-gray-400 dark:bg-background"
               placeholder="Source code link"
               required
             />
@@ -188,7 +185,7 @@ const AddProject = () => {
             <input
               type="text"
               name="link"
-              className="input input-bordered dark:bg-background"
+              className="input input-bordered text-gray-400 dark:bg-background"
               placeholder="Project link"
               required
             />
@@ -198,7 +195,7 @@ const AddProject = () => {
         <div className="form-control mt-5 w-full">
           <button
             type="submit"
-            className="btn border-none bg-[#49b9f1] text-white hover:bg-[#3987ad]"
+            className="btn border-none bg-[#0082C4] text-white hover:bg-[#3987ad]"
           >
             Add Project
           </button>

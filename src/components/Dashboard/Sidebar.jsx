@@ -10,7 +10,7 @@ const Sidebar = () => {
     <div className="flex min-h-screen w-52 flex-col gap-2 bg-gray-200 pt-5 text-white dark:bg-primary">
       <Link
         href={'/dashboard'}
-        className={`mx-2 rounded-lg text-black dark:bg-primary dark:text-white ${pathName === '/dashboard' && 'bg-base-100 dark:bg-[#474e5f]'}`}
+        className={`mx-2 rounded-lg text-black dark:text-white ${pathName === '/dashboard' && 'bg-base-100 dark:bg-[#3F4144]'}`}
       >
         <span className="menu flex flex-row items-center gap-2 font-bold">
           <GrProjects />
@@ -19,7 +19,7 @@ const Sidebar = () => {
       </Link>
       <Link
         href={'/dashboard/manage-projects'}
-        className={`mx-2 rounded-lg text-black dark:bg-primary dark:text-white ${pathName === '/dashboard/manage-projects' && 'bg-base-100 dark:bg-[#474e5f]'}`}
+        className={`mx-2 rounded-lg text-black dark:bg-primary dark:text-white ${pathName === '/dashboard/manage-projects' && 'bg-base-100 dark:bg-[#3F4144]'}`}
       >
         <span className="menu flex flex-row items-center gap-2 font-bold">
           <GrProjects />
@@ -28,7 +28,7 @@ const Sidebar = () => {
       </Link>
       <Link
         href={'/dashboard/add-project'}
-        className={`mx-2 rounded-lg text-black dark:bg-primary dark:text-white ${pathName === '/dashboard/add-project' && 'bg-base-100 dark:bg-[#474e5f]'}`}
+        className={`mx-2 rounded-lg text-black dark:bg-primary dark:text-white ${pathName === '/dashboard/add-project' && 'bg-base-100 dark:bg-[#3F4144]'}`}
       >
         <span className="menu flex flex-row items-center gap-2 font-bold">
           <GrProjects />

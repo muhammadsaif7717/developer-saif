@@ -1,38 +1,35 @@
 'use client';
+import LoadingPage from '@/components/Shared/LoadingPage';
 import { getProjectById } from '@/lib/getProjectById';
 import { getURL } from '@/lib/getURL';
+import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Swal from 'sweetalert2';
 
 const UpdateProject = ({ params }) => {
-  const [project, setProject] = useState(null);
-  const [id, setId] = useState(null);
-
   const router = useRouter();
+  const { id } = React.use(params);
 
-  useEffect(() => {
-    // Unwrap params asynchronously
-    const unwrapParams = async () => {
-      const resolvedParams = await params; // Await promise if needed
-      setId(resolvedParams.id);
-    };
+  const {
+    data: project = [],
+    isLoading,
+    isError,
+    refetch,
+  } = useQuery({
+    queryKey: [id],
+    queryFn: () => getProjectById(id),
+    enabled: !!id, // Ensures the query runs only when id is available
+  });
 
-    unwrapParams();
-  }, [params]);
+  if (isLoading) {
+    return <LoadingPage />;
+  }
 
-  useEffect(() => {
-    const loadProject = async () => {
-      try {
-        const res = await getProjectById(id);
-        setProject(res);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    loadProject();
-  }, [id]);
+  if (isError) {
+    return <div>Failed to load projects. Please try again later.</div>;
+  }
 
   const handleUpdate = async (e) => {
     e.preventDefault();
@@ -70,6 +67,7 @@ const UpdateProject = ({ params }) => {
           timer: 1500,
         });
         formData.reset();
+        refetch();
         router.push('/dashboard/manage-projects');
       }
     } catch (error) {
@@ -94,7 +92,7 @@ const UpdateProject = ({ params }) => {
             <input
               type="text"
               name="name"
-              className="input input-bordered dark:bg-background"
+              className="input input-bordered text-gray-400 dark:bg-background"
               defaultValue={project?.name}
               required
             />
@@ -107,7 +105,7 @@ const UpdateProject = ({ params }) => {
             <input
               type="text"
               name="type"
-              className="input input-bordered dark:bg-background"
+              className="input input-bordered text-gray-400 dark:bg-background"
               defaultValue={project?.type}
               required
             />
@@ -120,7 +118,7 @@ const UpdateProject = ({ params }) => {
             <input
               type="number"
               name="priority"
-              className="input input-bordered dark:bg-background"
+              className="input input-bordered text-gray-400 dark:bg-background"
               defaultValue={project?.priority}
               required
             />
@@ -152,7 +150,7 @@ const UpdateProject = ({ params }) => {
             <input
               type="text"
               name="images"
-              className="input input-bordered dark:bg-background"
+              className="input input-bordered text-gray-400 dark:bg-background"
               defaultValue={project?.images.join(',')}
               required
             />
@@ -164,7 +162,7 @@ const UpdateProject = ({ params }) => {
             </label>
             <textarea
               name="description"
-              className="input input-bordered pt-2 dark:bg-background"
+              className="input input-bordered pt-2 text-gray-400 dark:bg-background"
               defaultValue={project?.description}
               required
             />
@@ -178,7 +176,7 @@ const UpdateProject = ({ params }) => {
             <input
               type="text"
               name="keyFeatures"
-              className="input input-bordered dark:bg-background"
+              className="input input-bordered text-gray-400 dark:bg-background"
               defaultValue={project?.keyFeatures.join(',')}
               required
             />
@@ -192,7 +190,7 @@ const UpdateProject = ({ params }) => {
             <input
               type="text"
               name="technologies"
-              className="input input-bordered dark:bg-background"
+              className="input input-bordered text-gray-400 dark:bg-background"
               defaultValue={project?.technologies.join(',')}
               required
             />
@@ -205,7 +203,7 @@ const UpdateProject = ({ params }) => {
             <input
               type="text"
               name="sourceCode"
-              className="input input-bordered dark:bg-background"
+              className="input input-bordered text-gray-400 dark:bg-background"
               defaultValue={project?.sourceCode}
               required
             />
@@ -218,7 +216,7 @@ const UpdateProject = ({ params }) => {
             <input
               type="text"
               name="link"
-              className="input input-bordered dark:bg-background"
+              className="input input-bordered text-gray-400 dark:bg-background"
               defaultValue={project?.link}
               required
             />
@@ -228,7 +226,7 @@ const UpdateProject = ({ params }) => {
         <div className="form-control mt-5 w-full">
           <button
             type="submit"
-            className="btn border-none bg-[#49b9f1] text-white hover:bg-[#3987ad]"
+            className="btn border-none bg-[#0082C4] text-white hover:bg-[#3987ad]"
           >
             Update Project
           </button>

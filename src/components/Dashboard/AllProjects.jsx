@@ -3,21 +3,32 @@ import { getProjects } from '@/lib/getProjects';
 import { getURL } from '@/lib/getURL';
 import axios from 'axios';
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { FaCheck, FaEdit, FaEye, FaLink } from 'react-icons/fa';
 import { RiDeleteBin2Fill } from 'react-icons/ri';
 import Swal from 'sweetalert2';
+import LoadingPage from '../Shared/LoadingPage';
+import { useQuery } from '@tanstack/react-query';
+
+const loadProjects = async () => {
+  return await getProjects();
+};
 
 const AllProjects = () => {
-  const [projects, setProjects] = useState([]);
+  const {
+    data: projects,
+    isLoading,
+    isError,
+    refetch,
+  } = useQuery({ queryKey: ['projects'], queryFn: loadProjects });
 
-  useEffect(() => {
-    const loadProjects = async () => {
-      const res = await getProjects();
-      setProjects(res);
-    };
-    loadProjects();
-  }, []);
+  if (isLoading) {
+    return <LoadingPage />;
+  }
+
+  if (isError) {
+    return <div>Failed to load projects. Please try again later.</div>;
+  }
 
   const handleDelete = async (id) => {
     const deleteNow = async () => {
@@ -33,9 +44,7 @@ const AllProjects = () => {
             timer: 1500,
           });
         }
-        setTimeout(() => {
-          window.location.reload();
-        }, 1600);
+        refetch();
       } catch (error) {
         console.log(error);
       }
@@ -70,7 +79,7 @@ const AllProjects = () => {
         {sortedProjects?.map((project) => (
           <div
             key={project._id}
-            className="card w-full overflow-hidden border-2 border-transparent bg-gray-200 shadow-xl transition-all duration-300 hover:scale-[1.02] hover:border-blue-400 hover:shadow-[0_0_30px_rgba(127,72,230,0.2)] dark:bg-primary"
+            className="card h-full w-full overflow-hidden border-2 border-transparent bg-gray-200 shadow-xl transition-all duration-300 hover:scale-[1.02] hover:border-blue-400 hover:shadow-[0_0_30px_rgba(127,72,230,0.2)] dark:bg-primary"
           >
             <div className="card-content p-6 text-black dark:text-white">
               <div className="mb-4">
