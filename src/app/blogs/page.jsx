@@ -1,10 +1,29 @@
+'use client';
+import LoadingPage from '@/components/Shared/LoadingPage';
 import { getBlogs } from '@/lib/getBlogs';
+import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import Link from 'next/link';
 
-const blogs = (await getBlogs()) || [];
+const loadBlogs = async () => {
+  return await getBlogs();
+};
 
-const BlogsPage = async () => {
+const BlogsPage = () => {
+  const {
+    data: blogs,
+    isLoading,
+    isError,
+  } = useQuery({ queryKey: ['blogs'], queryFn: loadBlogs });
+
+  if (isLoading) {
+    return <LoadingPage />;
+  }
+
+  if (isError) {
+    return <div>Failed to load blogs. Please try again later.</div>;
+  }
+
   return (
     <div className="mx-auto min-h-[calc(100vh-224px)] max-w-screen-2xl pb-10 pt-24 text-black dark:text-white">
       <h1 className="mb-5 text-center text-3xl font-bold">Blogs</h1>
@@ -16,7 +35,6 @@ const BlogsPage = async () => {
           >
             <figure>
               <Image
-                priority
                 height={1080}
                 width={1080}
                 src={blog.image}

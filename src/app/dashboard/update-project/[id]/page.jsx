@@ -28,7 +28,7 @@ const UpdateProject = ({ params }) => {
   }
 
   if (isError) {
-    return <div>Failed to load projects. Please try again later.</div>;
+    return <div>Failed to load this project. Please try again later.</div>;
   }
 
   const handleUpdate = async (e) => {
