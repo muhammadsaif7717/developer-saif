@@ -61,6 +61,13 @@ const Links = ({ setOpened }) => {
       >
         Blogs
       </Link>
+      <Link
+        onClick={() => setOpened(false)}
+        href="/dashboard"
+        className={`hover:text-blue-500`}
+      >
+        Dashboard
+      </Link>
     </div>
   );
   return <div>{links}</div>;

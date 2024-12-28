@@ -31,7 +31,7 @@ const DashNavbar = () => {
               tabIndex={0}
               className="menu dropdown-content menu-sm -left-5 z-[1]"
             >
-              {opened && <Sidebar />}
+              {opened && <Sidebar setOpened={setOpened} />}
             </ul>
           </div>
           <Link
