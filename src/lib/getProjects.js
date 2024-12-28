@@ -8,5 +8,6 @@ export const getProjects = async () => {
     return res.data.res;
   } catch (error) {
     console.log(error);
+    return [];
   }
 };

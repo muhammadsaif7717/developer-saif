@@ -8,6 +8,6 @@ export const getProjectById = async (id) => {
     return res.data.res;
   } catch (error) {
     console.log(error);
-    throw error;
+    return [];
   }
 };

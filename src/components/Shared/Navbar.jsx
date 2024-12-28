@@ -35,7 +35,7 @@ const Navbar = () => {
                   tabIndex={0}
                   className={`menu dropdown-content menu-sm top-10 mt-4 flex w-36 items-center justify-center bg-gray-200 p-3 pt-8 shadow ease-in dark:bg-primary ${!opened && 'hidden'} ${opened && '-left-2'}`}
                 >
-                  {opened ? <Links /> : ''}
+                  {opened ? <Links setOpened={setOpened} /> : ''}
                 </ul>
               </div>
               <Link
