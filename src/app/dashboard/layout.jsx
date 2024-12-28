@@ -5,7 +5,7 @@ import { useState } from 'react';
 import Swal from 'sweetalert2';
 
 export default function DashboardLayout({ children }) {
-  const [loginPage, setLoginPage] = useState(false);
+  const [loginPage, setLoginPage] = useState(true);
 
   const handleSubmit = (e) => {
     const username = 'muhammadsaif7717';
