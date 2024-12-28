@@ -4,6 +4,7 @@ import Navbar from '@/components/Shared/Navbar';
 import Footer from '@/components/Shared/Footer';
 import ActiveProvider from '@/contexts/ActiveProvider';
 import ThemeProvider from '@/contexts/ThemeProvider';
+import TanStackQueryProvider from '@/contexts/TanStackQueryProvider';
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
@@ -23,7 +24,12 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" data-theme="light" suppressHydrationWarning className='overflow-y-scroll scrollbar-thin scrollbar-thumb-[#0082C4] scrollbar-track-blue-200 scroll-smooth'>
+    <html
+      lang="en"
+      data-theme="light"
+      suppressHydrationWarning
+      className="overflow-y-scroll scroll-smooth scrollbar-thin scrollbar-track-blue-200 scrollbar-thumb-[#0082C4]"
+    >
       <head>
         <link rel="shortcut icon" href="logo.png" type="image/x-icon" />
       </head>
@@ -31,11 +37,13 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} bg-base-100 antialiased dark:bg-background`}
       >
         <ThemeProvider>
-          <ActiveProvider>
-            <Navbar />
-            {children}
-            <Footer />
-          </ActiveProvider>
+          <TanStackQueryProvider>
+            <ActiveProvider>
+              <Navbar />
+              {children}
+              <Footer />
+            </ActiveProvider>
+          </TanStackQueryProvider>
         </ThemeProvider>
       </body>
     </html>

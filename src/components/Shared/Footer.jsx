@@ -10,9 +10,11 @@ const Footer = () => {
     <footer>
       {!isDashboard && (
         <div className="flex justify-center rounded bg-gray-200 text-base-content dark:bg-primary dark:text-white">
-          <div className="footer gap-3 footer-center mx-auto max-w-screen-2xl p-10">
-              <p className='text-[18px]'>Developer Protfolio of MD. SAIF ISLAM</p>
-              <p className='text-[14px]'>Copyright © 2025 - All right reserved</p>
+          <div className="footer footer-center mx-auto max-w-screen-2xl gap-3 p-10">
+            <p className="text-[18px]">Developer Protfolio of MD. SAIF ISLAM</p>
+            <p className="text-[14px]">
+              Copyright © 2025 - All right reserved
+            </p>
           </div>
         </div>
       )}

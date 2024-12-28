@@ -36,9 +36,9 @@ const Banner = () => {
             developer. This is my portfolio page. Keep learning about myself and
             stay connected with me.
             <br />
-            <a href="#about" className="text-blue-400 hover:text-orange-500">
+            <Link href="#about" className="text-blue-400 hover:text-orange-500">
               More Details...
-            </a>
+            </Link>
           </p>
           <div className="flex justify-center lg:justify-start">
             <Link
@@ -60,7 +60,6 @@ const Banner = () => {
             alt="Saif Islam's profile image"
             src="/Saif.png"
             className="mx-auto w-56 scale-75 rounded-[50px] border-2 border-blue-400 bg-gray-200 p-4 transition-all duration-300 hover:scale-90 hover:shadow-[0_0_30px_rgba(127,72,230,0.2)] dark:bg-primary md:w-64 md:rounded-full lg:w-3/5"
-            priority
           />
         </div>
       </div>

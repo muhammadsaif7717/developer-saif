@@ -1,22 +1,46 @@
+'use client';
+
 import { getProjects } from '@/lib/getProjects';
+import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
 import React from 'react';
 import { FaCheck, FaEye, FaLink } from 'react-icons/fa';
+import LoadingPage from '../Shared/LoadingPage';
 
-const Projects = async () => {
-  const projects = await getProjects();
+const loadProjects = async () => {
+  return await getProjects();
+};
 
-  // Sort projects by priority (descending order, highest priority first)
-  const sortedProjects = projects?.sort((a, b) => a.priority - b.priority);
+const Projects = () => {
+  const {
+    data: projects,
+    isLoading,
+    isError,
+  } = useQuery({ queryKey: ['projects'], queryFn: loadProjects });
+
+  if (isLoading) {
+    return <LoadingPage />;
+  }
+
+  if (isError) {
+    return <div>Failed to load projects. Please try again later.</div>;
+  }
+
+  // Sort projects by priority (highest priority first)
+  const sortedProjects = projects
+    ? [...projects].sort((a, b) => b.priority - a.priority)
+    : [];
 
   return (
     <div
       id="projects"
       className="mt-5 flex flex-col items-center rounded-xl bg-gray-200 p-5 dark:bg-background dark:text-white"
     >
-      <h1 className="mb-5 text-2xl lg:text-3xl font-bold uppercase bg-gradient-to-r from-blue-400 to-blue-500 bg-clip-text text-transparent">Projects</h1>
+      <h1 className="mb-5 bg-gradient-to-r from-blue-400 to-blue-500 bg-clip-text text-2xl font-bold uppercase text-transparent lg:text-3xl">
+        Projects
+      </h1>
       <div className="grid grid-cols-1 items-center justify-center gap-5 lg:grid-cols-3">
-        {sortedProjects?.map((project) => (
+        {sortedProjects.map((project) => (
           <div
             key={project._id}
             className="card h-full w-full overflow-hidden border-2 border-transparent bg-base-100 shadow-xl transition-all duration-300 hover:scale-[1.02] hover:border-blue-400 hover:shadow-[0_0_30px_rgba(127,72,230,0.2)] dark:bg-primary"
@@ -38,7 +62,7 @@ const Projects = async () => {
                 <ul className="space-y-1 text-sm">
                   {project.keyFeatures.map((keyFeature, index) => (
                     <li key={index} className="flex items-start">
-                      <FaCheck />
+                      <FaCheck className="mr-2 mt-0.5" />
                       <span className="truncate">{keyFeature}</span>
                     </li>
                   ))}
@@ -52,7 +76,7 @@ const Projects = async () => {
                   {project.technologies.map((technology, index) => (
                     <span
                       key={index}
-                      className="rounded-full px-2 py-1 text-xs font-medium"
+                      className="rounded-full bg-gray-300 px-2 py-1 text-xs font-medium dark:bg-gray-700"
                     >
                       {technology}
                     </span>

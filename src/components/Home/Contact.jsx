@@ -20,10 +20,12 @@ const Contact = () => {
   return (
     <div
       id="contact"
-      className="mt-5 mb-20 lg:mb-24 flex flex-col items-center justify-center rounded-xl bg-gray-200 p-8 dark:bg-[#00283A] dark:text-white md:p-12 lg:p-16"
+      className="mb-20 mt-5 flex flex-col items-center justify-center rounded-xl bg-gray-200 p-8 dark:bg-[#00283A] dark:text-white md:p-12 lg:mb-24 lg:p-16"
     >
       <div className="pb-5 lg:pb-10">
-        <h1 className="text-2xl lg:text-3xl font-bold bg-gradient-to-r from-blue-400 to-blue-500 bg-clip-text text-transparent">GET IN TOUCH</h1>
+        <h1 className="bg-gradient-to-r from-blue-400 to-blue-500 bg-clip-text text-2xl font-bold text-transparent lg:text-3xl">
+          GET IN TOUCH
+        </h1>
       </div>
       <hr className="bg-gray-300" />
 
@@ -173,7 +175,7 @@ const Contact = () => {
           </div>
         </div>
 
-        <div className="w-full mt-10 lg:mt-0">
+        <div className="mt-10 w-full lg:mt-0">
           <div className="flex flex-col items-center justify-center rounded-xl bg-gray-200 dark:bg-[#00283A] dark:text-white">
             <form
               onSubmit={handleSend}
