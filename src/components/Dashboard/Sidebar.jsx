@@ -21,7 +21,7 @@ const Sidebar = ({ setOpened }) => {
       <Link
         onClick={() => setOpened(false)}
         href={'/dashboard/manage-projects'}
-        className={`mx-2 rounded-lg text-black dark:bg-primary dark:text-white ${pathName === '/dashboard/manage-projects' && 'bg-base-100 dark:bg-[#3F4144]'}`}
+        className={`mx-2 rounded-lg text-black dark:text-white ${pathName === '/dashboard/manage-projects' && 'bg-base-100 dark:bg-[#3F4144]'}`}
       >
         <span className="menu flex flex-row items-center gap-2 font-bold">
           <GrProjects />
@@ -31,7 +31,7 @@ const Sidebar = ({ setOpened }) => {
       <Link
         onClick={() => setOpened(false)}
         href={'/dashboard/add-project'}
-        className={`mx-2 rounded-lg text-black dark:bg-primary dark:text-white ${pathName === '/dashboard/add-project' && 'bg-base-100 dark:bg-[#3F4144]'}`}
+        className={`mx-2 rounded-lg text-black dark:text-white ${pathName === '/dashboard/add-project' && 'bg-base-100 dark:bg-[#3F4144]'}`}
       >
         <span className="menu flex flex-row items-center gap-2 font-bold">
           <GrProjects />
