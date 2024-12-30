@@ -3,7 +3,7 @@ import React from 'react';
 
 const Education = () => {
   return (
-    <div className="mt-16">
+    <div className="md:mt-8">
       <h2 className="mb-8 bg-gradient-to-r from-blue-400 to-blue-500 bg-clip-text text-center text-2xl font-bold uppercase text-transparent lg:text-3xl">
         Education
       </h2>

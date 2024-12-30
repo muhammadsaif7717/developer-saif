@@ -8,7 +8,14 @@ const nextConfig = {
         port: '',
         pathname: '**',
       },
+      {
+        protocol: 'https',
+        hostname: 'skillicons.dev',
+        port: '',
+        pathname: '/icons/**',
+      },
     ],
+    dangerouslyAllowSVG: true,
   },
 };
 

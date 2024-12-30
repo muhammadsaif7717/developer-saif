@@ -40,7 +40,7 @@ export default function DashboardLayout({ children }) {
       {loginPage ? (
         <div className="hero min-h-screen bg-base-200 dark:bg-background">
           <div className="hero-content">
-            <div className="card w-full md:w-96 max-w-sm shrink-0 bg-base-100 shadow-2xl">
+            <div className="card w-full max-w-sm shrink-0 bg-base-100 shadow-2xl md:w-96">
               <form
                 onSubmit={handleSubmit}
                 className="card-body rounded-lg hover:shadow-md dark:bg-primary dark:hover:shadow-gray-800"

@@ -34,7 +34,7 @@ const Projects = () => {
   return (
     <div
       id="projects"
-      className="mt-5 flex flex-col items-center rounded-xl bg-gray-200 p-5 dark:bg-background dark:text-white"
+      className="flex flex-col items-center rounded-xl bg-gray-200 p-5 dark:bg-background dark:text-white"
     >
       <h1 className="mb-5 bg-gradient-to-r from-blue-400 to-blue-500 bg-clip-text text-2xl font-bold uppercase text-transparent lg:text-3xl">
         Projects

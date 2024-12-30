@@ -1,70 +1,90 @@
+'use client';
+import { useTheme } from 'next-themes';
 import Image from 'next/image';
 import React from 'react';
 
 const Skills = () => {
-  // Custom array of objects with skills in the specified order
+  const { theme } = useTheme();
   const skills = [
     {
       id: 1,
-      name: 'React.js',
-      image:
-        'https://gerold.themejunction.net/wp-content/uploads/2024/05/react.png',
+      name: 'nextjs',
+      image: 'https://skillicons.dev/icons?i=nextjs',
     },
     {
       id: 2,
-      name: 'Express.js',
-      image: 'https://i.postimg.cc/TwNLjkt5/icons8-express-js-50.png',
+      name: 'react',
+      image: 'https://skillicons.dev/icons?i=react',
     },
     {
       id: 3,
-      name: 'Node.js',
-      image: 'https://i.postimg.cc/7hT63qCj/icons8-nodejs-48.png',
+      name: 'TypeScript',
+      image: 'https://skillicons.dev/icons?i=ts',
     },
     {
       id: 4,
       name: 'JavaScript',
-      image: 'https://i.postimg.cc/mgqFFp6c/icons8-javascript-48.png',
+      image: 'https://skillicons.dev/icons?i=js',
     },
     {
       id: 5,
-      name: 'MongoDB',
-      image: 'https://i.postimg.cc/Fzjft993/icons8-mongo-db-48.png',
+      name: 'Tailwind',
+      image: 'https://skillicons.dev/icons?i=tailwind',
     },
     {
       id: 6,
-      name: 'Firebase',
-      image: 'https://i.postimg.cc/Yqz4bqDw/icons8-firebase-48.png',
+      name: 'nodejs',
+      image: 'https://skillicons.dev/icons?i=nodejs',
     },
     {
       id: 7,
-      name: 'Tailwind',
-      image: 'https://i.postimg.cc/kMVF18WP/icons8-tailwind-css-48.png',
+      name: 'Express',
+      image: 'https://skillicons.dev/icons?i=express',
     },
     {
       id: 8,
-      name: 'Bootstrap',
-      image: 'https://i.postimg.cc/28kjjdGP/icons8-bootstrap-64.png',
+      name: 'MongoDB',
+      image: 'https://skillicons.dev/icons?i=mongodb',
     },
     {
       id: 9,
-      name: 'Figma',
-      image:
-        'https://gerold.themejunction.net/wp-content/uploads/2024/05/figma.png',
+      name: 'HTML',
+      image: 'https://skillicons.dev/icons?i=html',
     },
     {
       id: 10,
-      name: 'Illustrator',
-      image: 'https://i.postimg.cc/tgYYqdqX/icons8-illustrator-48.png',
+      name: 'CSS',
+      image: 'https://skillicons.dev/icons?i=css',
     },
     {
       id: 11,
-      name: 'CSS3',
-      image: 'https://i.postimg.cc/5t1CfQHy/icons8-css-48.png',
+      name: 'Firebase',
+      image: 'https://skillicons.dev/icons?i=firebase',
     },
     {
       id: 12,
-      name: 'HTML5',
-      image: 'https://i.postimg.cc/PrpZyjsX/icons8-html5-48.png',
+      name: 'GitHub',
+      image: 'https://skillicons.dev/icons?i=github',
+    },
+    {
+      id: 13,
+      name: 'git',
+      image: 'https://skillicons.dev/icons?i=git',
+    },
+    {
+      id: 14,
+      name: 'npm',
+      image: 'https://skillicons.dev/icons?i=npm',
+    },
+    {
+      id: 15,
+      name: 'figma',
+      image: 'https://skillicons.dev/icons?i=figma',
+    },
+    {
+      id: 16,
+      name: 'vscode',
+      image: 'https://skillicons.dev/icons?i=vscode',
     },
   ];
 
@@ -81,22 +101,22 @@ const Skills = () => {
         </p>
 
         {/* Dynamically rendering skills */}
-        <div className="grid grid-cols-2 items-center justify-center gap-10 py-10 md:grid-cols-4 lg:grid-cols-6">
+        <div className="flex flex-wrap items-center justify-center gap-10 py-10 md:grid-cols-4 lg:grid-cols-6">
           {skills.map((skill) => (
             <div
               key={skill.id}
-              className="relative flex flex-col items-center justify-center gap-4 overflow-hidden rounded-2xl border-2 border-transparent bg-gray-200 p-4 transition-all duration-300 hover:scale-[1.15] hover:border-blue-400 hover:shadow-[0_0_30px_rgba(127,72,230,0.2)] dark:bg-primary"
+              className="relative flex flex-col items-center justify-center gap-4 overflow-hidden rounded-3xl border-2 border-transparent bg-transparent p-3 transition-all duration-300 hover:scale-[1.15] hover:border-blue-400 hover:shadow-[0_0_30px_rgba(127,72,230,0.2)]"
             >
               <Image
                 height={100}
                 width={100}
-                src={skill.image}
+                src={`${skill.image}&theme=${theme === 'dark' ? 'dark' : 'light'}`}
                 alt={skill.name}
                 className="w-16"
               />
-              <p className="text-center text-2xl tracking-wider text-black dark:text-white">
+              {/* <p className="text-center text-2xl tracking-wider text-black dark:text-white">
                 {skill.name}
-              </p>
+              </p> */}
             </div>
           ))}
         </div>
