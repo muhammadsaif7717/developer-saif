@@ -101,18 +101,18 @@ const Skills = () => {
         </p>
 
         {/* Dynamically rendering skills */}
-        <div className="flex flex-wrap items-center justify-center gap-10 py-10 md:grid-cols-4 lg:grid-cols-6">
+        <div className="flex flex-wrap items-center justify-center gap-4 py-10 md:grid-cols-4 md:gap-10 lg:grid-cols-6">
           {skills.map((skill) => (
             <div
               key={skill.id}
-              className="relative flex flex-col items-center justify-center gap-4 overflow-hidden rounded-3xl border-2 border-transparent bg-transparent p-3 transition-all duration-300 hover:scale-[1.15] hover:border-blue-400 hover:shadow-[0_0_30px_rgba(127,72,230,0.2)]"
+              className="relative flex flex-col items-center justify-center gap-4 overflow-hidden rounded-2xl border-2 border-transparent bg-transparent transition-all duration-300 hover:scale-[1.15] hover:border-blue-400 hover:shadow-[0_0_30px_rgba(127,72,230,0.2)]"
             >
               <Image
                 height={100}
                 width={100}
                 src={`${skill.image}&theme=${theme === 'dark' ? 'dark' : 'light'}`}
                 alt={skill.name}
-                className="w-16"
+                className="w-10 md:w-16"
               />
               {/* <p className="text-center text-2xl tracking-wider text-black dark:text-white">
                 {skill.name}
