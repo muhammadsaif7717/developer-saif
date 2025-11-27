@@ -17,7 +17,7 @@ import {
 } from 'lucide-react';
 import { ActiveContext } from '@/providers/ActiveProvider';
 
-export default function Navbar() {
+const Navbar=()=> {
   const pathname = usePathname();
   const [opened, setOpened] = useState(false);
   const { active, setActive } = useContext(ActiveContext);
@@ -233,3 +233,5 @@ export default function Navbar() {
     </>
   );
 }
+
+export default Navbar;

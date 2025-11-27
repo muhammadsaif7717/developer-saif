@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "npm run format && next build --webpack",
+    "build": "npm run format && next build",
     "start": "next start",
     "shadecn": "npx shadcn@latest add",
     "lint": "eslint",
