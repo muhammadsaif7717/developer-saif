@@ -17,7 +17,7 @@ import {
 } from 'lucide-react';
 import { ActiveContext } from '@/providers/ActiveProvider';
 
-const Navbar=()=> {
+const Navbar = () => {
   const pathname = usePathname();
   const [opened, setOpened] = useState(false);
   const { active, setActive } = useContext(ActiveContext);
@@ -232,6 +232,6 @@ const Navbar=()=> {
       </AnimatePresence>
     </>
   );
-}
+};
 
 export default Navbar;
