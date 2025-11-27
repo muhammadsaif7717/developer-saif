@@ -73,22 +73,22 @@ const Banner = () => {
         </div>
 
         {/* Floating Code Snippets - Responsive positioning */}
-        <div className="absolute top-[15%] left-[5%] animate-bounce font-mono text-[10px] text-[#0082c4] opacity-30 [animation-duration-[15s]] sm:text-xs dark:opacity-40">
+        <div className="[animation-duration-[15s]] absolute top-[15%] left-[5%] animate-bounce font-mono text-[10px] text-[#0082c4] opacity-30 sm:text-xs dark:opacity-40">
           {'{ developer: true }'}
         </div>
-        <div className="absolute top-[27%] left-[16%] animate-bounce font-mono text-[10px] text-[#0082c4] opacity-30 [animation-delay:0.5s] [animation-duration-[17s]] sm:text-xs dark:opacity-40">
+        <div className="[animation-duration-[17s]] absolute top-[27%] left-[16%] animate-bounce font-mono text-[10px] text-[#0082c4] opacity-30 [animation-delay:0.5s] sm:text-xs dark:opacity-40">
           {'const skills = [...]'}
         </div>
-        <div className="absolute top-[39%] left-[27%] animate-bounce font-mono text-[10px] text-[#0082c4] opacity-30 [animation-delay:1s] [animation-duration-[19s]] sm:text-xs dark:opacity-40">
+        <div className="[animation-duration-[19s]] absolute top-[39%] left-[27%] animate-bounce font-mono text-[10px] text-[#0082c4] opacity-30 [animation-delay:1s] sm:text-xs dark:opacity-40">
           {'function build()'}
         </div>
-        <div className="absolute top-[51%] left-[38%] animate-bounce font-mono text-[10px] text-[#0082c4] opacity-30 [animation-delay:1.5s] [animation-duration-[21s]] sm:text-xs dark:opacity-40">
+        <div className="[animation-duration-[21s]] absolute top-[51%] left-[38%] animate-bounce font-mono text-[10px] text-[#0082c4] opacity-30 [animation-delay:1.5s] sm:text-xs dark:opacity-40">
           {'// Clean code'}
         </div>
-        <div className="absolute top-[63%] left-[49%] animate-bounce font-mono text-[10px] text-[#0082c4] opacity-30 [animation-delay:2s] [animation-duration-[23s]] sm:text-xs dark:opacity-30">
+        <div className="[animation-duration-[23s]] absolute top-[63%] left-[49%] animate-bounce font-mono text-[10px] text-[#0082c4] opacity-30 [animation-delay:2s] sm:text-xs dark:opacity-30">
           {'npm run dev'}
         </div>
-        <div className="absolute top-[75%] left-[60%] animate-bounce font-mono text-[10px] text-[#0082c4] opacity-30 [animation-delay:2.5s] [animation-duration-[25s]] sm:text-xs dark:opacity-40">
+        <div className="[animation-duration-[25s]] absolute top-[75%] left-[60%] animate-bounce font-mono text-[10px] text-[#0082c4] opacity-30 [animation-delay:2.5s] sm:text-xs dark:opacity-40">
           {'<Component />'}
         </div>
       </div>
@@ -122,7 +122,7 @@ const Banner = () => {
             </div>
 
             {/* Floating Tech Icons */}
-            <div className="absolute -top-2 -right-2 flex h-10 w-10 animate-bounce items-center justify-center rounded-full border-2 border-[#0082c4] bg-[#f2f2f2] [animation-duration-[3s]] sm:-top-3 sm:-right-3 sm:h-11 sm:w-11 md:-top-4 md:-right-4 md:h-12 md:w-12 dark:bg-[#11141c]">
+            <div className="[animation-duration-[3s]] absolute -top-2 -right-2 flex h-10 w-10 animate-bounce items-center justify-center rounded-full border-2 border-[#0082c4] bg-[#f2f2f2] sm:-top-3 sm:-right-3 sm:h-11 sm:w-11 md:-top-4 md:-right-4 md:h-12 md:w-12 dark:bg-[#11141c]">
               <CodeXml className="h-5 w-5 text-[#0082c4] sm:h-6 sm:w-6" />
             </div>
           </div>
@@ -265,7 +265,7 @@ const Banner = () => {
       {/* Scroll Indicator */}
       <a
         href="#about"
-        className="absolute bottom-3 left-1/2 z-10 flex -translate-x-1/2 animate-bounce flex-col items-center gap-1 font-semibold text-[#0082c4] transition-all [animation-duration-[2s]] hover:scale-110 hover:text-[#0099e6] sm:bottom-4 sm:gap-2 md:bottom-5"
+        className="[animation-duration-[2s]] absolute bottom-3 left-1/2 z-10 flex -translate-x-1/2 animate-bounce flex-col items-center gap-1 font-semibold text-[#0082c4] transition-all hover:scale-110 hover:text-[#0099e6] sm:bottom-4 sm:gap-2 md:bottom-5"
       >
         <span className="font-mono text-xs sm:text-sm">scroll()</span>
         <ArrowDown className="h-4 w-4 sm:h-5 sm:w-5" />

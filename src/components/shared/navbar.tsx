@@ -3,8 +3,8 @@ import { useContext, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ActiveContext } from '@/providers/active-provider';
-import ThemeToggle from './theme-toggle';
+import { ActiveContext } from '@/providers/ActiveProvider';
+import ThemeToggle from './ThemeToggle';
 import {
   Code,
   Home,
