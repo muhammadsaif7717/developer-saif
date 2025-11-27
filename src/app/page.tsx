@@ -6,11 +6,10 @@ import Skills from '@/components/root/Skills';
 export default function Home() {
   return (
     <main>
-      <Banner/>
+      <Banner />
       <About />
       <Skills />
       <Projects />
-      
     </main>
   );
 }

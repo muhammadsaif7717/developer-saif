@@ -77,7 +77,12 @@ const Navbar = () => {
     { name: 'Skills', href: '/#skills', icon: ListChecks, key: 'skills' },
     { name: 'Projects', href: '/#projects', icon: Code, key: 'projects' },
     { name: 'Blogs', href: '/blogs', icon: Rss, key: 'blogs' },
-    { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard, key: 'dashboard' },
+    {
+      name: 'Dashboard',
+      href: '/dashboard',
+      icon: LayoutDashboard,
+      key: 'dashboard',
+    },
   ];
 
   if (pathname.startsWith('/dashboard') || pathname.startsWith('/auth')) {
@@ -122,10 +127,11 @@ const Navbar = () => {
                 aria-label={link.name}
               >
                 <div
-                  className={`flex h-10 w-10 items-center justify-center rounded-lg transition-all duration-200 ${active === link.key
+                  className={`flex h-10 w-10 items-center justify-center rounded-lg transition-all duration-200 ${
+                    active === link.key
                       ? 'bg-[#0082c4] text-white shadow-lg shadow-[#0082c4]/30'
                       : 'text-black hover:bg-[#f2f2f2] dark:text-white dark:hover:bg-[#11141c]'
-                    }`}
+                  }`}
                 >
                   <link.icon className="h-5 w-5" />
                 </div>
@@ -199,10 +205,11 @@ const Navbar = () => {
                         setOpened(false);
                         setActive(link.key);
                       }}
-                      className={`flex items-center gap-4 rounded-lg p-3 font-semibold transition-all ${active === link.key
+                      className={`flex items-center gap-4 rounded-lg p-3 font-semibold transition-all ${
+                        active === link.key
                           ? 'bg-[#0082c4] text-white shadow-lg shadow-[#0082c4]/20'
                           : 'text-black hover:bg-[#f2f2f2] dark:text-white dark:hover:bg-[#27273a]'
-                        }`}
+                      }`}
                     >
                       <link.icon className="h-6 w-6" />
                       <span>{link.name}</span>

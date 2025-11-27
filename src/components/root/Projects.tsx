@@ -3,92 +3,42 @@
 import { useState } from 'react';
 import { ExternalLink, Github, Filter } from 'lucide-react';
 import Image from 'next/image';
+import { getProjects } from '@/lib/getApi';
+import { useQuery } from '@tanstack/react-query';
+import LoadingPage from '../shared/LoadingPage';
 
 const categories = ['All', 'Web Apps', 'UI/UX', 'Open Source'];
 
-const projects = [
-  {
-    id: 1,
-    title: 'E-Commerce Platform',
-    description:
-      'Full-stack e-commerce solution with real-time inventory management and secure payment processing.',
-    image:
-      'https://images.unsplash.com/photo-1661956602116-aa6865609028?w=800&q=80',
-    category: 'Web Apps',
-    tags: ['Next.js', 'MongoDB', 'Stripe', 'Tailwind'],
-    liveUrl: 'https://example.com',
-    githubUrl: 'https://github.com',
-    featured: true,
-  },
-  {
-    id: 2,
-    title: 'Dashboard Analytics',
-    description:
-      'Modern analytics dashboard with real-time data visualization and interactive charts.',
-    image:
-      'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80',
-    category: 'Web Apps',
-    tags: ['React', 'TypeScript', 'D3.js', 'Node.js'],
-    liveUrl: 'https://example.com',
-    githubUrl: 'https://github.com',
-    featured: false,
-  },
-  {
-    id: 3,
-    title: 'Design System Library',
-    description:
-      'Comprehensive component library with accessibility-first approach and dark mode support.',
-    image:
-      'https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=800&q=80',
-    category: 'UI/UX',
-    tags: ['React', 'Tailwind', 'Storybook', 'TypeScript'],
-    liveUrl: 'https://example.com',
-    githubUrl: 'https://github.com',
-    featured: false,
-  },
-  {
-    id: 4,
-    title: 'Task Management App',
-    description:
-      'Collaborative task management tool with real-time updates and team collaboration features.',
-    image:
-      'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&q=80',
-    category: 'Web Apps',
-    tags: ['Next.js', 'Firebase', 'Framer Motion'],
-    liveUrl: 'https://example.com',
-    githubUrl: 'https://github.com',
-    featured: false,
-  },
-  {
-    id: 5,
-    title: 'Weather Dashboard',
-    description:
-      'Beautiful weather application with location-based forecasts and interactive maps.',
-    image:
-      'https://images.unsplash.com/photo-1592210454359-9043f067919b?w=800&q=80',
-    category: 'Open Source',
-    tags: ['React', 'OpenWeather API', 'Mapbox'],
-    liveUrl: 'https://example.com',
-    githubUrl: 'https://github.com',
-    featured: false,
-  },
-  {
-    id: 6,
-    title: 'Portfolio Template',
-    description:
-      'Modern portfolio template for developers with customizable themes and animations.',
-    image:
-      'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=800&q=80',
-    category: 'Open Source',
-    tags: ['Next.js', 'Tailwind', 'MDX'],
-    liveUrl: 'https://example.com',
-    githubUrl: 'https://github.com',
-    featured: false,
-  },
-];
+export interface Project {
+  _id: string; // Added missing id field
+  title: string;
+  description: string;
+  image: string;
+  category: string;
+  tags: string[];
+  liveUrl: string;
+  githubUrl: string;
+  featured: boolean;
+}
 
 const Projects = () => {
   const [activeCategory, setActiveCategory] = useState('All');
+
+  // TanStack Query - Fixed: Changed Project to Project[]
+  const {
+    data: projects = [],
+    isLoading,
+    isError,
+    error,
+  } = useQuery<Project[]>({
+    queryKey: ['projects'],
+    queryFn: () => getProjects(),
+    staleTime: 5 * 60 * 1000,
+  });
+
+  if (isLoading) {
+    return <LoadingPage />;
+  }
 
   const filteredProjects =
     activeCategory === 'All'
@@ -237,7 +187,7 @@ const Projects = () => {
         <div className="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           {regularProjects.map((project, index) => (
             <article
-              key={project.id}
+              key={project._id}
               className="group relative flex flex-col overflow-hidden rounded-2xl border-2 border-slate-200 bg-[#f2f2f2] shadow-lg transition-all duration-500 hover:-translate-y-2 hover:border-[#0082c4] hover:shadow-2xl hover:shadow-[#0082c4]/20 dark:border-slate-800 dark:bg-[#11141c]"
               style={{
                 animationDelay: `${index * 100}ms`,
