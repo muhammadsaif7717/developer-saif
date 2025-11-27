@@ -3,7 +3,6 @@ import { useContext, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ActiveContext } from '@/providers/ActiveProvider';
 import ThemeToggle from './ThemeToggle';
 import {
   Code,
@@ -16,6 +15,7 @@ import {
   SquareChartGantt,
   X,
 } from 'lucide-react';
+import { ActiveContext } from '@/providers/ActiveProvider';
 
 export default function Navbar() {
   const pathname = usePathname();
