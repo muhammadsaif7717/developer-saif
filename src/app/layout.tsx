@@ -5,6 +5,7 @@ import ActiveProvider from '@/providers/ActiveProvider';
 import Navbar from '@/components/shared/Navbar';
 import ThemeProvider from '@/providers/ThemeProvider';
 import TanstackProvider from '@/providers/TanstackProvider';
+import AuthProvider from '@/providers/AuthProvider';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -31,14 +32,16 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <TanstackProvider>
-          <ActiveProvider>
-            <ThemeProvider>
-              <Navbar />
-              {children}
-            </ThemeProvider>
-          </ActiveProvider>
-        </TanstackProvider>
+        <AuthProvider>
+          <TanstackProvider>
+            <ActiveProvider>
+              <ThemeProvider>
+                <Navbar />
+                {children}
+              </ThemeProvider>
+            </ActiveProvider>
+          </TanstackProvider>
+        </AuthProvider>
       </body>
     </html>
   );

@@ -1,8 +1,10 @@
 'use client';
 import { useContext, useEffect, useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useSession } from 'next-auth/react';
 
 import {
   Code,
@@ -20,6 +22,7 @@ import ThemeToggle from './ThemeToggle';
 
 const Navbar = () => {
   const pathname = usePathname();
+  const { data: session, status } = useSession();
   const [opened, setOpened] = useState(false);
   const { active, setActive } = useContext(ActiveContext);
   const [mounted, setMounted] = useState(false);
@@ -77,12 +80,6 @@ const Navbar = () => {
     { name: 'Skills', href: '/#skills', icon: ListChecks, key: 'skills' },
     { name: 'Projects', href: '/#projects', icon: Code, key: 'projects' },
     { name: 'Blogs', href: '/blogs', icon: Rss, key: 'blogs' },
-    {
-      name: 'Dashboard',
-      href: '/dashboard',
-      icon: LayoutDashboard,
-      key: 'dashboard',
-    },
   ];
 
   if (pathname.startsWith('/dashboard') || pathname.startsWith('/auth')) {
@@ -110,7 +107,7 @@ const Navbar = () => {
             <Link
               onClick={() => setActive('home')}
               href="/"
-              className="dark:hover:text-[#0082c4 text-lg font-bold text-black transition-colors hover:text-[#0082c4] md:text-2xl lg:text-3xl dark:text-white"
+              className="text-lg font-bold text-black transition-colors hover:text-[#0082c4] md:text-2xl lg:text-3xl dark:text-white dark:hover:text-[#0082c4]"
             >
               Developer <span className="text-[#0082c4]">Saif</span>
             </Link>
@@ -141,6 +138,30 @@ const Navbar = () => {
                 </span>
               </Link>
             ))}
+
+            {/* Dashboard Link (if authenticated) */}
+            {status === 'authenticated' && session.user.role === 'admin' && (
+              <Link
+                onClick={() => setActive('dashboard')}
+                href="/dashboard"
+                className="group relative flex items-center justify-center"
+                aria-label="Dashboard"
+              >
+                <div
+                  className={`flex h-10 w-10 items-center justify-center rounded-lg transition-all duration-200 ${
+                    active === 'dashboard'
+                      ? 'bg-[#0082c4] text-white shadow-lg shadow-[#0082c4]/30'
+                      : 'text-black hover:bg-[#f2f2f2] dark:text-white dark:hover:bg-[#11141c]'
+                  }`}
+                >
+                  <LayoutDashboard className="h-5 w-5" />
+                </div>
+                <span className="pointer-events-none absolute -bottom-10 rounded-md bg-black px-2 py-1 text-xs whitespace-nowrap text-white opacity-0 transition-opacity group-hover:opacity-100 dark:bg-white dark:text-black">
+                  Dashboard
+                </span>
+              </Link>
+            )}
+
             <div className="ml-2">
               <ThemeToggle />
             </div>
@@ -217,14 +238,43 @@ const Navbar = () => {
                   </motion.div>
                 ))}
 
+                {/* Dashboard Link (Mobile - if authenticated) */}
+                {status === 'authenticated' &&
+                  session.user.role === 'admin' && (
+                    <motion.div
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: navLinks.length * 0.05 }}
+                    >
+                      <Link
+                        href="/dashboard"
+                        onClick={() => {
+                          setOpened(false);
+                          setActive('dashboard');
+                        }}
+                        className={`flex items-center gap-4 rounded-lg p-3 font-semibold transition-all ${
+                          active === 'dashboard'
+                            ? 'bg-[#0082c4] text-white shadow-lg shadow-[#0082c4]/20'
+                            : 'text-black hover:bg-[#f2f2f2] dark:text-white dark:hover:bg-[#27273a]'
+                        }`}
+                      >
+                        <LayoutDashboard className="h-6 w-6" />
+                        <span>Dashboard</span>
+                      </Link>
+                    </motion.div>
+                  )}
+
                 {/* Theme Toggle in Mobile Menu */}
                 <motion.div
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: navLinks.length * 0.05 }}
+                  transition={{ delay: (navLinks.length + 4) * 0.05 }}
                   className="mt-4 flex items-center gap-4 rounded-lg p-3 hover:bg-[#f2f2f2] dark:hover:bg-[#27273a]"
                 >
                   <ThemeToggle />
+                  <span className="font-semibold text-black dark:text-white">
+                    Theme
+                  </span>
                 </motion.div>
               </div>
             </motion.div>
