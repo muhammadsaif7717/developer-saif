@@ -19,11 +19,11 @@ export const getProjects = async () => {
   }
 };
 
-// Get failed student resuklts
-export const getFailedStudents = async () => {
+// Get by id
+export const getProjectsById = async (id: string) => {
   try {
-    const res = await axios.get(`${url}/result/failed`);
-    return res.data.results;
+    const res = await axios.get(`${url}/projects/get/${id}`);
+    return res.data.res;
   } catch (err) {
     throw new Error(`Failed to get results: ${err}`);
   }
