@@ -24,6 +24,7 @@ import {
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { getProjects } from '@/lib/getApi';
 import LoadingPage from '@/components/shared/LoadingPage';
+import axios from 'axios';
 
 interface Project {
   _id?: string;
@@ -80,19 +81,24 @@ export default function ProjectsPage() {
 
   const deleteMutation = useMutation({
     mutationFn: async (projectId: string) => {
-      const response = await fetch(`/api/projects/${projectId}`, {
-        method: 'DELETE',
-      });
-      if (!response.ok) throw new Error('Failed to delete project');
-      return response.json();
+      try {
+        const { data } = await axios.delete(
+          `/api/v1/projects/delete/${projectId}`,
+        );
+        return data;
+      } catch (error: any) {
+        throw new Error(
+          error.response?.data?.message || 'Failed to delete project',
+        );
+      }
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['projects'] });
       setShowDeleteModal(false);
       setProjectToDelete(null);
     },
-    onError: () => {
-      alert('Failed to delete project. Please try again.');
+    onError: (error: any) => {
+      alert(error.message || 'Failed to delete project. Please try again.');
     },
   });
 
@@ -104,17 +110,24 @@ export default function ProjectsPage() {
       projectId: string;
       featured: boolean;
     }) => {
-      const response = await fetch(`/api/projects/${projectId}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ featured }),
-      });
-      if (!response.ok) throw new Error('Failed to update project');
-      return response.json();
+      try {
+        const { data } = await axios.put(
+          `/api/v1/projects/update/${projectId}`,
+          { featured },
+        );
+        return data;
+      } catch (error: any) {
+        throw new Error(
+          error.response?.data?.message || 'Failed to update project',
+        );
+      }
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['projects'] });
       setActiveMenu(null);
+    },
+    onError: (error: any) => {
+      alert(error.message || 'Failed to update project. Please try again.');
     },
   });
 
