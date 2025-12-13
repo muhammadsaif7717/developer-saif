@@ -69,7 +69,7 @@ const Projects = () => {
   return (
     <section
       id="projects"
-      className="relative overflow-hidden bg-white py-20 md:py-28 lg:py-36 dark:bg-black"
+      className="relative overflow-hidden bg-white py-5 dark:bg-black"
       aria-labelledby="projects-heading"
     >
       {/* Background Elements */}
@@ -85,11 +85,11 @@ const Projects = () => {
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <header className="mb-16 text-center">
-          <div className="mb-4 inline-block rounded-full border border-[#0082c4]/20 bg-[#0082c4]/5 px-4 py-2 backdrop-blur-sm">
+          {/* <div className="mb-4 inline-block rounded-full border border-[#0082c4]/20 bg-[#0082c4]/5 px-4 py-2 backdrop-blur-sm">
             <span className="font-mono text-sm font-medium text-[#0082c4]">
               {'<Portfolio />'}
             </span>
-          </div>
+          </div> */}
           <h2
             id="projects-heading"
             className="mb-6 bg-gradient-to-r from-[#0082c4] via-[#0099e6] to-[#0082c4] bg-clip-text text-5xl font-bold text-transparent md:text-6xl lg:text-7xl"
@@ -398,12 +398,12 @@ const Projects = () => {
         )}
 
         {/* View More Section */}
-        <div className="mt-16 text-center">
+        <div className="mt-10 text-center">
           <p className="mb-6 text-[#64748b] dark:text-[#cbd5e1]">
             Want to see more of my work?
           </p>
           <Link
-            href="https://github.com/yourusername"
+            href="https://github.com/muhammadsaif7717"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 rounded-xl border-2 border-[#0082c4] bg-transparent px-8 py-4 font-semibold text-[#0082c4] transition-all duration-300 hover:bg-[#0082c4] hover:text-white hover:shadow-lg hover:shadow-[#0082c4]/30"
@@ -414,11 +414,11 @@ const Projects = () => {
         </div>
 
         {/* Closing Tag */}
-        <div className="mt-20 text-center">
+        {/* <div className="mt-20 text-center">
           <span className="inline-block rounded-lg border border-[#0082c4]/20 bg-[#0082c4]/5 px-4 py-2 font-mono text-sm font-medium text-[#0082c4]">
             {'</Portfolio>'}
           </span>
-        </div>
+        </div> */}
       </div>
     </section>
   );

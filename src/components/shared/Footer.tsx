@@ -1,6 +1,6 @@
 'use client';
 import Link from 'next/link';
-import { Github, Linkedin, Twitter, Mail, ArrowUp } from 'lucide-react';
+import { Github, Linkedin, Mail, ArrowUp, Facebook } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 
 export default function Footer() {
@@ -67,7 +67,7 @@ export default function Footer() {
             <h4 className="font-semibold text-[#0082c4]">Connect</h4>
             <div className="flex space-x-4">
               <a
-                href="https://github.com/yourusername"
+                href="https://github.com/muhammadsaif7717"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="rounded-lg bg-white p-2 text-[#334155] transition-all hover:scale-110 hover:text-[#0082c4] dark:bg-[#000000] dark:text-[#cbd5e1] dark:hover:text-[#0082c4]"
@@ -76,7 +76,7 @@ export default function Footer() {
                 <Github className="h-5 w-5" />
               </a>
               <a
-                href="https://linkedin.com/in/yourusername"
+                href="https://linkedin.com/in/mdsaifislam77"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="rounded-lg bg-white p-2 text-[#334155] transition-all hover:scale-110 hover:text-[#0082c4] dark:bg-[#000000] dark:text-[#cbd5e1] dark:hover:text-[#0082c4]"
@@ -85,16 +85,16 @@ export default function Footer() {
                 <Linkedin className="h-5 w-5" />
               </a>
               <a
-                href="https://twitter.com/yourusername"
+                href="https://www.facebook.com/muhammadsaif7717"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="rounded-lg bg-white p-2 text-[#334155] transition-all hover:scale-110 hover:text-[#0082c4] dark:bg-[#000000] dark:text-[#cbd5e1] dark:hover:text-[#0082c4]"
                 aria-label="Twitter"
               >
-                <Twitter className="h-5 w-5" />
+                <Facebook className="h-5 w-5" />
               </a>
               <a
-                href="mailto:hello@developer-saif.com"
+                href="mailto:muhammadsaif7717@gmail.com"
                 className="rounded-lg bg-white p-2 text-[#334155] transition-all hover:scale-110 hover:text-[#0082c4] dark:bg-[#000000] dark:text-[#cbd5e1] dark:hover:text-[#0082c4]"
                 aria-label="Email"
               >

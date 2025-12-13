@@ -85,9 +85,9 @@ const About = () => {
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section Header with Code Style */}
         <div className="mb-12 text-center md:mb-16">
-          <div className="mb-3 font-mono text-sm text-[#64748b] dark:text-[#cbd5e1]">
+          {/* <div className="mb-3 font-mono text-sm text-[#64748b] dark:text-[#cbd5e1]">
             <span className="text-[#0082c4]">{'<section id="about">'}</span>
-          </div>
+          </div> */}
           <h2 className="mb-4 text-4xl font-bold text-[#0082c4] md:text-5xl lg:text-6xl">
             About Me
           </h2>
@@ -235,9 +235,9 @@ const About = () => {
             <h3 className="mb-3 text-3xl font-bold text-[#0082c4] md:text-4xl">
               What Drives Me
             </h3>
-            <p className="text-sm text-[#64748b] md:text-base dark:text-[#cbd5e1]">
+            {/* <p className="text-sm text-[#64748b] md:text-base dark:text-[#cbd5e1]">
               const values = [...]
-            </p>
+            </p> */}
           </div>
 
           <div className="grid gap-5 sm:grid-cols-2 md:gap-6 lg:grid-cols-4">
@@ -289,9 +289,9 @@ const About = () => {
         </div>
 
         {/* Closing Tag */}
-        <div className="mt-12 text-center font-mono text-sm text-[#64748b] md:mt-16 dark:text-[#cbd5e1]">
+        {/* <div className="mt-12 text-center font-mono text-sm text-[#64748b] md:mt-16 dark:text-[#cbd5e1]">
           <span className="text-[#0082c4]">{'</section>'}</span>
-        </div>
+        </div> */}
       </div>
     </section>
   );

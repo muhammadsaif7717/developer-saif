@@ -291,7 +291,7 @@ export default function Contact() {
             {/* Contact Cards */}
             <div className="space-y-4">
               {/* Email */}
-              <div className="relative group rounded-xl border border-[#e2e8f0] bg-[#f2f2f2] p-6 transition-all hover:border-[#0082c4] dark:border-[#27273a] dark:bg-[#11141c]">
+              <div className="group relative rounded-xl border border-[#e2e8f0] bg-[#f2f2f2] p-6 transition-all hover:border-[#0082c4] dark:border-[#27273a] dark:bg-[#11141c]">
                 <div className="flex items-start justify-between">
                   <div className="flex items-start space-x-4">
                     <div className="rounded-lg bg-white p-3 transition-all group-hover:bg-[#0082c4] dark:bg-[#000000]">
@@ -303,7 +303,7 @@ export default function Contact() {
                       </h4>
                       <a
                         href="mailto:muhammadsaif7717@gmail.com"
-                        className="text-sm md:text-[16px] text-[#334155] transition-colors hover:text-[#0082c4] dark:text-[#cbd5e1] dark:hover:text-[#0082c4]"
+                        className="text-sm text-[#334155] transition-colors hover:text-[#0082c4] md:text-[16px] dark:text-[#cbd5e1] dark:hover:text-[#0082c4]"
                       >
                         muhammadsaif7717@gmail.com
                       </a>

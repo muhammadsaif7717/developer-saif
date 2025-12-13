@@ -6,8 +6,9 @@ import {
   Wrench,
   Cloud,
   Palette,
-  GitBranch,
   Server,
+  ChevronRight,
+  Sparkles,
 } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import Image from 'next/image';
@@ -19,6 +20,7 @@ const skillCategories = [
     icon: Code2,
     title: 'Frontend Development',
     codeComment: '// User Interface',
+    description: 'Building responsive, interactive user experiences',
     skills: [
       { name: 'React', level: 95 },
       { name: 'Next.js', level: 90 },
@@ -32,6 +34,7 @@ const skillCategories = [
     icon: Server,
     title: 'Backend Development',
     codeComment: '// Server Side',
+    description: 'Scalable server architecture and API design',
     skills: [
       { name: 'Node.js', level: 88 },
       { name: 'Express.js', level: 90 },
@@ -44,6 +47,7 @@ const skillCategories = [
     icon: Database,
     title: 'Database & Storage',
     codeComment: '// Data Layer',
+    description: 'Efficient data modeling and management',
     skills: [
       { name: 'MongoDB', level: 90 },
       { name: 'Firebase', level: 85 },
@@ -55,6 +59,7 @@ const skillCategories = [
     icon: Wrench,
     title: 'Tools & Technologies',
     codeComment: '// Dev Tools',
+    description: 'Modern development workflow optimization',
     skills: [
       { name: 'Git & GitHub', level: 92 },
       { name: 'VS Code', level: 95 },
@@ -67,6 +72,7 @@ const skillCategories = [
     icon: Palette,
     title: 'UI/UX & Design',
     codeComment: '// Visual Design',
+    description: 'Crafting beautiful, accessible interfaces',
     skills: [
       { name: 'Responsive Design', level: 95 },
       { name: 'Figma', level: 80 },
@@ -79,6 +85,7 @@ const skillCategories = [
     icon: Cloud,
     title: 'Deployment & Hosting',
     codeComment: '// Cloud Services',
+    description: 'Seamless deployment and infrastructure',
     skills: [
       { name: 'Vercel', level: 92 },
       { name: 'Netlify', level: 88 },
@@ -116,8 +123,9 @@ const Skills = () => {
   const [mounted, setMounted] = useState(false);
   const controls = useAnimation();
   const [isPaused, setIsPaused] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
+  const [hoveredSkill, setHoveredSkill] = useState<string | null>(null);
 
-  // Memoize doubled skills array for carousel
   const doubledSkills = useMemo(() => [...skillsData, ...skillsData], []);
 
   useEffect(() => {
@@ -148,15 +156,15 @@ const Skills = () => {
   return (
     <section
       id="skills"
-      className="relative overflow-hidden bg-white py-20 md:py-28 lg:py-36 dark:bg-black"
+      className="lg:pb∆-36 relative overflow-hidden bg-white pb-20 md:pb-28 dark:bg-black"
       aria-labelledby="skills-heading"
     >
-      {/* Animated Background Elements */}
+      {/* Animated Background */}
       <div
         className="pointer-events-none absolute inset-0 overflow-hidden"
         aria-hidden="true"
       >
-        <div className="absolute inset-0 bg-[linear-linear(rgba(0,130,196,0.05)_1px,transparent_1px),linear-linear(90deg,rgba(0,130,196,0.05)_1px,transparent_1px)] bg-size-[60px_60px] dark:bg-[linear-linear(rgba(0,130,196,0.1)_1px,transparent_1px),linear-linear(90deg,rgba(0,130,196,0.1)_1px,transparent_1px)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(0,130,196,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(0,130,196,0.05)_1px,transparent_1px)] bg-[size:60px_60px] dark:bg-[linear-gradient(rgba(0,130,196,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(0,130,196,0.1)_1px,transparent_1px)]" />
         <div className="absolute top-20 -left-40 h-96 w-96 rounded-full bg-[#0082c4] opacity-10 blur-3xl" />
         <div className="absolute top-1/3 -right-40 h-96 w-96 rounded-full bg-[#0099e6] opacity-10 blur-3xl" />
         <div className="absolute bottom-20 left-1/3 h-96 w-96 rounded-full bg-[#0082c4] opacity-10 blur-3xl" />
@@ -165,14 +173,9 @@ const Skills = () => {
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Header Section */}
         <header className="mb-20 text-center">
-          <div className="mb-4 inline-block rounded-full border border-[#0082c4]/20 bg-[#0082c4]/5 px-4 py-2 backdrop-blur-sm">
-            <span className="font-mono text-sm font-medium text-[#0082c4]">
-              {'<TechStack />'}
-            </span>
-          </div>
           <h2
             id="skills-heading"
-            className="mb-6 bg-linear-to-r from-[#0082c4] via-[#0099e6] to-[#0082c4] bg-clip-text text-5xl font-bold text-transparent md:text-6xl lg:text-7xl"
+            className="mb-6 bg-gradient-to-r from-[#0082c4] via-[#0099e6] to-[#0082c4] bg-clip-text text-5xl font-bold text-transparent md:text-6xl lg:text-7xl"
           >
             Skills & Expertise
           </h2>
@@ -189,29 +192,27 @@ const Skills = () => {
               className="inline-flex items-center gap-2 font-mono text-sm font-semibold tracking-wider text-[#0082c4] uppercase"
             >
               <span
-                className="h-px w-8 bg-linear-to-r from-transparent to-[#0082c4]"
+                className="h-px w-8 bg-gradient-to-r from-transparent to-[#0082c4]"
                 aria-hidden="true"
               />
               Technology Arsenal
               <span
-                className="h-px w-8 bg-linear-to-l from-transparent to-[#0082c4]"
+                className="h-px w-8 bg-gradient-to-l from-transparent to-[#0082c4]"
                 aria-hidden="true"
               />
             </h3>
           </div>
 
           <div className="relative">
-            {/* linear Fades */}
             <div
-              className="pointer-events-none absolute top-0 left-0 z-20 h-full w-24 bg-linear-to-r from-white via-white/80 to-transparent md:w-40 dark:from-black dark:via-black/80"
+              className="pointer-events-none absolute top-0 left-0 z-20 h-full w-24 bg-gradient-to-r from-white via-white/80 to-transparent md:w-40 dark:from-black dark:via-black/80"
               aria-hidden="true"
             />
             <div
-              className="pointer-events-none absolute top-0 right-0 z-20 h-full w-24 bg-linear-to-l from-white via-white/80 to-transparent md:w-40 dark:from-black dark:via-black/80"
+              className="pointer-events-none absolute top-0 right-0 z-20 h-full w-24 bg-gradient-to-l from-white via-white/80 to-transparent md:w-40 dark:from-black dark:via-black/80"
               aria-hidden="true"
             />
 
-            {/* Scrolling Container */}
             <div
               className="relative overflow-hidden py-4"
               onMouseEnter={handleMouseEnter}
@@ -227,7 +228,7 @@ const Skills = () => {
                 {doubledSkills.map((skill, index) => (
                   <div
                     key={`${skill.id}-${index}`}
-                    className="flex min-w-40 flex-col items-center gap-4 rounded-2xl border-2 border-slate-200 bg-[#f2f2f2] p-6 shadow-sm transition-transform duration-500 hover:scale-110 hover:border-[#0082c4] dark:border-slate-800 dark:bg-[#11141c]"
+                    className="flex min-w-40 flex-col items-center gap-4 rounded-2xl border-2 border-slate-200 bg-[#f2f2f2] p-6 shadow-sm transition-all duration-300 hover:scale-110 hover:border-[#0082c4] hover:shadow-[0_0_20px_rgba(0,130,196,0.3)] dark:border-slate-800 dark:bg-[#11141c]"
                   >
                     <Image
                       height={64}
@@ -251,7 +252,7 @@ const Skills = () => {
           </p>
         </section>
 
-        {/* Skill Categories Grid */}
+        {/* Skill Categories Grid - IMPROVED */}
         <section aria-labelledby="expertise-heading">
           <div className="mb-12 text-center">
             <h3
@@ -259,12 +260,12 @@ const Skills = () => {
               className="mb-3 inline-flex items-center gap-2 font-mono text-sm font-semibold tracking-wider text-[#0082c4] uppercase"
             >
               <span
-                className="h-px w-8 bg-linear-to-r from-transparent to-[#0082c4]"
+                className="h-px w-8 bg-gradient-to-r from-transparent to-[#0082c4]"
                 aria-hidden="true"
               />
               Expertise Breakdown
               <span
-                className="h-px w-8 bg-linear-to-l from-transparent to-[#0082c4]"
+                className="h-px w-8 bg-gradient-to-l from-transparent to-[#0082c4]"
                 aria-hidden="true"
               />
             </h3>
@@ -276,160 +277,206 @@ const Skills = () => {
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {skillCategories.map((category, categoryIndex) => {
               const Icon = category.icon;
+              const isExpanded = selectedCategory === categoryIndex;
+
               return (
-                <article
+                <motion.article
                   key={category.title}
-                  className="group relative overflow-hidden rounded-2xl border-2 border-slate-200 bg-[#f2f2f2] p-8 shadow-sm transition-all duration-500 hover:-translate-y-3 hover:border-[#0082c4] hover:shadow-2xl hover:shadow-[#0082c4]/20 dark:border-slate-800 dark:bg-[#11141c] dark:hover:shadow-[#0082c4]/30"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: categoryIndex * 0.1 }}
+                  className="group relative overflow-hidden rounded-2xl border-2 border-slate-200 bg-[#f2f2f2] shadow-sm transition-all duration-500 hover:shadow-2xl hover:shadow-[#0082c4]/20 dark:border-slate-800 dark:bg-[#11141c] dark:hover:shadow-[#0082c4]/30"
+                  onMouseEnter={() => setSelectedCategory(categoryIndex)}
+                  onMouseLeave={() => setSelectedCategory(null)}
                 >
-                  {/* Animated Background */}
+                  {/* Animated Gradient Background */}
                   <div
-                    className="absolute inset-0 bg-linear-to-br from-[#0082c4]/0 via-[#0082c4]/0 to-[#0082c4]/0 opacity-0 transition-all duration-500 group-hover:from-[#0082c4]/5 group-hover:via-[#0082c4]/10 group-hover:to-[#0082c4]/5 group-hover:opacity-100"
+                    className={`absolute inset-0 bg-gradient-to-br from-[#0082c4]/0 via-[#0082c4]/0 to-[#0082c4]/0 opacity-0 transition-all duration-700 ${
+                      isExpanded
+                        ? 'from-[#0082c4]/10 via-[#0099e6]/5 to-[#0082c4]/10 opacity-100'
+                        : ''
+                    }`}
                     aria-hidden="true"
                   />
 
-                  {/* Header */}
-                  <header className="relative z-10 mb-8">
-                    <div className="mb-3 inline-block rounded-lg bg-[#0082c4]/10 px-3 py-1">
-                      <span className="font-mono text-xs font-medium text-[#0082c4]">
-                        {category.codeComment}
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-4">
-                      <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-linear-to-br from-[#0082c4] to-[#0099e6] shadow-lg shadow-[#0082c4]/30 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-12">
-                        <Icon
-                          className="h-7 w-7 text-white"
-                          aria-hidden="true"
-                        />
-                      </div>
-                      <h3 className="text-xl font-bold text-[#0082c4] md:text-2xl">
-                        {category.title}
-                      </h3>
-                    </div>
-                  </header>
+                  {/* Animated Border Glow */}
+                  <div
+                    className={`absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-500 ${
+                      isExpanded ? 'opacity-100' : ''
+                    }`}
+                    style={{
+                      background:
+                        'linear-gradient(90deg, #0082c4, #0099e6, #0082c4)',
+                      padding: '2px',
+                      WebkitMask:
+                        'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+                      WebkitMaskComposite: 'xor',
+                      maskComposite: 'exclude',
+                    }}
+                    aria-hidden="true"
+                  />
 
-                  {/* Skills List */}
-                  <ul className="relative z-10 space-y-5">
-                    {category.skills.map((skill, skillIndex) => (
-                      <li key={skill.name} className="group/skill">
-                        <div className="mb-2 flex items-center justify-between">
-                          <span className="font-mono text-sm font-medium text-slate-700 transition-colors duration-300 group-hover/skill:text-[#0082c4] dark:text-slate-300 dark:group-hover/skill:text-[#0082c4]">
-                            {skill.name}
-                          </span>
-                          <span className="rounded-full bg-[#0082c4]/10 px-3 py-1 font-mono text-xs font-bold text-[#0082c4]">
-                            {skill.level}%
-                          </span>
-                        </div>
-                        <div
-                          role="progressbar"
-                          aria-valuenow={skill.level}
-                          aria-valuemin={0}
-                          aria-valuemax={100}
-                          aria-label={`${skill.name} proficiency: ${skill.level}%`}
-                          className="relative h-3 overflow-hidden rounded-full bg-slate-200 shadow-inner dark:bg-slate-900"
+                  <div className="relative z-10 p-8">
+                    {/* Header */}
+                    <header className="mb-6">
+                      <div className="mb-3 flex items-center justify-between">
+                        <span className="inline-block rounded-lg bg-[#0082c4]/10 px-3 py-1 font-mono text-xs font-medium text-[#0082c4]">
+                          {category.codeComment}
+                        </span>
+                        <motion.div
+                          animate={{ rotate: isExpanded ? 90 : 0 }}
+                          transition={{ duration: 0.3 }}
                         >
-                          <div
-                            className="absolute inset-y-0 left-0 rounded-full bg-linear-to-r from-[#0082c4] via-[#0099e6] to-[#0082c4] shadow-lg shadow-[#0082c4]/50 transition-all duration-1000 ease-out"
-                            style={{
-                              width: `${skill.level}%`,
-                              transitionDelay: `${categoryIndex * 100 + skillIndex * 80}ms`,
-                            }}
-                          >
-                            <div className="absolute inset-0 animate-[shimmer_2s_infinite] bg-linear-to-r from-transparent via-white/30 to-transparent" />
-                          </div>
-                        </div>
-                      </li>
-                    ))}
-                  </ul>
+                          <ChevronRight className="h-5 w-5 text-[#0082c4]" />
+                        </motion.div>
+                      </div>
 
-                  <div
-                    className="absolute -top-8 -right-8 h-32 w-32 rounded-full bg-[#0082c4] opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-20"
+                      <div className="flex items-start gap-4">
+                        <motion.div
+                          className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#0082c4] to-[#0099e6] shadow-lg shadow-[#0082c4]/30"
+                          whileHover={{ scale: 1.1, rotate: 12 }}
+                          transition={{
+                            type: 'spring',
+                            stiffness: 400,
+                            damping: 10,
+                          }}
+                        >
+                          <Icon
+                            className="h-7 w-7 text-white"
+                            aria-hidden="true"
+                          />
+                        </motion.div>
+
+                        <div className="flex-1">
+                          <h3 className="mb-2 text-xl font-bold text-[#0082c4] md:text-2xl">
+                            {category.title}
+                          </h3>
+                          <p className="text-sm text-slate-600 dark:text-slate-400">
+                            {category.description}
+                          </p>
+                        </div>
+                      </div>
+                    </header>
+
+                    {/* Skills List with Enhanced Animations */}
+                    <motion.ul
+                      className="space-y-4"
+                      initial={false}
+                      animate={{ height: isExpanded ? 'auto' : 'auto' }}
+                    >
+                      {category.skills.map((skill, skillIndex) => {
+                        const isHovered =
+                          hoveredSkill === `${categoryIndex}-${skillIndex}`;
+
+                        return (
+                          <motion.li
+                            key={skill.name}
+                            initial={{ opacity: 0, x: -20 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: skillIndex * 0.05 }}
+                            onMouseEnter={() =>
+                              setHoveredSkill(`${categoryIndex}-${skillIndex}`)
+                            }
+                            onMouseLeave={() => setHoveredSkill(null)}
+                            className="group/skill"
+                          >
+                            <div className="mb-2 flex items-center justify-between">
+                              <div className="flex items-center gap-2">
+                                {isHovered && (
+                                  <motion.div
+                                    initial={{ scale: 0 }}
+                                    animate={{ scale: 1 }}
+                                    transition={{
+                                      type: 'spring',
+                                      stiffness: 500,
+                                    }}
+                                  >
+                                    <Sparkles className="h-3 w-3 text-[#0082c4]" />
+                                  </motion.div>
+                                )}
+                                <span className="font-mono text-sm font-medium text-slate-700 transition-colors duration-300 group-hover/skill:text-[#0082c4] dark:text-slate-300 dark:group-hover/skill:text-[#0082c4]">
+                                  {skill.name}
+                                </span>
+                              </div>
+                              <motion.span
+                                className="rounded-full bg-[#0082c4]/10 px-3 py-1 font-mono text-xs font-bold text-[#0082c4]"
+                                whileHover={{ scale: 1.1 }}
+                              >
+                                {skill.level}%
+                              </motion.span>
+                            </div>
+
+                            {/* Enhanced Progress Bar */}
+                            <div
+                              role="progressbar"
+                              aria-valuenow={skill.level}
+                              aria-valuemin={0}
+                              aria-valuemax={100}
+                              aria-label={`${skill.name} proficiency: ${skill.level}%`}
+                              className="relative h-2.5 overflow-hidden rounded-full bg-slate-200 shadow-inner dark:bg-slate-900"
+                            >
+                              <motion.div
+                                initial={{ width: 0 }}
+                                whileInView={{ width: `${skill.level}%` }}
+                                viewport={{ once: true }}
+                                transition={{
+                                  duration: 1,
+                                  delay:
+                                    categoryIndex * 0.1 + skillIndex * 0.05,
+                                  ease: 'easeOut',
+                                }}
+                                className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-[#0082c4] via-[#0099e6] to-[#0082c4] shadow-lg shadow-[#0082c4]/50"
+                              >
+                                {/* Shimmer Effect */}
+                                <motion.div
+                                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent"
+                                  animate={{
+                                    x: ['-100%', '200%'],
+                                  }}
+                                  transition={{
+                                    repeat: Infinity,
+                                    duration: 2,
+                                    ease: 'linear',
+                                    delay: categoryIndex * 0.2,
+                                  }}
+                                />
+                              </motion.div>
+
+                              {/* Pulse Effect on Hover */}
+                              {isHovered && (
+                                <motion.div
+                                  className="absolute inset-0 rounded-full bg-[#0082c4]/30"
+                                  initial={{ scale: 0, opacity: 0 }}
+                                  animate={{ scale: 1.5, opacity: 0 }}
+                                  transition={{
+                                    duration: 0.6,
+                                    repeat: Infinity,
+                                  }}
+                                />
+                              )}
+                            </div>
+                          </motion.li>
+                        );
+                      })}
+                    </motion.ul>
+                  </div>
+
+                  {/* Floating Glow Effect */}
+                  <motion.div
+                    className="absolute -top-8 -right-8 h-32 w-32 rounded-full bg-[#0082c4] opacity-0 blur-3xl"
+                    animate={{
+                      opacity: isExpanded ? 0.2 : 0,
+                    }}
+                    transition={{ duration: 0.5 }}
                     aria-hidden="true"
                   />
-                </article>
+                </motion.article>
               );
             })}
           </div>
         </section>
-
-        {/* Continuous Growth Banner */}
-        <section
-          aria-labelledby="growth-heading"
-          className="mt-24 overflow-hidden rounded-3xl border-2 border-[#0082c4]/30 bg-linear-to-br from-[#f2f2f2] via-white to-[#f2f2f2] p-10 shadow-2xl md:p-12 dark:border-[#0082c4]/40 dark:from-[#11141c] dark:via-black dark:to-[#11141c]"
-        >
-          <div className="relative">
-            <div
-              className="absolute -top-20 -right-20 h-40 w-40 rounded-full bg-[#0082c4] opacity-10 blur-3xl"
-              aria-hidden="true"
-            />
-            <div
-              className="absolute -bottom-20 -left-20 h-40 w-40 rounded-full bg-[#0099e6] opacity-10 blur-3xl"
-              aria-hidden="true"
-            />
-
-            <div className="relative z-10 text-center">
-              <div className="mb-6 flex items-center justify-center gap-3">
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-linear-to-br from-[#0082c4] to-[#0099e6] shadow-lg shadow-[#0082c4]/40">
-                  <GitBranch
-                    className="h-6 w-6 text-white"
-                    aria-hidden="true"
-                  />
-                </div>
-                <h3
-                  id="growth-heading"
-                  className="bg-linear-to-r from-[#0082c4] to-[#0099e6] bg-clip-text text-3xl font-bold text-transparent md:text-4xl"
-                >
-                  Continuous Growth
-                </h3>
-              </div>
-
-              <p className="mx-auto max-w-3xl text-base leading-relaxed text-slate-700 md:text-lg dark:text-slate-300">
-                Technology evolves rapidly, and so do I. I'm constantly
-                exploring new frameworks, tools, and best practices to stay at
-                the cutting edge of web development. Currently diving deeper
-                into{' '}
-                <span className="font-bold text-[#0082c4]">
-                  advanced TypeScript patterns
-                </span>
-                ,{' '}
-                <span className="font-bold text-[#0082c4]">
-                  serverless architectures
-                </span>
-                , and{' '}
-                <span className="font-bold text-[#0082c4]">
-                  performance optimization
-                </span>
-                .
-              </p>
-
-              <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
-                <span className="inline-flex items-center gap-2 rounded-full border border-[#0082c4]/30 bg-[#0082c4]/10 px-4 py-2 text-sm font-semibold text-[#0082c4]">
-                  <span
-                    className="h-2 w-2 animate-pulse rounded-full bg-[#0082c4]"
-                    aria-hidden="true"
-                  />
-                  Always Learning
-                </span>
-                <span className="inline-flex items-center gap-2 rounded-full border border-[#0082c4]/30 bg-[#0082c4]/10 px-4 py-2 text-sm font-semibold text-[#0082c4]">
-                  <span
-                    className="h-2 w-2 animate-pulse rounded-full bg-[#0082c4]"
-                    aria-hidden="true"
-                  />
-                  Always Building
-                </span>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Closing Tag */}
-        <div className="mt-20 text-center">
-          <span
-            className="inline-block rounded-lg border border-[#0082c4]/20 bg-[#0082c4]/5 px-4 py-2 font-mono text-sm font-medium text-[#0082c4]"
-            aria-label="End of skills section"
-          >
-            {'</Skills>'}
-          </span>
-        </div>
       </div>
     </section>
   );

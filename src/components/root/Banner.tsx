@@ -3,7 +3,6 @@
 import {
   Github,
   Linkedin,
-  Twitter,
   Facebook,
   Mail,
   ArrowRight,
@@ -28,12 +27,6 @@ const Banner = () => {
       href: 'https://linkedin.com/in/mdsaifislam77',
       label: 'LinkedIn',
       hoverColor: 'hover:bg-[#0082c4] hover:text-white',
-    },
-    {
-      icon: Twitter,
-      href: 'https://twitter.com/muhammadsaif77',
-      label: 'Twitter',
-      hoverColor: 'hover:bg-[#1DA1F2] hover:text-white',
     },
     {
       icon: Facebook,
