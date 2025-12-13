@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useSession, signOut } from 'next-auth/react';
@@ -9,13 +9,13 @@ import {
   Home,
   LogOut,
   User,
-  Settings,
   Menu,
   X,
   ChevronDown,
   Shield,
 } from 'lucide-react';
 import ThemeToggle from '../shared/ThemeToggle';
+import { ActiveContext } from '@/providers/ActiveProvider';
 
 interface UserDropdownProps {
   isOpen: boolean;
@@ -24,6 +24,7 @@ interface UserDropdownProps {
 
 function UserDropdown({ isOpen, onClose }: UserDropdownProps) {
   const { data: session } = useSession();
+   const { setActive } = useContext(ActiveContext);
 
   if (!session?.user) return null;
 
@@ -119,7 +120,10 @@ function UserDropdown({ isOpen, onClose }: UserDropdownProps) {
               {/* Return to Homepage */}
               <Link
                 href="/"
-                onClick={onClose}
+                onClick={() => {
+                  onClose();         // call your onClose function
+                  setActive('home'); // set the active link
+                }}
                 className="group flex items-center gap-3 px-4 py-3 transition-colors hover:bg-[#0082c4]/10"
               >
                 <Home className="text-muted-foreground h-5 w-5 transition-colors group-hover:text-[#0082c4]" />
@@ -197,11 +201,10 @@ export default function DashNav() {
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.5 }}
-      className={`fixed top-0 right-0 left-0 z-50 transition-all duration-300 ${
-        isScrolled
+      className={`fixed top-0 right-0 left-0 z-50 transition-all duration-300 ${isScrolled
           ? 'glass-effect border-border border-b shadow-lg'
           : 'bg-transparent backdrop-blur-sm'
-      }`}
+        }`}
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between md:h-20">
@@ -259,9 +262,8 @@ export default function DashNav() {
                     <div className="ring-background absolute right-0 bottom-0 h-2.5 w-2.5 rounded-full bg-[#10b981] ring-2" />
                   </div>
                   <ChevronDown
-                    className={`text-muted-foreground h-4 w-4 transition-transform duration-300 ${
-                      isUserDropdownOpen ? 'rotate-180' : ''
-                    }`}
+                    className={`text-muted-foreground h-4 w-4 transition-transform duration-300 ${isUserDropdownOpen ? 'rotate-180' : ''
+                      }`}
                   />
                 </motion.button>
 
