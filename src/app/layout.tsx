@@ -6,6 +6,7 @@ import Navbar from '@/components/shared/Navbar';
 import ThemeProvider from '@/providers/ThemeProvider';
 import TanstackProvider from '@/providers/TanstackProvider';
 import AuthProvider from '@/providers/AuthProvider';
+import Footer from '@/components/shared/Footer';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -38,6 +39,7 @@ export default function RootLayout({
               <ThemeProvider>
                 <Navbar />
                 {children}
+                <Footer />
               </ThemeProvider>
             </ActiveProvider>
           </TanstackProvider>

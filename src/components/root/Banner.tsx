@@ -235,7 +235,7 @@ const Banner = () => {
           <div className="flex flex-col gap-3 pt-2 sm:flex-row sm:gap-4 sm:pt-4">
             {/* Download Resume Button */}
             <a
-              href="https://drive.google.com/uc?export=download&id=1fXoyWDzFV_VS81ISMkK-G0vCHc7_nw8j"
+              href="https://drive.google.com/uc?export=download&id=1bI07nOE949lIj5kUNtlEAKhIqo_sMt5w"
               target="_blank"
               className="group relative flex items-center justify-center gap-2 overflow-hidden rounded-lg bg-[#0082c4] px-4 py-2.5 text-sm font-semibold text-white shadow-lg shadow-[#0082c4]/30 transition-all duration-300 hover:scale-105 hover:bg-[#0099e6] hover:shadow-xl hover:shadow-[#0082c4]/40 sm:px-5 sm:py-3 sm:text-base md:px-6"
             >

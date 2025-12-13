@@ -15,28 +15,12 @@ import {
   Link as LinkIcon,
   Calendar,
   Briefcase,
+  ArrowUpDown,
 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import axios from 'axios';
-
-interface ProjectFormData {
-  name: string;
-  slug: string;
-  title: string;
-  description: string;
-  image: string[];
-  category: string;
-  type: 'personal' | 'client' | 'open-source' | 'freelance';
-  date: string;
-  role: string;
-  technologies: string[];
-  features: string[];
-  liveUrl: string;
-  githubUrl: string;
-  featured: boolean;
-  currentlyWorking: boolean;
-}
+import { Project } from '@/types';
 
 export default function NewProjectPage() {
   const { data: session, status } = useSession();
@@ -49,10 +33,9 @@ export default function NewProjectPage() {
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
   const [uploadMethod, setUploadMethod] = useState<'url' | 'upload'>('upload');
   const [isUploading, setIsUploading] = useState(false);
-  const [formData, setFormData] = useState<ProjectFormData>({
-    name: '',
-    slug: '',
+  const [formData, setFormData] = useState<Omit<Project, '_id'>>({
     title: '',
+    slug: '',
     description: '',
     image: [],
     category: 'Web Apps',
@@ -68,6 +51,7 @@ export default function NewProjectPage() {
     githubUrl: '',
     featured: false,
     currentlyWorking: false,
+    priority: 0,
   });
 
   useEffect(() => {
@@ -80,16 +64,16 @@ export default function NewProjectPage() {
     }
   }, [status, router]);
 
-  // Auto-generate slug from name
+  // Auto-generate slug from title
   useEffect(() => {
-    if (formData.name) {
-      const slug = formData.name
+    if (formData.title) {
+      const slug = formData.title
         .toLowerCase()
         .replace(/[^a-z0-9]+/g, '-')
         .replace(/^-+|-+$/g, '');
       setFormData((prev) => ({ ...prev, slug }));
     }
-  }, [formData.name]);
+  }, [formData.title]);
 
   const uploadToImgBB = async (file: File): Promise<string> => {
     const formData = new FormData();
@@ -165,7 +149,7 @@ export default function NewProjectPage() {
   };
 
   const createProjectMutation = useMutation({
-    mutationFn: async (data: ProjectFormData) => {
+    mutationFn: async (data: Omit<Project, '_id'>) => {
       const response = await axios.post('/api/v1/projects/post', data);
       return response.data;
     },
@@ -185,8 +169,25 @@ export default function NewProjectPage() {
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >,
   ) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    const { name, value, type } = e.target;
+
+    if (name === 'type') {
+      // Ensure type is one of the valid union types
+      const validTypes: Array<
+        'personal' | 'client' | 'open-source' | 'freelance'
+      > = ['personal', 'client', 'open-source', 'freelance'];
+      if (validTypes.includes(value as any)) {
+        setFormData((prev) => ({
+          ...prev,
+          [name]: value as 'personal' | 'client' | 'open-source' | 'freelance',
+        }));
+      }
+    } else {
+      setFormData((prev) => ({
+        ...prev,
+        [name]: type === 'number' ? parseInt(value) || 0 : value,
+      }));
+    }
   };
 
   const handleAddItem = (
@@ -210,7 +211,6 @@ export default function NewProjectPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (
-      !formData.name.trim() ||
       !formData.title.trim() ||
       !formData.description.trim() ||
       formData.image.length === 0 ||
@@ -273,36 +273,6 @@ export default function NewProjectPage() {
           onSubmit={handleSubmit}
           className="space-y-6 rounded-xl border-2 border-[#e2e8f0] bg-[#f2f2f2] p-6 md:p-8 dark:border-[#27273a] dark:bg-[#11141c]"
         >
-          {/* Name & Slug */}
-          <div className="grid gap-6 md:grid-cols-2">
-            <div>
-              <label className="mb-2 block text-sm font-semibold text-black dark:text-white">
-                Project Name *
-              </label>
-              <input
-                type="text"
-                name="name"
-                value={formData.name}
-                onChange={handleInputChange}
-                placeholder="E-Commerce Platform"
-                className="w-full rounded-lg border border-[#e2e8f0] bg-white px-4 py-3 text-black focus:border-[#0082c4] focus:ring-2 focus:ring-[#0082c4]/20 focus:outline-none dark:border-[#27273a] dark:bg-black dark:text-white"
-                required
-              />
-            </div>
-            <div>
-              <label className="mb-2 block text-sm font-semibold text-black dark:text-white">
-                URL Slug
-              </label>
-              <input
-                type="text"
-                name="slug"
-                value={formData.slug}
-                onChange={handleInputChange}
-                className="w-full rounded-lg border border-[#e2e8f0] bg-white px-4 py-3 text-black focus:border-[#0082c4] focus:ring-2 focus:ring-[#0082c4]/20 focus:outline-none dark:border-[#27273a] dark:bg-black dark:text-white"
-              />
-            </div>
-          </div>
-
           {/* Title */}
           <div>
             <label className="mb-2 block text-sm font-semibold text-black dark:text-white">
@@ -319,6 +289,20 @@ export default function NewProjectPage() {
             />
           </div>
 
+          {/* Slug (Auto-generated, read-only display) */}
+          <div>
+            <label className="mb-2 block text-sm font-semibold text-black dark:text-white">
+              Slug (Auto-generated)
+            </label>
+            <input
+              type="text"
+              name="slug"
+              value={formData.slug}
+              readOnly
+              className="w-full rounded-lg border border-[#e2e8f0] bg-gray-100 px-4 py-3 text-[#64748b] dark:border-[#27273a] dark:bg-[#1a1d27] dark:text-[#cbd5e1]"
+            />
+          </div>
+
           {/* Description */}
           <div>
             <label className="mb-2 block text-sm font-semibold text-black dark:text-white">
@@ -329,6 +313,7 @@ export default function NewProjectPage() {
               value={formData.description}
               onChange={handleInputChange}
               rows={4}
+              placeholder="Describe your project in detail..."
               className="w-full rounded-lg border border-[#e2e8f0] bg-white px-4 py-3 text-black focus:border-[#0082c4] focus:ring-2 focus:ring-[#0082c4]/20 focus:outline-none dark:border-[#27273a] dark:bg-black dark:text-white"
               required
             />
@@ -409,6 +394,30 @@ export default function NewProjectPage() {
             </div>
           </div>
 
+          {/* Priority */}
+          <div>
+            <label className="mb-2 flex items-center gap-2 text-sm font-semibold text-black dark:text-white">
+              <ArrowUpDown className="h-4 w-4 text-[#0082c4]" />
+              Priority
+              <span className="text-xs font-normal text-[#64748b] dark:text-[#cbd5e1]">
+                (Higher number = Higher priority)
+              </span>
+            </label>
+            <input
+              type="number"
+              name="priority"
+              value={formData.priority}
+              onChange={handleInputChange}
+              min="0"
+              placeholder="0"
+              className="w-full rounded-lg border border-[#e2e8f0] bg-white px-4 py-3 text-black focus:border-[#0082c4] focus:ring-2 focus:ring-[#0082c4]/20 focus:outline-none dark:border-[#27273a] dark:bg-black dark:text-white"
+            />
+            <p className="mt-1 text-xs text-[#64748b] dark:text-[#cbd5e1]">
+              Use priority to control display order. Featured projects with
+              higher priority appear first.
+            </p>
+          </div>
+
           {/* Images */}
           <div>
             <label className="mb-2 block text-sm font-semibold text-black dark:text-white">
@@ -418,16 +427,18 @@ export default function NewProjectPage() {
               <button
                 type="button"
                 onClick={() => setUploadMethod('upload')}
-                className={`flex-1 rounded-lg px-4 py-3 ${uploadMethod === 'upload' ? 'bg-[#0082c4] text-white' : 'border border-[#e2e8f0] dark:border-[#27273a]'}`}
+                className={`flex-1 rounded-lg px-4 py-3 transition-all ${uploadMethod === 'upload' ? 'bg-[#0082c4] text-white' : 'border border-[#e2e8f0] text-[#64748b] hover:border-[#0082c4] dark:border-[#27273a] dark:text-[#cbd5e1]'}`}
               >
                 <Upload className="mx-auto h-5 w-5" />
+                <span className="mt-1 block text-xs">Upload</span>
               </button>
               <button
                 type="button"
                 onClick={() => setUploadMethod('url')}
-                className={`flex-1 rounded-lg px-4 py-3 ${uploadMethod === 'url' ? 'bg-[#0082c4] text-white' : 'border border-[#e2e8f0] dark:border-[#27273a]'}`}
+                className={`flex-1 rounded-lg px-4 py-3 transition-all ${uploadMethod === 'url' ? 'bg-[#0082c4] text-white' : 'border border-[#e2e8f0] text-[#64748b] hover:border-[#0082c4] dark:border-[#27273a] dark:text-[#cbd5e1]'}`}
               >
                 <LinkIcon className="mx-auto h-5 w-5" />
+                <span className="mt-1 block text-xs">URL</span>
               </button>
             </div>
 
@@ -445,12 +456,17 @@ export default function NewProjectPage() {
                   type="button"
                   onClick={() => fileInputRef.current?.click()}
                   disabled={isUploading}
-                  className="w-full rounded-lg border-2 border-dashed border-[#e2e8f0] bg-white p-8 hover:border-[#0082c4] disabled:opacity-50 dark:border-[#27273a] dark:bg-black"
+                  className="w-full rounded-lg border-2 border-dashed border-[#e2e8f0] bg-white p-8 transition-all hover:border-[#0082c4] disabled:opacity-50 dark:border-[#27273a] dark:bg-black"
                 >
                   {isUploading ? (
                     <Loader2 className="mx-auto h-12 w-12 animate-spin text-[#0082c4]" />
                   ) : (
-                    <Upload className="mx-auto h-12 w-12 text-[#64748b]" />
+                    <>
+                      <Upload className="mx-auto h-12 w-12 text-[#64748b]" />
+                      <p className="mt-2 text-sm text-[#64748b] dark:text-[#cbd5e1]">
+                        Click to upload images (max 5MB each)
+                      </p>
+                    </>
                   )}
                 </button>
               </>
@@ -460,13 +476,17 @@ export default function NewProjectPage() {
                   type="url"
                   value={imageUrlInput}
                   onChange={(e) => setImageUrlInput(e.target.value)}
+                  onKeyDown={(e) =>
+                    e.key === 'Enter' &&
+                    (e.preventDefault(), handleAddImageUrl())
+                  }
                   placeholder="https://example.com/image.jpg"
                   className="flex-1 rounded-lg border border-[#e2e8f0] bg-white px-4 py-3 text-black focus:border-[#0082c4] focus:outline-none dark:border-[#27273a] dark:bg-black dark:text-white"
                 />
                 <button
                   type="button"
                   onClick={handleAddImageUrl}
-                  className="rounded-lg bg-[#0082c4] px-4 py-3 text-white"
+                  className="rounded-lg bg-[#0082c4] px-4 py-3 text-white transition-colors hover:bg-[#0099e6]"
                 >
                   <Plus className="h-5 w-5" />
                 </button>
@@ -477,7 +497,7 @@ export default function NewProjectPage() {
               <div className="mt-4 grid grid-cols-2 gap-4 md:grid-cols-3">
                 {imagePreviews.map((preview, index) => (
                   <div key={index} className="group relative">
-                    <div className="relative h-32 w-full overflow-hidden rounded-lg">
+                    <div className="relative h-32 w-full overflow-hidden rounded-lg border-2 border-[#e2e8f0] dark:border-[#27273a]">
                       <Image
                         src={preview}
                         alt={`Preview ${index + 1}`}
@@ -488,10 +508,15 @@ export default function NewProjectPage() {
                     <button
                       type="button"
                       onClick={() => handleRemoveImage(index)}
-                      className="absolute -top-2 -right-2 rounded-full bg-red-500 p-1.5 text-white opacity-0 group-hover:opacity-100"
+                      className="absolute -top-2 -right-2 rounded-full bg-red-500 p-1.5 text-white opacity-0 shadow-lg transition-opacity group-hover:opacity-100"
                     >
                       <X className="h-4 w-4" />
                     </button>
+                    {index === 0 && (
+                      <span className="absolute bottom-2 left-2 rounded bg-[#0082c4] px-2 py-1 text-xs font-semibold text-white">
+                        Primary
+                      </span>
+                    )}
                   </div>
                 ))}
               </div>
@@ -529,7 +554,7 @@ export default function NewProjectPage() {
                     setTechnologyInput,
                   )
                 }
-                className="rounded-lg bg-[#0082c4] px-4 py-3 text-white"
+                className="rounded-lg bg-[#0082c4] px-4 py-3 text-white transition-colors hover:bg-[#0099e6]"
               >
                 <Plus className="h-5 w-5" />
               </button>
@@ -539,12 +564,13 @@ export default function NewProjectPage() {
                 {formData.technologies.map((tech, index) => (
                   <span
                     key={`${tech}-${index}`}
-                    className="flex items-center gap-2 rounded-lg bg-[#0082c4]/10 px-3 py-1.5 text-sm text-[#0082c4]"
+                    className="flex items-center gap-2 rounded-lg bg-[#0082c4]/10 px-3 py-1.5 text-sm font-medium text-[#0082c4]"
                   >
                     {tech}
                     <button
                       type="button"
                       onClick={() => handleRemoveItem('technologies', tech)}
+                      className="transition-colors hover:text-red-500"
                     >
                       <X className="h-4 w-4" />
                     </button>
@@ -577,7 +603,7 @@ export default function NewProjectPage() {
                 onClick={() =>
                   handleAddItem('features', featureInput, setFeatureInput)
                 }
-                className="rounded-lg bg-[#0082c4] px-4 py-3 text-white"
+                className="rounded-lg bg-[#0082c4] px-4 py-3 text-white transition-colors hover:bg-[#0099e6]"
               >
                 <Plus className="h-5 w-5" />
               </button>
@@ -587,7 +613,7 @@ export default function NewProjectPage() {
                 {formData.features.map((feature, index) => (
                   <div
                     key={`${feature}-${index}`}
-                    className="flex items-center justify-between rounded-lg bg-white px-4 py-2 dark:bg-black"
+                    className="flex items-center justify-between rounded-lg border border-[#e2e8f0] bg-white px-4 py-3 dark:border-[#27273a] dark:bg-black"
                   >
                     <span className="text-sm text-black dark:text-white">
                       {index + 1}. {feature}
@@ -595,6 +621,7 @@ export default function NewProjectPage() {
                     <button
                       type="button"
                       onClick={() => handleRemoveItem('features', feature)}
+                      className="text-[#64748b] transition-colors hover:text-red-500 dark:text-[#cbd5e1]"
                     >
                       <X className="h-4 w-4" />
                     </button>
@@ -615,6 +642,7 @@ export default function NewProjectPage() {
                 name="liveUrl"
                 value={formData.liveUrl}
                 onChange={handleInputChange}
+                placeholder="https://example.com"
                 className="w-full rounded-lg border border-[#e2e8f0] bg-white px-4 py-3 text-black focus:border-[#0082c4] focus:outline-none dark:border-[#27273a] dark:bg-black dark:text-white"
               />
             </div>
@@ -627,14 +655,15 @@ export default function NewProjectPage() {
                 name="githubUrl"
                 value={formData.githubUrl}
                 onChange={handleInputChange}
+                placeholder="https://github.com/username/repo"
                 className="w-full rounded-lg border border-[#e2e8f0] bg-white px-4 py-3 text-black focus:border-[#0082c4] focus:outline-none dark:border-[#27273a] dark:bg-black dark:text-white"
               />
             </div>
           </div>
 
           {/* Checkboxes */}
-          <div className="flex gap-6">
-            <label className="flex cursor-pointer items-center gap-2">
+          <div className="flex flex-wrap gap-6">
+            <label className="group flex cursor-pointer items-center gap-2">
               <input
                 type="checkbox"
                 checked={formData.featured}
@@ -644,14 +673,14 @@ export default function NewProjectPage() {
                     featured: e.target.checked,
                   }))
                 }
-                className="h-5 w-5 rounded text-[#0082c4]"
+                className="h-5 w-5 rounded text-[#0082c4] focus:ring-2 focus:ring-[#0082c4]/20"
               />
-              <Star className="h-5 w-5 text-[#0082c4]" />
+              <Star className="h-5 w-5 text-[#0082c4] transition-transform group-hover:scale-110" />
               <span className="text-sm font-semibold text-black dark:text-white">
                 Featured
               </span>
             </label>
-            <label className="flex cursor-pointer items-center gap-2">
+            <label className="group flex cursor-pointer items-center gap-2">
               <input
                 type="checkbox"
                 checked={formData.currentlyWorking}
@@ -661,8 +690,9 @@ export default function NewProjectPage() {
                     currentlyWorking: e.target.checked,
                   }))
                 }
-                className="h-5 w-5 rounded text-[#0082c4]"
+                className="h-5 w-5 rounded text-green-500 focus:ring-2 focus:ring-green-500/20"
               />
+              <span className="h-2 w-2 animate-pulse rounded-full bg-green-500" />
               <span className="text-sm font-semibold text-black dark:text-white">
                 Currently Working
               </span>

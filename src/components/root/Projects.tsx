@@ -7,14 +7,22 @@ import { getProjects } from '@/lib/getApi';
 import { useQuery } from '@tanstack/react-query';
 import LoadingPage from '../shared/LoadingPage';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
-const categories = ['All', 'Web Apps', 'UI/UX', 'Open Source'];
+const categories = [
+  'All',
+  'Web Apps',
+  'UI/UX',
+  'Open Source',
+  'Mobile Apps',
+  'API',
+  'Desktop Apps',
+];
 
 interface Project {
-  _id: string;
-  name: string;
-  slug: string;
+  _id?: string;
   title: string;
+  slug: string;
   description: string;
   image: string[];
   category: string;
@@ -27,10 +35,12 @@ interface Project {
   githubUrl: string;
   featured: boolean;
   currentlyWorking: boolean;
+  priority: number;
 }
 
 const Projects = () => {
   const [activeCategory, setActiveCategory] = useState('All');
+  const router = useRouter();
 
   // TanStack Query
   const { data: projects = [], isLoading } = useQuery<Project[]>({
@@ -43,12 +53,17 @@ const Projects = () => {
     return <LoadingPage />;
   }
 
+  // Sort by priority (higher priority first)
+  const sortedProjects = [...projects].sort(
+    (a, b) => (b.priority || 0) - (a.priority || 0),
+  );
+
   const filteredProjects =
     activeCategory === 'All'
-      ? projects
-      : projects.filter((project) => project.category === activeCategory);
+      ? sortedProjects
+      : sortedProjects.filter((project) => project.category === activeCategory);
 
-  const featuredProject = projects.find((p) => p.featured);
+  const featuredProject = filteredProjects.find((p) => p.featured);
   const regularProjects = filteredProjects.filter((p) => !p.featured);
 
   return (
@@ -81,7 +96,7 @@ const Projects = () => {
           >
             Featured Projects
           </h2>
-          <p className="mx-auto max-w-2xl text-lg text-slate-600 md:text-xl dark:text-slate-400">
+          <p className="mx-auto max-w-2xl text-lg text-[#64748b] md:text-xl dark:text-[#cbd5e1]">
             Showcasing innovative solutions built with modern technologies
           </p>
         </header>
@@ -96,16 +111,16 @@ const Projects = () => {
               className={`rounded-full border-2 px-6 py-2 font-medium transition-all duration-300 ${
                 activeCategory === category
                   ? 'border-[#0082c4] bg-[#0082c4] text-white shadow-lg shadow-[#0082c4]/30'
-                  : 'border-slate-300 bg-transparent text-slate-700 hover:border-[#0082c4] hover:text-[#0082c4] dark:border-slate-700 dark:text-slate-300 dark:hover:border-[#0082c4]'
-              } `}
+                  : 'border-[#e2e8f0] bg-transparent text-[#334155] hover:border-[#0082c4] hover:text-[#0082c4] dark:border-[#27273a] dark:text-[#cbd5e1] dark:hover:border-[#0082c4]'
+              }`}
             >
               {category}
             </button>
           ))}
         </div>
 
-        {/* Featured Project */}
-        {featuredProject && activeCategory === 'All' && (
+        {/* Featured Project - FIXED: No nested buttons */}
+        {featuredProject && (
           <div className="mb-16">
             <div className="mb-6 flex items-center gap-2">
               <span
@@ -117,8 +132,20 @@ const Projects = () => {
               </h3>
             </div>
 
-            <article className="group relative overflow-hidden rounded-3xl border-2 border-slate-200 bg-[#f2f2f2] shadow-xl transition-all duration-500 hover:border-[#0082c4] hover:shadow-2xl hover:shadow-[#0082c4]/20 dark:border-slate-800 dark:bg-[#11141c]">
-              <Link href={`/projects/${featuredProject._id}`}>
+            <article className="group relative overflow-hidden rounded-3xl border-2 border-[#e2e8f0] bg-[#f2f2f2] shadow-xl transition-all duration-500 hover:border-[#0082c4] hover:shadow-2xl hover:shadow-[#0082c4]/20 dark:border-[#27273a] dark:bg-[#11141c]">
+              {/* FIXED: div with role="button" instead of button */}
+              <div
+                role="button"
+                tabIndex={0}
+                onClick={() => router.push(`/projects/${featuredProject._id}`)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    router.push(`/projects/${featuredProject._id}`);
+                  }
+                }}
+                className="cursor-pointer focus:ring-2 focus:ring-[#0082c4] focus:ring-offset-2 focus:ring-offset-white focus:outline-none dark:focus:ring-offset-black"
+              >
                 <div className="grid gap-8 md:grid-cols-2">
                   {/* Image */}
                   <div className="relative h-64 overflow-hidden md:h-full">
@@ -154,12 +181,12 @@ const Projects = () => {
                       {featuredProject.title}
                     </h3>
 
-                    <p className="mb-6 text-lg leading-relaxed text-slate-700 dark:text-slate-300">
+                    <p className="mb-6 text-lg leading-relaxed text-[#334155] dark:text-[#cbd5e1]">
                       {featuredProject.description}
                     </p>
 
                     {/* Role & Date */}
-                    <div className="mb-4 flex flex-wrap gap-4 text-sm text-slate-600 dark:text-slate-400">
+                    <div className="mb-4 flex flex-wrap gap-4 text-sm text-[#64748b] dark:text-[#cbd5e1]">
                       <span className="font-mono">
                         <span className="text-[#0082c4]">Role:</span>{' '}
                         {featuredProject.role}
@@ -168,13 +195,16 @@ const Projects = () => {
                         <span className="text-[#0082c4]">Date:</span>{' '}
                         {featuredProject.date}
                       </span>
+                      <span className="rounded-full bg-purple-500/10 px-3 py-1 text-xs font-semibold text-purple-600 capitalize dark:text-purple-400">
+                        {featuredProject.type.replace('-', ' ')}
+                      </span>
                     </div>
 
                     {/* Technologies */}
                     <div className="mb-6 flex flex-wrap gap-2">
-                      {featuredProject.technologies.map((tech) => (
+                      {featuredProject.technologies.map((tech, idx) => (
                         <span
-                          key={tech}
+                          key={`${tech}-${idx}`}
                           className="rounded-lg border border-[#0082c4]/30 bg-[#0082c4]/10 px-3 py-1 text-sm font-medium text-[#0082c4]"
                         >
                           {tech}
@@ -182,32 +212,45 @@ const Projects = () => {
                       ))}
                     </div>
 
-                    {/* Action Buttons */}
+                    {/* Action Buttons - FIXED: Added e.stopPropagation() */}
                     <div className="flex flex-wrap gap-4">
-                      <button
-                        onClick={() =>
-                          window.open(featuredProject.liveUrl, '_blank')
-                        }
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 rounded-xl bg-[#0082c4] px-6 py-3 font-semibold text-white shadow-lg shadow-[#0082c4]/30 transition-all duration-300 hover:scale-105 hover:bg-[#0099e6] hover:shadow-xl hover:shadow-[#0082c4]/40"
-                      >
-                        <ExternalLink className="h-5 w-5" />
-                        Live Demo
-                      </button>
-                      <button
-                        onClick={() =>
-                          window.open(featuredProject.githubUrl, '_blank')
-                        }
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 rounded-xl border-2 border-[#0082c4] bg-transparent px-6 py-3 font-semibold text-[#0082c4] transition-all duration-300 hover:bg-[#0082c4] hover:text-white"
-                      >
-                        <Github className="h-5 w-5" />
-                        View Code
-                      </button>
+                      {featuredProject.liveUrl && (
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation(); // Prevents parent div click
+                            window.open(
+                              featuredProject.liveUrl,
+                              '_blank',
+                              'noopener,noreferrer',
+                            );
+                          }}
+                          className="inline-flex items-center gap-2 rounded-xl bg-[#0082c4] px-6 py-3 font-semibold text-white shadow-lg shadow-[#0082c4]/30 transition-all duration-300 hover:scale-105 hover:bg-[#0099e6] hover:shadow-xl hover:shadow-[#0082c4]/40"
+                        >
+                          <ExternalLink className="h-5 w-5" />
+                          Live Demo
+                        </button>
+                      )}
+
+                      {featuredProject.githubUrl && (
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation(); // Prevents parent div click
+                            window.open(
+                              featuredProject.githubUrl,
+                              '_blank',
+                              'noopener,noreferrer',
+                            );
+                          }}
+                          className="inline-flex items-center gap-2 rounded-xl border-2 border-[#0082c4] bg-transparent px-6 py-3 font-semibold text-[#0082c4] transition-all duration-300 hover:bg-[#0082c4] hover:text-white"
+                        >
+                          <Github className="h-5 w-5" />
+                          View Code
+                        </button>
+                      )}
                     </div>
                   </div>
                 </div>
-              </Link>
+              </div>
             </article>
           </div>
         )}
@@ -217,8 +260,8 @@ const Projects = () => {
           {regularProjects.map((project, index) => (
             <Link
               href={`/projects/${project._id}`}
-              key={project._id}
-              className="group relative flex flex-col overflow-hidden rounded-2xl border-2 border-slate-200 bg-[#f2f2f2] shadow-lg transition-all duration-500 hover:-translate-y-2 hover:border-[#0082c4] hover:shadow-2xl hover:shadow-[#0082c4]/20 dark:border-slate-800 dark:bg-[#11141c]"
+              key={project._id || project.slug}
+              className="group relative flex flex-col overflow-hidden rounded-2xl border-2 border-[#e2e8f0] bg-[#f2f2f2] shadow-lg transition-all duration-500 hover:-translate-y-2 hover:border-[#0082c4] hover:shadow-2xl hover:shadow-[#0082c4]/20 dark:border-[#27273a] dark:bg-[#11141c]"
               style={{
                 animationDelay: `${index * 100}ms`,
               }}
@@ -245,22 +288,42 @@ const Projects = () => {
 
                 {/* Hover Overlay with Buttons */}
                 <div className="absolute inset-0 z-20 flex items-center justify-center gap-4 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
-                  <button
-                    onClick={() => window.open(project.liveUrl, '_blank')}
-                    rel="noopener noreferrer"
-                    className="flex h-12 w-12 items-center justify-center rounded-full bg-[#0082c4] text-white shadow-lg shadow-[#0082c4]/50 transition-transform duration-300 hover:scale-110"
-                    aria-label="View live demo"
-                  >
-                    <ExternalLink className="h-5 w-5" />
-                  </button>
-                  <button
-                    onClick={() => window.open(project.githubUrl, '_blank')}
-                    rel="noopener noreferrer"
-                    className="flex h-12 w-12 items-center justify-center rounded-full bg-white text-[#0082c4] shadow-lg transition-transform duration-300 hover:scale-110 dark:bg-slate-900"
-                    aria-label="View source code"
-                  >
-                    <Github className="h-5 w-5" />
-                  </button>
+                  {project.liveUrl && (
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        if (project.liveUrl) {
+                          window.open(
+                            project.liveUrl,
+                            '_blank',
+                            'noopener,noreferrer',
+                          );
+                        }
+                      }}
+                      className="flex h-12 w-12 items-center justify-center rounded-full bg-[#0082c4] text-white shadow-lg shadow-[#0082c4]/50 transition-transform duration-300 hover:scale-110"
+                      aria-label="View live demo"
+                    >
+                      <ExternalLink className="h-5 w-5" />
+                    </button>
+                  )}
+                  {project.githubUrl && (
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        if (project.githubUrl) {
+                          window.open(
+                            project.githubUrl,
+                            '_blank',
+                            'noopener,noreferrer',
+                          );
+                        }
+                      }}
+                      className="flex h-12 w-12 items-center justify-center rounded-full bg-white text-[#0082c4] shadow-lg transition-transform duration-300 hover:scale-110 dark:bg-[#11141c]"
+                      aria-label="View source code"
+                    >
+                      <Github className="h-5 w-5" />
+                    </button>
+                  )}
                 </div>
               </div>
 
@@ -271,21 +334,21 @@ const Projects = () => {
                   <span className="inline-flex items-center gap-1 rounded-full bg-[#0082c4]/10 px-3 py-1 text-xs font-semibold tracking-wider text-[#0082c4] uppercase">
                     {project.category}
                   </span>
-                  <span className="inline-flex items-center gap-1 rounded-full bg-slate-200 px-3 py-1 text-xs font-semibold text-slate-700 dark:bg-slate-800 dark:text-slate-300">
-                    {project.type}
+                  <span className="inline-flex items-center gap-1 rounded-full bg-purple-500/10 px-3 py-1 text-xs font-semibold text-purple-600 capitalize dark:text-purple-400">
+                    {project.type.replace('-', ' ')}
                   </span>
                 </div>
 
-                <h3 className="mb-3 text-xl font-bold text-slate-800 transition-colors duration-300 group-hover:text-[#0082c4] dark:text-slate-100 dark:group-hover:text-[#0082c4]">
+                <h3 className="mb-3 text-xl font-bold text-black transition-colors duration-300 group-hover:text-[#0082c4] dark:text-white dark:group-hover:text-[#0082c4]">
                   {project.title}
                 </h3>
 
-                <p className="mb-4 flex-1 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                <p className="mb-4 flex-1 text-sm leading-relaxed text-[#64748b] dark:text-[#cbd5e1]">
                   {project.description}
                 </p>
 
                 {/* Date & Role */}
-                <div className="mb-4 text-xs text-slate-500 dark:text-slate-500">
+                <div className="mb-4 text-xs text-[#64748b] dark:text-[#cbd5e1]">
                   <span className="font-mono">{project.date}</span>
                   {project.role && (
                     <>
@@ -297,16 +360,16 @@ const Projects = () => {
 
                 {/* Technologies */}
                 <div className="flex flex-wrap gap-2">
-                  {project.technologies.slice(0, 4).map((tech) => (
+                  {project.technologies.slice(0, 4).map((tech, idx) => (
                     <span
-                      key={tech}
-                      className="rounded-md border border-slate-300 bg-white px-2 py-1 text-xs font-medium text-slate-700 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300"
+                      key={`${tech}-${idx}`}
+                      className="rounded-md border border-[#e2e8f0] bg-white px-2 py-1 text-xs font-medium text-black dark:border-[#27273a] dark:bg-black dark:text-white"
                     >
                       {tech}
                     </span>
                   ))}
                   {project.technologies.length > 4 && (
-                    <span className="rounded-md border border-slate-300 bg-white px-2 py-1 text-xs font-medium text-slate-700 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300">
+                    <span className="rounded-md border border-[#e2e8f0] bg-white px-2 py-1 text-xs font-medium text-black dark:border-[#27273a] dark:bg-black dark:text-white">
                       +{project.technologies.length - 4}
                     </span>
                   )}
@@ -325,10 +388,10 @@ const Projects = () => {
             <div className="mx-auto mb-6 flex h-24 w-24 items-center justify-center rounded-full bg-[#0082c4]/10">
               <Filter className="h-12 w-12 text-[#0082c4]" />
             </div>
-            <h3 className="mb-2 text-2xl font-bold text-slate-800 dark:text-slate-100">
+            <h3 className="mb-2 text-2xl font-bold text-black dark:text-white">
               No Projects Found
             </h3>
-            <p className="text-slate-600 dark:text-slate-400">
+            <p className="text-[#64748b] dark:text-[#cbd5e1]">
               No projects match the selected category. Try a different filter.
             </p>
           </div>
@@ -336,11 +399,11 @@ const Projects = () => {
 
         {/* View More Section */}
         <div className="mt-16 text-center">
-          <p className="mb-6 text-slate-600 dark:text-slate-400">
+          <p className="mb-6 text-[#64748b] dark:text-[#cbd5e1]">
             Want to see more of my work?
           </p>
           <Link
-            href="https://github.com"
+            href="https://github.com/yourusername"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 rounded-xl border-2 border-[#0082c4] bg-transparent px-8 py-4 font-semibold text-[#0082c4] transition-all duration-300 hover:bg-[#0082c4] hover:text-white hover:shadow-lg hover:shadow-[#0082c4]/30"

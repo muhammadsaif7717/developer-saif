@@ -8,6 +8,7 @@ import { useSession } from 'next-auth/react';
 
 import {
   Code,
+  ContactRound,
   Home,
   LayoutDashboard,
   LayoutPanelLeft,
@@ -79,6 +80,7 @@ const Navbar = () => {
     { name: 'About', href: '/#about', icon: SquareChartGantt, key: 'about' },
     { name: 'Skills', href: '/#skills', icon: ListChecks, key: 'skills' },
     { name: 'Projects', href: '/#projects', icon: Code, key: 'projects' },
+    { name: 'Contact', href: '/#contact', icon: ContactRound, key: 'contact' },
     { name: 'Blogs', href: '/blogs', icon: Rss, key: 'blogs' },
   ];
 

@@ -2,7 +2,7 @@
 
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -20,43 +20,26 @@ import {
   Briefcase,
   Code2,
   Loader2,
+  ArrowUpDown,
 } from 'lucide-react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { getProjects } from '@/lib/getApi';
 import LoadingPage from '@/components/shared/LoadingPage';
 import axios from 'axios';
-
-interface Project {
-  _id?: string;
-  name: string;
-  slug: string;
-  title: string;
-  description: string;
-  image: string[];
-  category: string;
-  type: 'personal' | 'client' | 'open-source' | 'freelance';
-  date: string;
-  role: string;
-  technologies: string[];
-  features: string[];
-  liveUrl: string;
-  githubUrl: string;
-  featured: boolean;
-  currentlyWorking: boolean;
-}
+import { Project } from '@/types';
 
 export default function ProjectsPage() {
   const { data: session, status } = useSession();
   const router = useRouter();
   const queryClient = useQueryClient();
   const [mounted, setMounted] = useState(false);
-  const [filteredProjects, setFilteredProjects] = useState<Project[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [selectedType, setSelectedType] = useState('All');
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [projectToDelete, setProjectToDelete] = useState<Project | null>(null);
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
+  const [sortBy, setSortBy] = useState<'priority' | 'date'>('priority');
 
   useEffect(() => {
     setMounted(true);
@@ -131,11 +114,11 @@ export default function ProjectsPage() {
     },
   });
 
-  // Filter projects
-  useEffect(() => {
-    if (!projects) return;
+  // Filter and sort projects
+  const filteredProjects = useMemo(() => {
+    if (!projects) return [];
 
-    let filtered = projects;
+    let filtered = [...projects];
 
     if (selectedCategory !== 'All') {
       filtered = filtered.filter((p) => p.category === selectedCategory);
@@ -150,21 +133,22 @@ export default function ProjectsPage() {
         (p) =>
           p.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
           p.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
           p.technologies.some((tech) =>
             tech.toLowerCase().includes(searchQuery.toLowerCase()),
           ),
       );
     }
 
-    // Only update state if filtered projects actually changed
-    setFilteredProjects((prev) => {
-      const isEqual =
-        prev.length === filtered.length &&
-        prev.every((p, i) => p._id === filtered[i]._id);
-      return isEqual ? prev : filtered;
-    });
-  }, [searchQuery, selectedCategory, selectedType, projects]);
+    if (sortBy === 'priority') {
+      filtered.sort((a, b) => (b.priority || 0) - (a.priority || 0));
+    } else if (sortBy === 'date') {
+      filtered.sort(
+        (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+      );
+    }
+
+    return filtered;
+  }, [projects, searchQuery, selectedCategory, selectedType, sortBy]);
 
   const categories = [
     'All',
@@ -270,16 +254,34 @@ export default function ProjectsPage() {
 
         {/* Filters */}
         <div className="mb-8 space-y-4">
-          {/* Search */}
-          <div className="relative">
-            <Search className="absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2 text-[#64748b] dark:text-[#cbd5e1]" />
-            <input
-              type="text"
-              placeholder="Search by title, name, description, or technologies..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full rounded-lg border border-[#e2e8f0] bg-white py-3 pr-4 pl-10 text-black placeholder-[#64748b] focus:border-[#0082c4] focus:ring-2 focus:ring-[#0082c4]/20 focus:outline-none dark:border-[#27273a] dark:bg-[#11141c] dark:text-white dark:placeholder-[#cbd5e1]"
-            />
+          {/* Search & Sort */}
+          <div className="flex flex-col gap-4 sm:flex-row">
+            {/* Search */}
+            <div className="relative flex-1">
+              <Search className="absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2 text-[#64748b] dark:text-[#cbd5e1]" />
+              <input
+                type="text"
+                placeholder="Search by title, description, or technologies..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full rounded-lg border border-[#e2e8f0] bg-white py-3 pr-4 pl-10 text-black placeholder-[#64748b] focus:border-[#0082c4] focus:ring-2 focus:ring-[#0082c4]/20 focus:outline-none dark:border-[#27273a] dark:bg-[#11141c] dark:text-white dark:placeholder-[#cbd5e1]"
+              />
+            </div>
+
+            {/* Sort Dropdown */}
+            <div className="flex items-center gap-2">
+              <ArrowUpDown className="h-5 w-5 text-[#64748b] dark:text-[#cbd5e1]" />
+              <select
+                value={sortBy}
+                onChange={(e) =>
+                  setSortBy(e.target.value as 'priority' | 'date')
+                }
+                className="rounded-lg border border-[#e2e8f0] bg-white px-4 py-3 text-black focus:border-[#0082c4] focus:ring-2 focus:ring-[#0082c4]/20 focus:outline-none dark:border-[#27273a] dark:bg-[#11141c] dark:text-white"
+              >
+                <option value="priority">Sort by Priority</option>
+                <option value="date">Sort by Date</option>
+              </select>
+            </div>
           </div>
 
           {/* Category Filter */}
@@ -377,6 +379,12 @@ export default function ProjectsPage() {
                     <div className="flex items-center gap-1 rounded-full bg-green-500 px-3 py-1 text-xs font-semibold text-white shadow-lg">
                       <Loader2 className="h-3 w-3 animate-spin" />
                       In Progress
+                    </div>
+                  )}
+                  {/* Priority Badge */}
+                  {project.priority > 0 && (
+                    <div className="flex items-center gap-1 rounded-full bg-amber-500 px-3 py-1 text-xs font-semibold text-white shadow-lg">
+                      Priority: {project.priority}
                     </div>
                   )}
                 </div>
