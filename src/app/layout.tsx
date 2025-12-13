@@ -7,6 +7,7 @@ import ThemeProvider from '@/providers/ThemeProvider';
 import TanstackProvider from '@/providers/TanstackProvider';
 import AuthProvider from '@/providers/AuthProvider';
 import Footer from '@/components/shared/Footer';
+import WhatsAppButton from '@/components/shared/WhatsAppButton';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -39,6 +40,7 @@ export default function RootLayout({
               <ThemeProvider>
                 <Navbar />
                 {children}
+                <WhatsAppButton/>
                 <Footer />
               </ThemeProvider>
             </ActiveProvider>
