@@ -85,35 +85,6 @@ export default function ProjectsPage() {
     },
   });
 
-  const toggleFeaturedMutation = useMutation({
-    mutationFn: async ({
-      projectId,
-      featured,
-    }: {
-      projectId: string;
-      featured: boolean;
-    }) => {
-      try {
-        const { data } = await axios.put(
-          `/api/v1/projects/update/${projectId}`,
-          { featured },
-        );
-        return data;
-      } catch (error: any) {
-        throw new Error(
-          error.response?.data?.message || 'Failed to update project',
-        );
-      }
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['projects'] });
-      setActiveMenu(null);
-    },
-    onError: (error: any) => {
-      alert(error.message || 'Failed to update project. Please try again.');
-    },
-  });
-
   // Filter and sort projects
   const filteredProjects = useMemo(() => {
     if (!projects) return [];
@@ -176,14 +147,6 @@ export default function ProjectsPage() {
   const confirmDelete = async () => {
     if (!projectToDelete?._id) return;
     deleteMutation.mutate(projectToDelete._id);
-  };
-
-  const toggleFeatured = async (project: Project) => {
-    if (!project._id) return;
-    toggleFeaturedMutation.mutate({
-      projectId: project._id,
-      featured: !project.featured,
-    });
   };
 
   useEffect(() => {
@@ -413,17 +376,6 @@ export default function ProjectsPage() {
                         onClick={(e) => e.stopPropagation()}
                         className="absolute top-12 right-0 w-48 overflow-hidden rounded-lg border border-[#e2e8f0] bg-white shadow-xl dark:border-[#27273a] dark:bg-[#11141c]"
                       >
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            toggleFeatured(project);
-                          }}
-                          disabled={toggleFeaturedMutation.isPending}
-                          className="flex w-full items-center gap-2 px-4 py-3 text-sm font-medium text-black transition-colors hover:bg-[#0082c4]/10 disabled:opacity-50 dark:text-white"
-                        >
-                          <Star className="h-4 w-4" />
-                          {project.featured ? 'Unfeature' : 'Feature'}
-                        </button>
                         <Link href={`/dashboard/projects/edit/${project._id}`}>
                           <button className="flex w-full items-center gap-2 px-4 py-3 text-sm font-medium text-black transition-colors hover:bg-[#0082c4]/10 dark:text-white">
                             <Edit className="h-4 w-4" />

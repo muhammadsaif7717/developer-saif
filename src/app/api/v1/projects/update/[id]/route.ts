@@ -31,7 +31,6 @@ export async function PUT(
 
     // Basic validation
     const requiredFields = [
-      'name',
       'slug',
       'title',
       'description',

@@ -21,7 +21,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: 'Developer Saif',
-  description: 'Full-Stack Developer specializing in React, Next.js, and Node.js. Building modern web applications with precision and innovation. Available for freelance projects and collaborations.',
+  description:
+    'Full-Stack Developer specializing in React, Next.js, and Node.js. Building modern web applications with precision and innovation. Available for freelance projects and collaborations.',
 };
 
 export default function RootLayout({
@@ -40,7 +41,7 @@ export default function RootLayout({
               <ThemeProvider>
                 <Navbar />
                 {children}
-                <WhatsAppButton/>
+                <WhatsAppButton />
                 <Footer />
               </ThemeProvider>
             </ActiveProvider>

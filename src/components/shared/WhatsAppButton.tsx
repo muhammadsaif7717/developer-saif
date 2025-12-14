@@ -3,8 +3,10 @@
 import Link from 'next/link';
 import { MessageCircle, X } from 'lucide-react';
 import { useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 
 const WhatsAppButton = () => {
+  const pathname = usePathname();
   const [isExpanded, setIsExpanded] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
@@ -17,10 +19,10 @@ const WhatsAppButton = () => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
     };
-    
+
     checkMobile();
     window.addEventListener('resize', checkMobile);
-    
+
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
@@ -31,13 +33,17 @@ const WhatsAppButton = () => {
     } else {
       document.body.style.overflow = 'unset';
     }
-    
+
     return () => {
       document.body.style.overflow = 'unset';
     };
   }, [isExpanded, isMobile]);
 
   if (!isVisible) return null;
+
+  if (pathname.startsWith('/dashboard') || pathname.startsWith('/auth')) {
+    return null;
+  }
 
   return (
     <>
@@ -50,10 +56,10 @@ const WhatsAppButton = () => {
       )}
 
       {/* Main WhatsApp Button Container */}
-      <div className="fixed bottom-4 right-4 z-[1000] flex flex-col items-end gap-3 sm:bottom-6 sm:right-6">
+      <div className="fixed right-4 bottom-4 z-[1000] flex flex-col items-end gap-3 sm:right-6 sm:bottom-6">
         {/* Expanded Card */}
         {isExpanded && (
-          <div className="animate-in slide-in-from-bottom-5 fade-in duration-300 mb-2 w-[calc(100vw-2rem)] max-w-sm rounded-2xl border-2 border-[#0082c4] bg-white p-4 shadow-2xl sm:w-80 sm:p-6 dark:bg-[#11141c]">
+          <div className="animate-in slide-in-from-bottom-5 fade-in mb-2 w-[calc(100vw-2rem)] max-w-sm rounded-2xl border-2 border-[#0082c4] bg-white p-4 shadow-2xl duration-300 sm:w-80 sm:p-6 dark:bg-[#11141c]">
             {/* Close Button */}
             <button
               onClick={() => setIsExpanded(false)}
@@ -124,9 +130,9 @@ const WhatsAppButton = () => {
 
           {/* Tooltip - Hidden on mobile, shown on tablet+ */}
           {!isExpanded && (
-            <div className="pointer-events-none absolute bottom-full right-0 mb-2 hidden w-max max-w-xs rounded-lg bg-slate-900 px-3 py-2 text-sm text-white opacity-0 shadow-xl transition-opacity duration-300 group-hover:opacity-100 md:block dark:bg-slate-800">
+            <div className="pointer-events-none absolute right-0 bottom-full mb-2 hidden w-max max-w-xs rounded-lg bg-slate-900 px-3 py-2 text-sm text-white opacity-0 shadow-xl transition-opacity duration-300 group-hover:opacity-100 md:block dark:bg-slate-800">
               <span>Chat with me on WhatsApp!</span>
-              <div className="absolute -bottom-1 right-6 h-2 w-2 rotate-45 bg-slate-900 dark:bg-slate-800" />
+              <div className="absolute right-6 -bottom-1 h-2 w-2 rotate-45 bg-slate-900 dark:bg-slate-800" />
             </div>
           )}
         </div>
@@ -146,7 +152,7 @@ const WhatsAppButton = () => {
       {!isVisible && (
         <button
           onClick={() => setIsVisible(true)}
-          className="fixed bottom-4 right-4 z-[1000] rounded-full bg-slate-200 p-2.5 text-slate-600 shadow-lg transition-all hover:bg-slate-300 active:scale-95 sm:bottom-6 sm:right-6 sm:p-3 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700"
+          className="fixed right-4 bottom-4 z-[1000] rounded-full bg-slate-200 p-2.5 text-slate-600 shadow-lg transition-all hover:bg-slate-300 active:scale-95 sm:right-6 sm:bottom-6 sm:p-3 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700"
           aria-label="Show WhatsApp button"
         >
           <MessageCircle className="h-5 w-5" />
