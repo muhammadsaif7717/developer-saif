@@ -21,7 +21,9 @@ export default function Footer() {
         <div className="mb-8 grid grid-cols-1 gap-8 md:grid-cols-3">
           {/* Brand Column */}
           <div className="space-y-4">
-            <h3 className="text-2xl font-bold text-[#0082c4]">Saif.dev</h3>
+            <h3 className="text-2xl font-bold text-[#0082c4]">
+              Developer Saif
+            </h3>
             <p className="text-sm text-[#334155] dark:text-[#cbd5e1]">
               Full-Stack Developer crafting modern web experiences with
               precision and innovation.
@@ -42,16 +44,16 @@ export default function Footer() {
                 Home
               </Link>
               <Link
-                href="#services"
+                href="#about"
                 className="text-sm text-[#334155] transition-colors hover:text-[#0082c4] dark:text-[#cbd5e1] dark:hover:text-[#0082c4]"
               >
-                Services
+                About
               </Link>
               <Link
-                href="#portfolio"
+                href="#skills"
                 className="text-sm text-[#334155] transition-colors hover:text-[#0082c4] dark:text-[#cbd5e1] dark:hover:text-[#0082c4]"
               >
-                Portfolio
+                Skills
               </Link>
               <Link
                 href="#contact"
