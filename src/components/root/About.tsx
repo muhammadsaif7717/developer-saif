@@ -1,3 +1,6 @@
+
+
+
 'use client';
 
 import {
@@ -114,7 +117,7 @@ const About = () => {
               <div className="relative overflow-hidden rounded-2xl border-2 border-[#0082c4] bg-white p-2 transition-all duration-300 hover:scale-105 hover:border-[#0099e6] hover:shadow-xl hover:shadow-[#0082c4]/30 dark:bg-black">
                 <div className="relative aspect-square overflow-hidden rounded-xl bg-gradient-to-br from-[#0082c4]/20 to-[#0099e6]/20">
                   <Image
-                    src="/saif1.png"
+                    src="https://i.ibb.co.com/Fb3MTP0f/Picsart-26-01-06-05-22-42-281.png"
                     alt="MD. Saif Islam - Full Stack Developer"
                     fill
                     className="object-cover object-top"
