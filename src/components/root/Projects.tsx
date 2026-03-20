@@ -42,18 +42,14 @@ const Projects = () => {
   const [activeCategory, setActiveCategory] = useState('All');
   const router = useRouter();
 
-  // TanStack Query
   const { data: projects = [], isLoading } = useQuery<Project[]>({
     queryKey: ['projects'],
     queryFn: () => getProjects(),
     staleTime: 5 * 60 * 1000,
   });
 
-  if (isLoading) {
-    return <LoadingPage />;
-  }
+  if (isLoading) return <LoadingPage />;
 
-  // Sort by priority (higher priority first)
   const sortedProjects = [...projects].sort(
     (a, b) => (b.priority || 0) - (a.priority || 0),
   );
@@ -61,7 +57,7 @@ const Projects = () => {
   const filteredProjects =
     activeCategory === 'All'
       ? sortedProjects
-      : sortedProjects.filter((project) => project.category === activeCategory);
+      : sortedProjects.filter((p) => p.category === activeCategory);
 
   const featuredProject = filteredProjects.find((p) => p.featured);
   const regularProjects = filteredProjects.filter((p) => !p.featured);
@@ -77,19 +73,14 @@ const Projects = () => {
         className="pointer-events-none absolute inset-0 overflow-hidden"
         aria-hidden="true"
       >
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(0,130,196,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(0,130,196,0.03)_1px,transparent_1px)] bg-[length:60px_60px] dark:bg-[linear-gradient(rgba(0,130,196,0.08)_1px,transparent_1px),linear-gradient(90deg,rgba(0,130,196,0.08)_1px,transparent_1px)]" />
-        <div className="absolute top-40 -right-48 h-96 w-96 rounded-full bg-[#0082c4] opacity-10 blur-3xl" />
-        <div className="absolute bottom-40 -left-48 h-96 w-96 rounded-full bg-[#0099e6] opacity-10 blur-3xl" />
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(0,130,196,0.3)_1px,transparent_1px),linear-gradient(90deg,rgba(0,130,196,0.3)_1px,transparent_1px)] bg-size-[50px_50px] opacity-[0.03] dark:opacity-[0.08]" />
+        <div className="absolute top-1/4 right-1/4 h-96 w-96 animate-pulse rounded-full bg-[#0082c4] opacity-20 blur-[120px] dark:opacity-10" />
+        <div className="absolute bottom-1/4 left-1/4 h-96 w-96 animate-pulse rounded-full bg-[#0099e6] opacity-20 blur-[120px] [animation-delay:1s] dark:opacity-10" />
       </div>
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <header className="mb-16 text-center">
-          {/* <div className="mb-4 inline-block rounded-full border border-[#0082c4]/20 bg-[#0082c4]/5 px-4 py-2 backdrop-blur-sm">
-            <span className="font-mono text-sm font-medium text-[#0082c4]">
-              {'<Portfolio />'}
-            </span>
-          </div> */}
           <h2
             id="projects-heading"
             className="mb-6 bg-gradient-to-r from-[#0082c4] via-[#0099e6] to-[#0082c4] bg-clip-text text-5xl font-bold text-transparent md:text-6xl lg:text-7xl"
@@ -119,7 +110,7 @@ const Projects = () => {
           ))}
         </div>
 
-        {/* Featured Project - FIXED: No nested buttons */}
+        {/* ── Featured Project ───────────────────────────────────── */}
         {featuredProject && (
           <div className="mb-16">
             <div className="mb-6 flex items-center gap-2">
@@ -133,7 +124,6 @@ const Projects = () => {
             </div>
 
             <article className="group relative overflow-hidden rounded-3xl border-2 border-[#e2e8f0] bg-[#f2f2f2] shadow-xl transition-all duration-500 hover:border-[#0082c4] hover:shadow-2xl hover:shadow-[#0082c4]/20 dark:border-[#27273a] dark:bg-[#11141c]">
-              {/* FIXED: div with role="button" instead of button */}
               <div
                 role="button"
                 tabIndex={0}
@@ -146,18 +136,36 @@ const Projects = () => {
                 }}
                 className="cursor-pointer focus:ring-2 focus:ring-[#0082c4] focus:ring-offset-2 focus:ring-offset-white focus:outline-none dark:focus:ring-offset-black"
               >
-                <div className="grid gap-8 md:grid-cols-2">
-                  {/* Image */}
-                  <div className="relative h-64 overflow-hidden md:h-full">
+                {/*
+                  Layout:
+                  • Mobile  → image on top (full-width, aspect-[735/401]), content below
+                  • Desktop → image left (50%), content right (50%), rows match via grid
+                */}
+                <div className="grid md:grid-cols-2">
+                  {/* ── Image panel ── */}
+                  {/*
+                    On mobile  : aspect-[735/401] keeps the natural ratio → no crop
+                    On desktop : h-full stretches to match the content column height.
+                                 min-h-[360px] prevents collapse when content is short.
+                  */}
+                  <div className="relative aspect-[735/401] overflow-hidden md:aspect-auto md:h-full md:min-h-[360px]">
+                    {/* Hover tint */}
                     <div className="absolute inset-0 z-10 bg-gradient-to-r from-[#0082c4]/20 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+
                     <Image
                       src={featuredProject.image[0] || '/placeholder.jpg'}
                       alt={featuredProject.title}
                       fill
-                      className="object-cover transition-transform duration-700 group-hover:scale-110"
+                      /*
+                        object-top: keeps the top of the image visible when the
+                        desktop panel is taller than the natural 735/401 ratio.
+                        Change to object-center if your screenshots are centered.
+                      */
+                      className="object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                      priority
                     />
 
-                    {/* Currently Working Badge */}
                     {featuredProject.currentlyWorking && (
                       <div className="absolute top-4 right-4 z-20 inline-flex items-center gap-2 rounded-full border border-green-500/30 bg-green-500/10 px-3 py-1 backdrop-blur-sm">
                         <span className="h-2 w-2 animate-pulse rounded-full bg-green-500" />
@@ -168,7 +176,7 @@ const Projects = () => {
                     )}
                   </div>
 
-                  {/* Content */}
+                  {/* ── Content panel ── */}
                   <div className="flex flex-col justify-center p-8 md:p-12">
                     <div className="mb-4 inline-flex items-center gap-2 self-start rounded-full border border-[#0082c4]/30 bg-[#0082c4]/10 px-3 py-1">
                       <span className="h-2 w-2 animate-pulse rounded-full bg-[#0082c4]" />
@@ -185,7 +193,6 @@ const Projects = () => {
                       {featuredProject.description}
                     </p>
 
-                    {/* Role & Date */}
                     <div className="mb-4 flex flex-wrap gap-4 text-sm text-[#64748b] dark:text-[#cbd5e1]">
                       <span className="font-mono">
                         <span className="text-[#0082c4]">Role:</span>{' '}
@@ -200,7 +207,6 @@ const Projects = () => {
                       </span>
                     </div>
 
-                    {/* Technologies */}
                     <div className="mb-6 flex flex-wrap gap-2">
                       {featuredProject.technologies.map((tech, idx) => (
                         <span
@@ -212,12 +218,11 @@ const Projects = () => {
                       ))}
                     </div>
 
-                    {/* Action Buttons - FIXED: Added e.stopPropagation() */}
                     <div className="flex flex-wrap gap-4">
                       {featuredProject.liveUrl && (
                         <button
                           onClick={(e) => {
-                            e.stopPropagation(); // Prevents parent div click
+                            e.stopPropagation();
                             window.open(
                               featuredProject.liveUrl,
                               '_blank',
@@ -230,11 +235,10 @@ const Projects = () => {
                           Live Demo
                         </button>
                       )}
-
                       {featuredProject.githubUrl && (
                         <button
                           onClick={(e) => {
-                            e.stopPropagation(); // Prevents parent div click
+                            e.stopPropagation();
                             window.open(
                               featuredProject.githubUrl,
                               '_blank',
@@ -255,28 +259,27 @@ const Projects = () => {
           </div>
         )}
 
-        {/* Regular Projects Grid */}
+        {/* ── Regular Project Cards ──────────────────────────────── */}
         <div className="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           {regularProjects.map((project, index) => (
             <Link
               href={`/projects/${project._id}`}
               key={project._id || project.slug}
               className="group relative flex flex-col overflow-hidden rounded-2xl border-2 border-[#e2e8f0] bg-[#f2f2f2] shadow-lg transition-all duration-500 hover:-translate-y-2 hover:border-[#0082c4] hover:shadow-2xl hover:shadow-[#0082c4]/20 dark:border-[#27273a] dark:bg-[#11141c]"
-              style={{
-                animationDelay: `${index * 100}ms`,
-              }}
+              style={{ animationDelay: `${index * 100}ms` }}
             >
-              {/* Image Container */}
-              <div className="relative h-56 overflow-hidden">
+              {/* ── Image — exact 735/401 ratio, no crop ── */}
+              <div className="relative aspect-[735/401] w-full overflow-hidden">
                 <div className="absolute inset-0 z-10 bg-gradient-to-t from-[#0082c4]/40 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+
                 <Image
                   src={project.image[0] || '/placeholder.jpg'}
                   alt={project.title}
                   fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-110"
+                  className="object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 />
 
-                {/* Currently Working Badge */}
                 {project.currentlyWorking && (
                   <div className="absolute top-4 right-4 z-20 inline-flex items-center gap-2 rounded-full border border-green-500/30 bg-green-500/10 px-2 py-1 backdrop-blur-sm">
                     <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-green-500" />
@@ -286,19 +289,18 @@ const Projects = () => {
                   </div>
                 )}
 
-                {/* Hover Overlay with Buttons */}
+                {/* Hover action buttons */}
                 <div className="absolute inset-0 z-20 flex items-center justify-center gap-4 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
                   {project.liveUrl && (
                     <button
                       onClick={(e) => {
+                        e.preventDefault();
                         e.stopPropagation();
-                        if (project.liveUrl) {
-                          window.open(
-                            project.liveUrl,
-                            '_blank',
-                            'noopener,noreferrer',
-                          );
-                        }
+                        window.open(
+                          project.liveUrl,
+                          '_blank',
+                          'noopener,noreferrer',
+                        );
                       }}
                       className="flex h-12 w-12 items-center justify-center rounded-full bg-[#0082c4] text-white shadow-lg shadow-[#0082c4]/50 transition-transform duration-300 hover:scale-110"
                       aria-label="View live demo"
@@ -309,14 +311,13 @@ const Projects = () => {
                   {project.githubUrl && (
                     <button
                       onClick={(e) => {
+                        e.preventDefault();
                         e.stopPropagation();
-                        if (project.githubUrl) {
-                          window.open(
-                            project.githubUrl,
-                            '_blank',
-                            'noopener,noreferrer',
-                          );
-                        }
+                        window.open(
+                          project.githubUrl,
+                          '_blank',
+                          'noopener,noreferrer',
+                        );
                       }}
                       className="flex h-12 w-12 items-center justify-center rounded-full bg-white text-[#0082c4] shadow-lg transition-transform duration-300 hover:scale-110 dark:bg-[#11141c]"
                       aria-label="View source code"
@@ -329,7 +330,6 @@ const Projects = () => {
 
               {/* Content */}
               <div className="flex flex-1 flex-col p-6">
-                {/* Category & Type Badge */}
                 <div className="mb-3 flex flex-wrap gap-2">
                   <span className="inline-flex items-center gap-1 rounded-full bg-[#0082c4]/10 px-3 py-1 text-xs font-semibold tracking-wider text-[#0082c4] uppercase">
                     {project.category}
@@ -347,7 +347,6 @@ const Projects = () => {
                   {project.description}
                 </p>
 
-                {/* Date & Role */}
                 <div className="mb-4 text-xs text-[#64748b] dark:text-[#cbd5e1]">
                   <span className="font-mono">{project.date}</span>
                   {project.role && (
@@ -358,7 +357,6 @@ const Projects = () => {
                   )}
                 </div>
 
-                {/* Technologies */}
                 <div className="flex flex-wrap gap-2">
                   {project.technologies.slice(0, 4).map((tech, idx) => (
                     <span
@@ -376,7 +374,7 @@ const Projects = () => {
                 </div>
               </div>
 
-              {/* Bottom Accent Line */}
+              {/* Bottom accent bar */}
               <div className="h-1 w-0 bg-gradient-to-r from-[#0082c4] to-[#0099e6] transition-all duration-500 group-hover:w-full" />
             </Link>
           ))}
@@ -397,7 +395,7 @@ const Projects = () => {
           </div>
         )}
 
-        {/* View More Section */}
+        {/* View More */}
         <div className="mt-10 text-center">
           <p className="mb-6 text-[#64748b] dark:text-[#cbd5e1]">
             Want to see more of my work?
@@ -412,13 +410,6 @@ const Projects = () => {
             View All Projects on GitHub
           </Link>
         </div>
-
-        {/* Closing Tag */}
-        {/* <div className="mt-20 text-center">
-          <span className="inline-block rounded-lg border border-[#0082c4]/20 bg-[#0082c4]/5 px-4 py-2 font-mono text-sm font-medium text-[#0082c4]">
-            {'</Portfolio>'}
-          </span>
-        </div> */}
       </div>
     </section>
   );

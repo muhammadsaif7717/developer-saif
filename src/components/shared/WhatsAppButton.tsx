@@ -1,9 +1,10 @@
 'use client';
 
 import Link from 'next/link';
-import { MessageCircle, X } from 'lucide-react';
+import { X } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
+import { FaWhatsapp } from 'react-icons/fa';
 
 const WhatsAppButton = () => {
   const pathname = usePathname();
@@ -14,40 +15,42 @@ const WhatsAppButton = () => {
   const whatsappNumber = '+8801319630516';
   const defaultMessage = `Hi, Saif! We should talk about your services in details.`;
 
-  // Detect mobile devices
   useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
     checkMobile();
     window.addEventListener('resize', checkMobile);
-
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  // Prevent body scroll when expanded on mobile
   useEffect(() => {
     if (isExpanded && isMobile) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'unset';
     }
-
     return () => {
       document.body.style.overflow = 'unset';
     };
   }, [isExpanded, isMobile]);
 
-  if (!isVisible) return null;
-
-  if (pathname.startsWith('/dashboard') || pathname.startsWith('/auth')) {
-    return null;
+  if (!isVisible) {
+    return (
+      <button
+        onClick={() => setIsVisible(true)}
+        className="fixed right-3 bottom-3 z-[1000] rounded-full bg-slate-200 p-2 text-slate-600 shadow-lg transition-all hover:bg-slate-300 active:scale-95 sm:right-6 sm:bottom-6 sm:p-3 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700"
+        aria-label="Show WhatsApp button"
+      >
+        <FaWhatsapp className="h-4 w-4 sm:h-5 sm:w-5" />
+      </button>
+    );
   }
+
+  if (pathname.startsWith('/dashboard') || pathname.startsWith('/auth'))
+    return null;
 
   return (
     <>
-      {/* Backdrop for expanded state */}
+      {/* Backdrop */}
       {isExpanded && (
         <div
           className="fixed inset-0 z-[999] bg-black/20 backdrop-blur-sm"
@@ -55,109 +58,85 @@ const WhatsAppButton = () => {
         />
       )}
 
-      {/* Main WhatsApp Button Container */}
-      <div className="fixed right-4 bottom-4 z-[1000] flex flex-col items-end gap-3 sm:right-6 sm:bottom-6">
-        {/* Expanded Card */}
+      <div className="fixed right-3 bottom-3 z-[1000] flex flex-col items-end gap-2 sm:right-6 sm:bottom-6 sm:gap-3">
+        {/* ── Expanded Card ──────────────────────────────────── */}
         {isExpanded && (
-          <div className="animate-in slide-in-from-bottom-5 fade-in mb-2 w-[calc(100vw-2rem)] max-w-sm rounded-2xl border-2 border-[#0082c4] bg-white p-4 shadow-2xl duration-300 sm:w-80 sm:p-6 dark:bg-[#11141c]">
-            {/* Close Button */}
+          <div className="animate-in slide-in-from-bottom-4 fade-in relative mb-1 w-[min(calc(100vw-1.5rem),20rem)] rounded-2xl border border-[#25D366]/40 bg-white p-4 shadow-2xl shadow-[#25D366]/10 duration-200 dark:bg-[#11141c]">
+            {/* Close */}
             <button
               onClick={() => setIsExpanded(false)}
-              className="absolute top-2 right-2 rounded-full p-1.5 text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-600 sm:top-3 sm:right-3 dark:hover:bg-slate-800 dark:hover:text-slate-300"
+              className="absolute top-2.5 right-2.5 rounded-full p-1 text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-600 dark:hover:bg-slate-800 dark:hover:text-slate-300"
               aria-label="Close"
             >
-              <X className="h-4 w-4 sm:h-5 sm:w-5" />
+              <X className="h-4 w-4" />
             </button>
 
             {/* Header */}
-            <div className="mb-3 sm:mb-4">
-              <div className="mb-2 flex items-center gap-2 sm:gap-3">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#25D366] to-[#128C7E] sm:h-12 sm:w-12">
-                  <MessageCircle className="h-5 w-5 text-white sm:h-6 sm:w-6" />
-                </div>
-                <div className="min-w-0 flex-1">
-                  <h3 className="truncate text-base font-bold text-[#0082c4] sm:text-lg">
-                    Let's Connect!
-                  </h3>
-                  <p className="text-xs text-slate-500 sm:text-sm dark:text-slate-400">
-                    Usually replies within hours
-                  </p>
-                </div>
+            <div className="mb-3 flex items-center gap-3">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#25D366] to-[#128C7E] shadow-md shadow-[#25D366]/30">
+                <FaWhatsapp className="h-5 w-5 text-white" />
+              </div>
+              <div className="min-w-0">
+                <h3 className="text-sm font-bold text-[#0082c4]">
+                  Let's Connect!
+                </h3>
+                <p className="text-xs text-slate-500 dark:text-slate-400">
+                  Usually replies within hours
+                </p>
               </div>
             </div>
 
-            {/* Message Preview */}
-            <div className="mb-3 rounded-lg bg-[#f2f2f2] p-2.5 sm:mb-4 sm:p-3 dark:bg-[#000000]">
-              <p className="text-xs leading-relaxed text-slate-600 sm:text-sm dark:text-slate-300">
+            {/* Message preview */}
+            <div className="mb-3 rounded-xl bg-[#f2f2f2] px-3 py-2.5 dark:bg-black">
+              <p className="text-xs leading-relaxed text-slate-600 dark:text-slate-300">
                 "{defaultMessage}"
               </p>
             </div>
 
-            {/* Action Button */}
+            {/* CTA */}
             <Link
               href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(defaultMessage)}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex w-full items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-[#25D366] to-[#128C7E] px-4 py-2.5 text-sm font-semibold text-white shadow-lg transition-all hover:scale-105 hover:shadow-xl hover:shadow-[#25D366]/30 active:scale-95 sm:py-3 sm:text-base"
               onClick={() => setIsExpanded(false)}
+              className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#25D366] to-[#128C7E] py-2.5 text-sm font-semibold text-white shadow-md shadow-[#25D366]/25 transition-all hover:scale-[1.02] hover:shadow-lg hover:shadow-[#25D366]/35 active:scale-95"
             >
-              <MessageCircle className="h-4 w-4 sm:h-5 sm:w-5" />
-              <span className="truncate">Start Chat on WhatsApp</span>
+              <FaWhatsapp className="h-4 w-4" />
+              Start Chat on WhatsApp
             </Link>
 
-            {/* Footer */}
-            <p className="mt-2 text-center text-xs text-slate-400 sm:mt-3">
+            <p className="mt-2 text-center text-[0.65rem] text-slate-400">
               Available for projects & collaborations
             </p>
+
+            {/* Hide option */}
+            <button
+              onClick={() => {
+                setIsVisible(false);
+                setIsExpanded(false);
+              }}
+              className="mt-1 block w-full text-center text-[0.65rem] text-slate-400 transition-colors hover:text-slate-600 dark:hover:text-slate-300"
+            >
+              Hide widget
+            </button>
           </div>
         )}
 
-        {/* Floating Action Button */}
+        {/* ── FAB ───────────────────────────────────────────── */}
         <div className="relative">
-          {/* Pulse Animation Rings */}
+          {/* Ping rings */}
           <div className="absolute inset-0 animate-ping rounded-full bg-[#25D366] opacity-20" />
-          <div className="absolute inset-0 animate-pulse rounded-full bg-[#25D366] opacity-30" />
+          <div className="absolute inset-0 animate-pulse rounded-full bg-[#25D366] opacity-25" />
 
-          {/* Main Button */}
           <button
             onClick={() => setIsExpanded(!isExpanded)}
-            className="group relative flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-[#25D366] to-[#128C7E] shadow-2xl shadow-[#25D366]/40 transition-all duration-300 hover:scale-110 hover:shadow-[#25D366]/60 active:scale-95 sm:h-16 sm:w-16"
             aria-label="Open WhatsApp chat"
+            className="group relative flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-[#25D366] to-[#128C7E] shadow-xl shadow-[#25D366]/40 transition-all duration-300 hover:scale-110 hover:shadow-[#25D366]/60 active:scale-95 sm:h-14 sm:w-14"
           >
-            {/* Icon with rotation animation */}
-            <MessageCircle className="h-7 w-7 text-white transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12 sm:h-8 sm:w-8" />
+            <FaWhatsapp className="h-5 w-5 text-white transition-transform duration-300 group-hover:scale-110 sm:h-7 sm:w-7" />
           </button>
-
-          {/* Tooltip - Hidden on mobile, shown on tablet+ */}
-          {!isExpanded && (
-            <div className="pointer-events-none absolute right-0 bottom-full mb-2 hidden w-max max-w-xs rounded-lg bg-slate-900 px-3 py-2 text-sm text-white opacity-0 shadow-xl transition-opacity duration-300 group-hover:opacity-100 md:block dark:bg-slate-800">
-              <span>Chat with me on WhatsApp!</span>
-              <div className="absolute right-6 -bottom-1 h-2 w-2 rotate-45 bg-slate-900 dark:bg-slate-800" />
-            </div>
-          )}
         </div>
-
-        {/* Minimize Button (when expanded) */}
-        {isExpanded && (
-          <button
-            onClick={() => setIsVisible(false)}
-            className="text-xs text-slate-500 transition-colors hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-300"
-          >
-            Hide chat widget
-          </button>
-        )}
       </div>
-
-      {/* Restore Button (when hidden) */}
-      {!isVisible && (
-        <button
-          onClick={() => setIsVisible(true)}
-          className="fixed right-4 bottom-4 z-[1000] rounded-full bg-slate-200 p-2.5 text-slate-600 shadow-lg transition-all hover:bg-slate-300 active:scale-95 sm:right-6 sm:bottom-6 sm:p-3 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700"
-          aria-label="Show WhatsApp button"
-        >
-          <MessageCircle className="h-5 w-5" />
-        </button>
-      )}
     </>
   );
 };

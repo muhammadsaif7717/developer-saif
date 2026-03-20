@@ -1,6 +1,3 @@
-
-
-
 'use client';
 
 import {
@@ -64,7 +61,7 @@ const About = () => {
       {/* Animated Grid Background - Same as Banner */}
       <div className="absolute inset-0 overflow-hidden">
         {/* Grid Pattern */}
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(0,130,196,0.3)_1px,transparent_1px),linear-gradient(90deg,rgba(0,130,196,0.3)_1px,transparent_1px)] bg-[size:50px_50px] opacity-[0.03] dark:opacity-[0.08]" />
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(0,130,196,0.3)_1px,transparent_1px),linear-gradient(90deg,rgba(0,130,196,0.3)_1px,transparent_1px)] bg-size-[50px_50px] opacity-[0.03] dark:opacity-[0.08]" />
 
         {/* Gradient Orbs */}
         <div className="absolute top-1/4 right-1/4 h-96 w-96 animate-pulse rounded-full bg-[#0082c4] opacity-20 blur-[120px] dark:opacity-10" />
@@ -271,24 +268,6 @@ const About = () => {
               </div>
             ))}
           </div>
-        </div>
-
-        {/* Call to Action */}
-        <div className="mt-16 text-center md:mt-20">
-          <div className="mb-4 font-mono text-sm text-[#64748b] dark:text-[#cbd5e1]">
-            {'// Ready to collaborate?'}
-          </div>
-          <p className="mb-6 text-base text-[#64748b] md:text-lg dark:text-[#cbd5e1]">
-            Interested in working together?
-          </p>
-          <a
-            href="#contact"
-            className="group relative inline-flex items-center gap-2 overflow-hidden rounded-lg bg-[#0082c4] px-6 py-3 font-semibold text-white shadow-lg shadow-[#0082c4]/30 transition-all duration-300 hover:scale-105 hover:bg-[#0099e6] hover:shadow-xl hover:shadow-[#0082c4]/40 md:px-8 md:py-4"
-          >
-            <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
-            <span className="relative z-10">Let's Connect</span>
-            <Zap className="relative z-10 h-5 w-5 transition-transform group-hover:translate-x-1" />
-          </a>
         </div>
 
         {/* Closing Tag */}

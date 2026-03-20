@@ -27,7 +27,6 @@ interface DetailedProjectProps {
 export default function DetailedProject({ projectId }: DetailedProjectProps) {
   const id = projectId;
 
-  // Fetch project data
   const {
     data: project,
     isLoading: isLoadingProject,
@@ -37,19 +36,15 @@ export default function DetailedProject({ projectId }: DetailedProjectProps) {
     queryFn: () => getProjectsById(id),
   });
 
-  if (isLoadingProject) {
-    return <LoadingPage />;
-  }
+  if (isLoadingProject) return <LoadingPage />;
 
   if (error || !project) {
     return (
       <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-white dark:bg-black">
-        {/* Background Elements */}
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute inset-0 bg-[linear-gradient(rgba(0,130,196,0.3)_1px,transparent_1px),linear-gradient(90deg,rgba(0,130,196,0.3)_1px,transparent_1px)] bg-[length:50px_50px] opacity-[0.03] dark:opacity-[0.08]" />
           <div className="absolute top-1/4 left-1/4 h-96 w-96 animate-pulse rounded-full bg-[#0082c4] opacity-20 blur-[120px] dark:opacity-10" />
         </div>
-
         <div className="relative z-10 text-center">
           <div className="mb-4 font-mono text-sm text-[#0082c4]">
             {'// 404 Error'}
@@ -74,16 +69,11 @@ export default function DetailedProject({ projectId }: DetailedProjectProps) {
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-white dark:bg-black">
-      {/* Animated Grid Background */}
+      {/* Background */}
       <div className="absolute inset-0 overflow-hidden">
-        {/* Grid Pattern */}
         <div className="absolute inset-0 bg-[linear-gradient(rgba(0,130,196,0.3)_1px,transparent_1px),linear-gradient(90deg,rgba(0,130,196,0.3)_1px,transparent_1px)] bg-[length:50px_50px] opacity-[0.03] dark:opacity-[0.08]" />
-
-        {/* Gradient Orbs */}
         <div className="absolute top-20 right-1/4 h-96 w-96 animate-pulse rounded-full bg-[#0082c4] opacity-20 blur-[120px] dark:opacity-10" />
         <div className="absolute bottom-20 left-1/4 h-96 w-96 animate-pulse rounded-full bg-[#0099e6] opacity-20 blur-[120px] [animation-delay:1s] dark:opacity-10" />
-
-        {/* Floating Code Snippets */}
         <div className="absolute top-[20%] left-[10%] animate-bounce font-mono text-xs text-[#0082c4] opacity-30 [animation-duration:15s] dark:opacity-40">
           {'const project = {}'}
         </div>
@@ -96,7 +86,7 @@ export default function DetailedProject({ projectId }: DetailedProjectProps) {
       </div>
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-        {/* Code Comment */}
+        {/* Code comment */}
         <div className="mb-4 font-mono text-sm text-[#64748b] dark:text-[#cbd5e1]">
           <span className="text-[#0082c4]">
             {'<article id="project-details">'}
@@ -118,14 +108,13 @@ export default function DetailedProject({ projectId }: DetailedProjectProps) {
           </Link>
         </motion.div>
 
-        {/* Hero Section */}
+        {/* Hero */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
           className="mb-12"
         >
-          {/* Status Badges */}
           <div className="mb-6 flex flex-wrap items-center gap-3">
             {project.featured && (
               <span className="inline-flex items-center gap-2 rounded-full border border-[#0082c4]/30 bg-[#0082c4]/10 px-4 py-1.5">
@@ -151,17 +140,14 @@ export default function DetailedProject({ projectId }: DetailedProjectProps) {
             </span>
           </div>
 
-          {/* Title */}
           <h1 className="mb-6 text-4xl font-bold text-[#0082c4] sm:text-5xl md:text-6xl">
             {project.title}
           </h1>
 
-          {/* Description */}
           <p className="mb-8 max-w-3xl text-base leading-relaxed text-[#64748b] sm:text-lg md:text-xl dark:text-[#cbd5e1]">
             {project.description}
           </p>
 
-          {/* Meta Information */}
           <div className="mb-6 flex flex-wrap gap-6 font-mono text-sm text-[#64748b] dark:text-[#cbd5e1]">
             <div className="flex items-center gap-2">
               <Calendar className="h-5 w-5 text-[#0082c4]" />
@@ -177,7 +163,6 @@ export default function DetailedProject({ projectId }: DetailedProjectProps) {
             </div>
           </div>
 
-          {/* Action Buttons */}
           <div className="flex flex-wrap gap-4">
             <a
               href={project.liveUrl}
@@ -201,7 +186,7 @@ export default function DetailedProject({ projectId }: DetailedProjectProps) {
           </div>
         </motion.div>
 
-        {/* Image Gallery */}
+        {/* ── Image Gallery ─────────────────────────────────────── */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
@@ -211,6 +196,7 @@ export default function DetailedProject({ projectId }: DetailedProjectProps) {
           <div className="mb-4 font-mono text-sm text-[#0082c4]">
             {'// Project Screenshots'}
           </div>
+
           <div className="grid gap-6 md:grid-cols-2">
             {project.image.map((img, index) => (
               <motion.div
@@ -222,19 +208,26 @@ export default function DetailedProject({ projectId }: DetailedProjectProps) {
                   index === 0 ? 'md:col-span-2' : ''
                 }`}
               >
-                <div
-                  className={`relative ${
-                    index === 0 ? 'h-[400px] sm:h-[500px]' : 'h-[300px]'
-                  }`}
-                >
+                {/*
+                  aspect-[735/401] — matches the exact upload dimensions (2940×1604).
+                  Every image renders at its natural ratio with zero cropping.
+                  object-top keeps the top portion (navbar / hero) visible
+                  if the container ever deviates slightly from the ratio.
+                */}
+                <div className="relative aspect-[735/401] w-full">
                   <Image
                     src={img}
                     alt={`${project.title} - Screenshot ${index + 1}`}
                     fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-110"
+                    className="object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                    sizes={
+                      index === 0
+                        ? '(max-width: 768px) 100vw, 90vw'
+                        : '(max-width: 768px) 100vw, 45vw'
+                    }
+                    priority={index === 0}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-                  {/* Image Number Badge */}
                   <div className="absolute top-4 right-4 rounded-lg bg-[#0082c4] px-3 py-1 font-mono text-sm font-semibold text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                     {index + 1}/{project.image.length}
                   </div>
@@ -246,9 +239,8 @@ export default function DetailedProject({ projectId }: DetailedProjectProps) {
 
         {/* Content Grid */}
         <div className="grid gap-12 lg:grid-cols-3">
-          {/* Main Content */}
+          {/* Main */}
           <div className="lg:col-span-2">
-            {/* Technologies Section */}
             <motion.section
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -279,7 +271,6 @@ export default function DetailedProject({ projectId }: DetailedProjectProps) {
               </div>
             </motion.section>
 
-            {/* Features Section */}
             <motion.section
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -321,7 +312,6 @@ export default function DetailedProject({ projectId }: DetailedProjectProps) {
             className="lg:col-span-1"
           >
             <div className="sticky top-24 space-y-6">
-              {/* Project Info Card */}
               <div className="rounded-2xl border border-[#0082c4]/20 bg-[#f2f2f2] p-6 shadow-lg dark:bg-[#11141c]">
                 <div className="mb-4 font-mono text-sm text-[#0082c4]">
                   {'// Project Info'}
@@ -365,7 +355,6 @@ export default function DetailedProject({ projectId }: DetailedProjectProps) {
                 </dl>
               </div>
 
-              {/* Quicks Card */}
               <div className="rounded-2xl border border-[#0082c4]/20 bg-[#f2f2f2] p-6 shadow-lg dark:bg-[#11141c]">
                 <div className="mb-4 font-mono text-sm text-[#0082c4]">
                   {'// Quick Access'}
@@ -393,7 +382,6 @@ export default function DetailedProject({ projectId }: DetailedProjectProps) {
                 </div>
               </div>
 
-              {/* CTA Card */}
               <div className="rounded-2xl border border-[#0082c4]/30 bg-gradient-to-br from-[#0082c4]/10 to-[#0099e6]/10 p-6">
                 <div className="mb-2 flex items-center gap-2">
                   <Sparkles className="h-5 w-5 text-[#0082c4]" />
@@ -416,7 +404,7 @@ export default function DetailedProject({ projectId }: DetailedProjectProps) {
           </motion.aside>
         </div>
 
-        {/* Navigation to Other Projects */}
+        {/* Bottom nav */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -435,7 +423,6 @@ export default function DetailedProject({ projectId }: DetailedProjectProps) {
           </Link>
         </motion.div>
 
-        {/* Closing Tag */}
         <div className="mt-12 font-mono text-sm text-[#64748b] dark:text-[#cbd5e1]">
           <span className="text-[#0082c4]">{'</article>'}</span>
         </div>
