@@ -53,7 +53,7 @@ export default function DetailedProject({ projectId }: DetailedProjectProps) {
             Project Not Found
           </h1>
           <p className="mb-8 text-[#64748b] dark:text-[#cbd5e1]">
-            The project you're looking for doesn't exist or has been removed.
+            The project you&apos;re looking for doesn&apos;t exist or has been removed.
           </p>
           <Link
             href="/projects"
@@ -390,7 +390,7 @@ export default function DetailedProject({ projectId }: DetailedProjectProps) {
                   </h3>
                 </div>
                 <p className="mb-4 text-sm text-[#64748b] dark:text-[#cbd5e1]">
-                  Let's collaborate on your next project!
+                  Let&apos;s collaborate on your next project!
                 </p>
                 <Link
                   href="#contact"

@@ -10,7 +10,6 @@ import {
   Terminal,
   Sparkles,
   Target,
-  Zap,
 } from 'lucide-react';
 import Image from 'next/image';
 
@@ -131,7 +130,7 @@ const About = () => {
 
             {/* Stats Grid */}
             <div className="grid grid-cols-2 gap-3 sm:gap-4">
-              {stats.map((stat, index) => (
+              {stats.map((stat) => (
                 <div
                   key={stat.label}
                   className="group relative overflow-hidden rounded-xl bg-[#f2f2f2] p-5 text-center transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-[#0082c4]/20 sm:p-6 dark:bg-[#11141c]"
@@ -163,7 +162,7 @@ const About = () => {
               </h3>
               <div className="space-y-4 border-l-2 border-[#0082c4] pl-4 text-sm leading-relaxed text-[#64748b] md:text-base dark:text-[#cbd5e1]">
                 <p>
-                  Hey there! I'm{' '}
+                  Hey there! I&apos;m{' '}
                   <span className="font-semibold text-[#0082c4]">
                     MD. Saif Islam
                   </span>
@@ -178,7 +177,7 @@ const About = () => {
                   <span className="font-semibold text-[#0082c4]">
                     5 years of hands-on experience
                   </span>
-                  , I've had the privilege of collaborating with startups,
+                  , I&apos;ve had the privilege of collaborating with startups,
                   established enterprises, and ambitious founders. I specialize
                   in the modern JavaScript ecosystem, particularly the{' '}
                   <span className="font-semibold text-[#0082c4]">
@@ -188,7 +187,7 @@ const About = () => {
                   exceptional user experiences.
                 </p>
                 <p>
-                  When I'm not coding, you'll find me exploring emerging
+                  When I&apos;m not coding, you&apos;ll find me exploring emerging
                   technologies, contributing to open-source projects, or sharing
                   insights with the developer community. I believe in{' '}
                   <span className="font-semibold text-[#0082c4]">
@@ -209,7 +208,7 @@ const About = () => {
                 </h4>
               </div>
               <p className="relative z-10 text-sm leading-relaxed text-[#64748b] dark:text-[#cbd5e1]">
-                I believe in writing code that's not just functional, but{' '}
+                I believe in writing code that&apos;s not just functional, but{' '}
                 <span className="font-semibold text-[#0082c4]">
                   maintainable and scalable
                 </span>
@@ -241,7 +240,7 @@ const About = () => {
           </div>
 
           <div className="grid gap-5 sm:grid-cols-2 md:gap-6 lg:grid-cols-4">
-            {values.map((value, index) => (
+            {values.map((value) => (
               <div
                 key={value.title}
                 className="group relative overflow-hidden rounded-xl border border-[#0082c4]/20 bg-[#f2f2f2] p-6 transition-all duration-300 hover:-translate-y-2 hover:border-[#0082c4]/50 hover:shadow-xl hover:shadow-[#0082c4]/20 dark:bg-[#11141c]"

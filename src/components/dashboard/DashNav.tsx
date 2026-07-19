@@ -153,7 +153,8 @@ export default function DashNav() {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
+    const timer = setTimeout(() => setMounted(true), 0);
+    return () => clearTimeout(timer);
   }, []);
 
   // Scroll detection
@@ -267,7 +268,7 @@ export default function DashNav() {
                 />
               </div>
             ) : (
-              <Link href="/auth/signin">
+              <Link href="/auth/sign-in">
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}

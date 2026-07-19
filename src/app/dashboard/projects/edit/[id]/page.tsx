@@ -25,7 +25,7 @@ import axios from 'axios';
 import { Project } from '@/types';
 
 export default function EditProjectPage() {
-  const { data: session, status } = useSession();
+  const { status } = useSession();
   const router = useRouter();
   const params = useParams();
   const id = params.id as string;
@@ -56,12 +56,13 @@ export default function EditProjectPage() {
   });
 
   useEffect(() => {
-    setMounted(true);
+    const timer = setTimeout(() => setMounted(true), 0);
+    return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {
     if (status === 'unauthenticated') {
-      router.push('/auth/signin');
+      router.push('/auth/sign-in');
     }
   }, [status, router]);
 
@@ -75,6 +76,7 @@ export default function EditProjectPage() {
   // Populate form when project data is loaded
   useEffect(() => {
     if (project) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setFormData({
         title: project.title || '',
         slug: project.slug || '',
@@ -103,6 +105,7 @@ export default function EditProjectPage() {
         .toLowerCase()
         .replace(/[^a-z0-9]+/g, '-')
         .replace(/^-+|-+$/g, '');
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setFormData((prev) => ({ ...prev, slug }));
     }
   }, [formData.title, formData.slug]);
@@ -155,7 +158,7 @@ export default function EditProjectPage() {
         image: [...prev.image, ...uploadedUrls],
       }));
       setIsUploading(false);
-    } catch (error) {
+    } catch {
       alert('Failed to upload images. Please try again.');
       setIsUploading(false);
     }
@@ -189,6 +192,7 @@ export default function EditProjectPage() {
     onSuccess: () => {
       router.push('/dashboard/projects');
     },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onError: (error: any) => {
       alert(
         error?.response?.data?.message ||
@@ -209,6 +213,7 @@ export default function EditProjectPage() {
       const validTypes: Array<
         'personal' | 'client' | 'open-source' | 'freelance'
       > = ['personal', 'client', 'open-source', 'freelance'];
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       if (validTypes.includes(value as any)) {
         setFormData((prev) => ({
           ...prev,

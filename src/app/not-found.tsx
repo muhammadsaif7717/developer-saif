@@ -10,7 +10,8 @@ export default function NotFound() {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
+    const timer = setTimeout(() => setMounted(true), 0);
+    return () => clearTimeout(timer);
   }, []);
 
   if (!mounted) return null;
@@ -35,11 +36,11 @@ export default function NotFound() {
         {/* Description */}
         <div className="mb-12 space-y-4">
           <p className="text-lg text-[#334155] md:text-xl dark:text-[#cbd5e1]">
-            Oops! The page you're looking for seems to have wandered off into
+            Oops! The page you&apos;re looking for seems to have wandered off into
             the digital void.
           </p>
           <p className="text-sm text-[#64748b]">
-            Don't worry, even the best developers get lost sometimes. Let's get
+            Don&apos;t worry, even the best developers get lost sometimes. Let&apos;s get
             you back on track.
           </p>
         </div>

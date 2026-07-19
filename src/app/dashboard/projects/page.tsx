@@ -29,7 +29,7 @@ import axios from 'axios';
 import { Project } from '@/types';
 
 export default function ProjectsPage() {
-  const { data: session, status } = useSession();
+  const { status } = useSession();
   const router = useRouter();
   const queryClient = useQueryClient();
   const [mounted, setMounted] = useState(false);
@@ -42,12 +42,13 @@ export default function ProjectsPage() {
   const [sortBy, setSortBy] = useState<'priority' | 'date'>('priority');
 
   useEffect(() => {
-    setMounted(true);
+    const timer = setTimeout(() => setMounted(true), 0);
+    return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {
     if (status === 'unauthenticated') {
-      router.push('/auth/signin');
+      router.push('/auth/sign-in');
     }
   }, [status, router]);
 
@@ -69,6 +70,7 @@ export default function ProjectsPage() {
           `/api/v1/projects/delete/${projectId}`,
         );
         return data;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (error: any) {
         throw new Error(
           error.response?.data?.message || 'Failed to delete project',
@@ -80,6 +82,7 @@ export default function ProjectsPage() {
       setShowDeleteModal(false);
       setProjectToDelete(null);
     },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onError: (error: any) => {
       alert(error.message || 'Failed to delete project. Please try again.');
     },

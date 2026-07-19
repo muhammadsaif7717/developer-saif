@@ -176,7 +176,7 @@ export default function Contact() {
           <div className="mb-5 inline-flex items-center gap-3">
             <span className="h-px w-10 bg-gradient-to-r from-transparent to-[#0082c4]" />
             <span className="font-mono text-xs font-bold tracking-[0.25em] text-[#0082c4] uppercase">
-              Let's Work Together
+              Let&apos;s Work Together
             </span>
             <span className="h-px w-10 bg-gradient-to-l from-transparent to-[#0082c4]" />
           </div>
@@ -185,7 +185,7 @@ export default function Contact() {
           </h2>
           <p className="mx-auto max-w-xl text-base text-[#64748b] md:text-lg dark:text-[#cbd5e1]">
             Have a project in mind or just want to chat? Drop me a message and
-            I'll get back to you within 24 hours.
+            I&apos;ll get back to you within 24 hours.
           </p>
         </motion.header>
 
@@ -209,7 +209,7 @@ export default function Contact() {
                     Send a message
                   </p>
                   <p className="text-sm text-[#64748b] dark:text-[#cbd5e1]">
-                    I'll reply within 24 hours
+                    I&apos;ll reply within 24 hours
                   </p>
                 </div>
               </div>
@@ -406,13 +406,13 @@ export default function Contact() {
             {/* Quote / personality note */}
             <div className="mt-auto rounded-2xl border border-[#0082c4]/20 bg-gradient-to-br from-[#0082c4]/8 to-[#0099e6]/5 p-5 dark:from-[#0082c4]/10 dark:to-[#0099e6]/5">
               <p className="mb-2 font-mono text-[0.65rem] font-bold tracking-[0.18em] text-[#0082c4] uppercase">
-                // a quick note
+                {`// a quick note`}
               </p>
               <p className="text-sm leading-relaxed text-[#64748b] dark:text-[#cbd5e1]">
-                Whether it's a full product build, a quick fix, or just an idea
+                Whether it&apos;s a full product build, a quick fix, or just an idea
                 you want to bounce off someone —{' '}
                 <span className="font-semibold text-[#0082c4]">
-                  I'm all ears.
+                  I&apos;m all ears.
                 </span>
               </p>
             </div>

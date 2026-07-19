@@ -6,7 +6,7 @@ import { useQuery } from '@tanstack/react-query';
 import { ArrowLeft, Link } from 'lucide-react';
 import { Project } from 'next/dist/build/swc/types';
 
-export default function page() {
+export default function Page() {
   // Fetch project data
   const {
     data: project,
@@ -30,7 +30,7 @@ export default function page() {
             Blogs Not Found
           </h1>
           <p className="mb-8 text-slate-600 dark:text-slate-400">
-            Blogs you're looking for doesn't exist or has been removed.
+            Blogs you&apos;re looking for doesn&apos;t exist or has been removed.
           </p>
           <Link
             href="/"

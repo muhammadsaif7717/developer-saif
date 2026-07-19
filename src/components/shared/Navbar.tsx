@@ -28,7 +28,8 @@ const Navbar = () => {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
+    const timer = setTimeout(() => setMounted(true), 0);
+    return () => clearTimeout(timer);
   }, []);
 
   // Close mobile menu when clicking outside
@@ -62,6 +63,36 @@ const Navbar = () => {
       document.body.style.overflow = 'unset';
     };
   }, [opened]);
+
+  // Scroll Spy to highlight active section on the home page
+  useEffect(() => {
+    if (pathname !== '/') return;
+
+    const sections = ['home', 'about', 'skills', 'projects', 'contact'];
+    
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActive(entry.target.id);
+          }
+        });
+      },
+      {
+        rootMargin: '-50% 0px -50% 0px',
+        threshold: 0,
+      }
+    );
+
+    sections.forEach((id) => {
+      const element = document.getElementById(id);
+      if (element) {
+        observer.observe(element);
+      }
+    });
+
+    return () => observer.disconnect();
+  }, [pathname, setActive]);
 
   if (!mounted) {
     return (

@@ -6,10 +6,8 @@ import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import {
   Activity,
-  Users,
   FileText,
   MessageSquare,
-  TrendingUp,
   Eye,
   Heart,
   Code,
@@ -53,13 +51,14 @@ export default function DashboardPage() {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
+    const timer = setTimeout(() => setMounted(true), 0);
+    return () => clearTimeout(timer);
   }, []);
 
   // Redirect to sign in if not authenticated
   useEffect(() => {
     if (status === 'unauthenticated') {
-      router.push('/auth/signin');
+      router.push('/auth/sign-in');
     }
   }, [status, router]);
 
@@ -208,7 +207,7 @@ export default function DashboardPage() {
             Welcome back, {session?.user?.name?.split(' ')[0] || 'User'}! 👋
           </h1>
           <p className="text-muted-foreground mt-2">
-            Here's what's happening with your portfolio today.
+            Here&apos;s what&apos;s happening with your portfolio today.
           </p>
         </motion.div>
 

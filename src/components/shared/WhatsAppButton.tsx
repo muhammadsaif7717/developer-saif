@@ -78,7 +78,7 @@ const WhatsAppButton = () => {
               </div>
               <div className="min-w-0">
                 <h3 className="text-sm font-bold text-[#0082c4]">
-                  Let's Connect!
+                  Let&apos;s Connect!
                 </h3>
                 <p className="text-xs text-slate-500 dark:text-slate-400">
                   Usually replies within hours
@@ -89,7 +89,7 @@ const WhatsAppButton = () => {
             {/* Message preview */}
             <div className="mb-3 rounded-xl bg-[#f2f2f2] px-3 py-2.5 dark:bg-black">
               <p className="text-xs leading-relaxed text-slate-600 dark:text-slate-300">
-                "{defaultMessage}"
+                &quot;{defaultMessage}&quot;
               </p>
             </div>
 

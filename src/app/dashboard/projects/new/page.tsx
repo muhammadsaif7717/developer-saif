@@ -23,7 +23,7 @@ import axios from 'axios';
 import { Project } from '@/types';
 
 export default function NewProjectPage() {
-  const { data: session, status } = useSession();
+  const { status } = useSession();
   const router = useRouter();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [mounted, setMounted] = useState(false);
@@ -55,12 +55,13 @@ export default function NewProjectPage() {
   });
 
   useEffect(() => {
-    setMounted(true);
+    const timer = setTimeout(() => setMounted(true), 0);
+    return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {
     if (status === 'unauthenticated') {
-      router.push('/auth/signin');
+      router.push('/auth/sign-in');
     }
   }, [status, router]);
 
@@ -71,6 +72,7 @@ export default function NewProjectPage() {
         .toLowerCase()
         .replace(/[^a-z0-9]+/g, '-')
         .replace(/^-+|-+$/g, '');
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setFormData((prev) => ({ ...prev, slug }));
     }
   }, [formData.title]);
@@ -123,7 +125,7 @@ export default function NewProjectPage() {
         image: [...prev.image, ...uploadedUrls],
       }));
       setIsUploading(false);
-    } catch (error) {
+    } catch {
       alert('Failed to upload images. Please try again.');
       setIsUploading(false);
     }
@@ -156,6 +158,7 @@ export default function NewProjectPage() {
     onSuccess: () => {
       router.push('/dashboard/projects');
     },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onError: (error: any) => {
       alert(
         error?.response?.data?.message ||
@@ -176,6 +179,7 @@ export default function NewProjectPage() {
       const validTypes: Array<
         'personal' | 'client' | 'open-source' | 'freelance'
       > = ['personal', 'client', 'open-source', 'freelance'];
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       if (validTypes.includes(value as any)) {
         setFormData((prev) => ({
           ...prev,
