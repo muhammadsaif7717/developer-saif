@@ -1,4 +1,5 @@
 'use client';
+import LoadingPage from '@/components/shared/LoadingPage';
 
 import { Project } from '@/types';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -417,7 +418,7 @@ export default function NewProjectPage() {
             <label className="mb-1.5 flex items-center gap-2 text-xs font-semibold text-black md:mb-2 md:text-sm dark:text-white">
               <ArrowUpDown className="h-4 w-4 text-[#0082c4]" />
               Priority
-              <span className="text-[10px] font-normal text-[#64748b] md:text-xs dark:text-[#cbd5e1]">
+              <span className="text-xs font-normal text-[#64748b] md:text-xs dark:text-[#cbd5e1]">
                 (Higher number = Higher priority)
               </span>
             </label>
@@ -448,9 +449,7 @@ export default function NewProjectPage() {
                 className={`flex-1 rounded-lg px-3 py-2 transition-all md:px-4 md:py-3 ${uploadMethod === 'upload' ? 'bg-[#0082c4] text-white' : 'border border-[#e2e8f0] text-[#64748b] hover:border-[#0082c4] dark:border-[#27273a] dark:text-[#cbd5e1]'}`}
               >
                 <Upload className="mx-auto h-4 w-4 md:h-5 md:w-5" />
-                <span className="mt-1 block text-[10px] md:text-xs">
-                  Upload
-                </span>
+                <span className="mt-1 block text-xs md:text-xs">Upload</span>
               </button>
               <button
                 type="button"
@@ -458,7 +457,7 @@ export default function NewProjectPage() {
                 className={`flex-1 rounded-lg px-3 py-2 transition-all md:px-4 md:py-3 ${uploadMethod === 'url' ? 'bg-[#0082c4] text-white' : 'border border-[#e2e8f0] text-[#64748b] hover:border-[#0082c4] dark:border-[#27273a] dark:text-[#cbd5e1]'}`}
               >
                 <LinkIcon className="mx-auto h-4 w-4 md:h-5 md:w-5" />
-                <span className="mt-1 block text-[10px] md:text-xs">URL</span>
+                <span className="mt-1 block text-xs md:text-xs">URL</span>
               </button>
             </div>
 
@@ -537,7 +536,7 @@ export default function NewProjectPage() {
                         />
                       </div>
                       {index === 0 && (
-                        <span className="rounded bg-[#0082c4] px-2 py-1 text-[10px] font-semibold text-white shadow-md md:text-xs">
+                        <span className="rounded bg-[#0082c4] px-2 py-1 text-xs font-semibold text-white shadow-md md:text-xs">
                           Primary
                         </span>
                       )}

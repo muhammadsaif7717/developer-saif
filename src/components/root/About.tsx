@@ -82,13 +82,10 @@ const About = () => {
       </div>
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* Section Header with Code Style */}
         <div className="mb-12 text-center md:mb-16">
-          {/* <div className="mb-3 font-mono text-sm text-[#64748b] dark:text-[#cbd5e1]">
-            <span className="text-[#0082c4]">{'<section id="about">'}</span>
-          </div> */}
-          <h2 className="mb-4 text-4xl font-bold text-[#0082c4] md:text-5xl lg:text-6xl">
-            About Me
+          <h2 className="mb-4 text-4xl font-bold md:text-5xl lg:text-6xl">
+            <span className="text-[#0082c4]">About </span>
+            <span className="text-slate-800 dark:text-white">Me</span>
           </h2>
           <p className="mx-auto max-w-2xl text-base text-[#64748b] md:text-lg dark:text-[#cbd5e1]">
             Passionate developer crafting digital experiences that make a

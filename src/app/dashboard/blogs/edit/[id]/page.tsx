@@ -1,5 +1,4 @@
 'use client';
-
 import { Blog } from '@/types';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
@@ -292,9 +291,7 @@ export default function EditBlogPage() {
                 className={`flex-1 rounded-lg px-3 py-2 transition-all md:px-4 md:py-3 ${uploadMethod === 'upload' ? 'bg-[#0082c4] text-white' : 'border border-[#e2e8f0] text-[#64748b] hover:border-[#0082c4] dark:border-[#27273a] dark:text-[#cbd5e1]'}`}
               >
                 <Upload className="mx-auto h-4 w-4 md:h-5 md:w-5" />
-                <span className="mt-1 block text-[10px] md:text-xs">
-                  Upload
-                </span>
+                <span className="mt-1 block text-xs md:text-xs">Upload</span>
               </button>
               <button
                 type="button"
@@ -302,7 +299,7 @@ export default function EditBlogPage() {
                 className={`flex-1 rounded-lg px-3 py-2 transition-all md:px-4 md:py-3 ${uploadMethod === 'url' ? 'bg-[#0082c4] text-white' : 'border border-[#e2e8f0] text-[#64748b] hover:border-[#0082c4] dark:border-[#27273a] dark:text-[#cbd5e1]'}`}
               >
                 <LinkIcon className="mx-auto h-4 w-4 md:h-5 md:w-5" />
-                <span className="mt-1 block text-[10px] md:text-xs">URL</span>
+                <span className="mt-1 block text-xs md:text-xs">URL</span>
               </button>
             </div>
 

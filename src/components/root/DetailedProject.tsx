@@ -58,7 +58,7 @@ export default function DetailedProject({ projectId }: DetailedProjectProps) {
           </p>
           <Link
             href="/projects"
-            className="group inline-flex items-center gap-2 rounded-lg border-2 border-[#0082c4] bg-[#0082c4] px-6 py-3 font-semibold text-white shadow-lg shadow-[#0082c4]/30 transition-all hover:bg-[#0099e6] hover:shadow-xl hover:shadow-[#0082c4]/40"
+            className="group inline-flex items-center gap-2 rounded-xl border-2 border-[#0082c4] bg-[#0082c4] px-6 py-3 font-semibold text-white shadow-lg shadow-[#0082c4]/30 transition-all hover:bg-[#0099e6] hover:shadow-xl hover:shadow-[#0082c4]/40"
           >
             <ArrowLeft className="h-5 w-5 transition-transform group-hover:-translate-x-1" />
             Back to Projects
@@ -102,7 +102,7 @@ export default function DetailedProject({ projectId }: DetailedProjectProps) {
         >
           <Link
             href="/projects"
-            className="group mb-8 inline-flex items-center gap-2 rounded-lg border border-[#0082c4]/20 bg-[#f2f2f2] px-4 py-2 font-medium text-[#64748b] transition-all hover:border-[#0082c4] hover:bg-[#0082c4]/10 hover:text-[#0082c4] dark:bg-[#11141c] dark:text-[#cbd5e1]"
+            className="group mb-8 inline-flex items-center gap-2 rounded-xl border border-[#0082c4]/20 bg-[#f2f2f2] px-4 py-2 font-medium text-[#64748b] transition-all hover:border-[#0082c4] hover:bg-[#0082c4]/10 hover:text-[#0082c4] dark:bg-[#11141c] dark:text-[#cbd5e1]"
           >
             <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
             <span className="font-mono text-sm">{'<- Back to Projects'}</span>
@@ -169,7 +169,7 @@ export default function DetailedProject({ projectId }: DetailedProjectProps) {
               href={project.liveUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative inline-flex items-center gap-2 overflow-hidden rounded-lg bg-[#0082c4] px-6 py-3 font-semibold text-white shadow-lg shadow-[#0082c4]/30 transition-all hover:scale-105 hover:bg-[#0099e6] hover:shadow-xl hover:shadow-[#0082c4]/40"
+              className="group relative inline-flex items-center gap-2 overflow-hidden rounded-xl bg-[#0082c4] px-6 py-3 font-semibold text-white shadow-lg shadow-[#0082c4]/30 transition-all hover:scale-105 hover:bg-[#0099e6] hover:shadow-xl hover:shadow-[#0082c4]/40"
             >
               <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
               <ExternalLink className="relative z-10 h-5 w-5" />
@@ -179,7 +179,7 @@ export default function DetailedProject({ projectId }: DetailedProjectProps) {
               href={project.githubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="group inline-flex items-center gap-2 rounded-lg border-2 border-[#0082c4] bg-transparent px-6 py-3 font-semibold text-[#0082c4] transition-all hover:scale-105 hover:bg-[#0082c4] hover:text-white"
+              className="group inline-flex items-center gap-2 rounded-xl border-2 border-[#0082c4] bg-transparent px-6 py-3 font-semibold text-[#0082c4] transition-all hover:scale-105 hover:bg-[#0082c4] hover:text-white"
             >
               <Github className="h-5 w-5 transition-transform group-hover:rotate-12" />
               Source Code
@@ -229,7 +229,7 @@ export default function DetailedProject({ projectId }: DetailedProjectProps) {
                     priority={index === 0}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-                  <div className="absolute top-4 right-4 rounded-lg bg-[#0082c4] px-3 py-1 font-mono text-sm font-semibold text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                  <div className="absolute top-4 right-4 rounded-xl bg-[#0082c4] px-3 py-1 font-mono text-sm font-semibold text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                     {index + 1}/{project.image.length}
                   </div>
                 </div>
@@ -264,7 +264,7 @@ export default function DetailedProject({ projectId }: DetailedProjectProps) {
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.3, delay: 0.5 + index * 0.05 }}
-                    className="rounded-lg border border-[#0082c4]/30 bg-[#f2f2f2] px-4 py-2 font-mono text-sm font-semibold text-[#0082c4] transition-all hover:scale-105 hover:border-[#0082c4] hover:bg-[#0082c4]/10 hover:shadow-lg hover:shadow-[#0082c4]/20 dark:bg-[#11141c]"
+                    className="rounded-xl border border-[#0082c4]/30 bg-[#f2f2f2] px-4 py-2 font-mono text-sm font-semibold text-[#0082c4] transition-all hover:scale-105 hover:border-[#0082c4] hover:bg-[#0082c4]/10 hover:shadow-lg hover:shadow-[#0082c4]/20 dark:bg-[#11141c]"
                   >
                     {tech}
                   </motion.span>
@@ -395,7 +395,7 @@ export default function DetailedProject({ projectId }: DetailedProjectProps) {
                 </p>
                 <Link
                   href="#contact"
-                  className="group inline-flex w-full items-center justify-center gap-2 rounded-lg bg-[#0082c4] px-4 py-2 font-semibold text-white transition-all hover:bg-[#0099e6] hover:shadow-lg hover:shadow-[#0082c4]/30"
+                  className="group inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#0082c4] px-4 py-2 font-semibold text-white transition-all hover:bg-[#0099e6] hover:shadow-lg hover:shadow-[#0082c4]/30"
                 >
                   <span>Get In Touch</span>
                   <ExternalLink className="h-4 w-4 transition-transform group-hover:translate-x-1" />
@@ -417,7 +417,7 @@ export default function DetailedProject({ projectId }: DetailedProjectProps) {
           </div>
           <Link
             href="/#projects"
-            className="group inline-flex items-center gap-2 rounded-lg border-2 border-[#0082c4] bg-transparent px-8 py-4 font-semibold text-[#0082c4] transition-all hover:scale-105 hover:bg-[#0082c4] hover:text-white hover:shadow-lg hover:shadow-[#0082c4]/30"
+            className="group inline-flex items-center gap-2 rounded-xl border-2 border-[#0082c4] bg-transparent px-8 py-4 font-semibold text-[#0082c4] transition-all hover:scale-105 hover:bg-[#0082c4] hover:text-white hover:shadow-lg hover:shadow-[#0082c4]/30"
           >
             <ArrowLeft className="h-5 w-5 transition-transform group-hover:-translate-x-1" />
             View All Projects

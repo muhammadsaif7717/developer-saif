@@ -1,4 +1,5 @@
 'use client';
+import LoadingPage from '@/components/shared/LoadingPage';
 
 import { useState, useEffect } from 'react';
 import * as LucideIcons from 'lucide-react';
@@ -376,12 +377,12 @@ export default function SkillsDashboard() {
                               {cat.title}
                             </h3>
                             {cat.isHidden && (
-                              <span className="ml-2 rounded-full bg-slate-200 px-1.5 py-0.5 text-[8px] font-bold text-slate-400 uppercase md:px-2 md:text-[10px] dark:bg-white/10">
+                              <span className="ml-2 rounded-full bg-slate-200 px-1.5 py-0.5 text-xs font-bold text-slate-400 uppercase md:px-2 md:text-xs dark:bg-white/10">
                                 Hidden
                               </span>
                             )}
                           </div>
-                          <p className="mb-4 text-[10px] text-slate-500 md:text-xs">
+                          <p className="mb-4 text-xs text-slate-500 md:text-xs">
                             {cat.skills ? cat.skills.length : 0} Skills
                           </p>
                         </div>
@@ -393,7 +394,7 @@ export default function SkillsDashboard() {
                                 !!cat.isHidden,
                               )
                             }
-                            className="flex items-center gap-1 rounded-md p-1.5 text-[10px] text-slate-500 transition-colors hover:bg-slate-200 hover:text-slate-700 md:p-2 md:text-xs dark:hover:bg-white/10 dark:hover:text-slate-300"
+                            className="flex items-center gap-1 rounded-md p-1.5 text-xs text-slate-500 transition-colors hover:bg-slate-200 hover:text-slate-700 md:p-2 md:text-xs dark:hover:bg-white/10 dark:hover:text-slate-300"
                           >
                             {cat.isHidden ? (
                               <Eye className="h-3 w-3" />
@@ -404,7 +405,7 @@ export default function SkillsDashboard() {
                           </button>
                           <button
                             onClick={() => requestDeleteCategory(cat._id)}
-                            className="flex items-center gap-1 rounded-md p-1.5 text-[10px] text-red-500 transition-colors hover:bg-red-50 hover:text-red-600 md:p-2 md:text-xs dark:hover:bg-red-500/10"
+                            className="flex items-center gap-1 rounded-md p-1.5 text-xs text-red-500 transition-colors hover:bg-red-50 hover:text-red-600 md:p-2 md:text-xs dark:hover:bg-red-500/10"
                           >
                             <Trash2 className="h-3 w-3" /> Delete
                           </button>
@@ -515,7 +516,7 @@ export default function SkillsDashboard() {
                               <div className="flex items-center gap-2 md:gap-3">
                                 <GripVertical className="h-3 w-3 text-slate-400 md:h-4 md:w-4" />
                                 <div>
-                                  <span className="font-mono text-[8px] text-slate-500 uppercase md:text-[10px]">
+                                  <span className="font-mono text-xs text-slate-500 uppercase md:text-xs">
                                     {skill.label}
                                   </span>
                                   <p className="text-xs font-medium md:text-sm">

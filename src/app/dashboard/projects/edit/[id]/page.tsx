@@ -1,4 +1,5 @@
 'use client';
+import LoadingPage from '@/components/shared/LoadingPage';
 
 import { getProjectsById } from '@/lib/getApi';
 import { Project } from '@/types';
@@ -379,7 +380,7 @@ export default function EditProjectPage() {
               className="w-full rounded-lg border border-[#e2e8f0] bg-white p-2.5 text-sm text-black focus:border-[#0082c4] focus:ring-2 focus:ring-[#0082c4]/20 focus:outline-none md:px-4 md:py-3 md:text-base dark:border-[#27273a] dark:bg-black dark:text-white"
               required
             />
-            <p className="mt-1 text-[10px] text-[#64748b] md:text-xs dark:text-[#cbd5e1]">
+            <p className="mt-1 text-xs text-[#64748b] md:text-xs dark:text-[#cbd5e1]">
               URL-friendly version of the title. Auto-generated if left empty.
             </p>
           </div>
@@ -487,7 +488,7 @@ export default function EditProjectPage() {
                 placeholder="0"
                 className="w-full rounded-lg border border-[#e2e8f0] bg-white p-2.5 text-sm text-black focus:border-[#0082c4] focus:outline-none md:px-4 md:py-3 md:text-base dark:border-[#27273a] dark:bg-black dark:text-white"
               />
-              <p className="mt-1 text-[10px] text-[#64748b] md:text-xs dark:text-[#cbd5e1]">
+              <p className="mt-1 text-xs text-[#64748b] md:text-xs dark:text-[#cbd5e1]">
                 Higher number = Higher priority
               </p>
             </div>
@@ -509,9 +510,7 @@ export default function EditProjectPage() {
                 }`}
               >
                 <Upload className="mx-auto h-4 w-4 md:h-5 md:w-5" />
-                <span className="mt-1 block text-[10px] md:text-xs">
-                  Upload
-                </span>
+                <span className="mt-1 block text-xs md:text-xs">Upload</span>
               </button>
               <button
                 type="button"
@@ -523,7 +522,7 @@ export default function EditProjectPage() {
                 }`}
               >
                 <LinkIcon className="mx-auto h-4 w-4 md:h-5 md:w-5" />
-                <span className="mt-1 block text-[10px] md:text-xs">URL</span>
+                <span className="mt-1 block text-xs md:text-xs">URL</span>
               </button>
             </div>
 
@@ -602,7 +601,7 @@ export default function EditProjectPage() {
                         />
                       </div>
                       {index === 0 && (
-                        <span className="rounded bg-[#0082c4] px-2 py-1 text-[10px] font-semibold text-white shadow-md md:text-xs">
+                        <span className="rounded bg-[#0082c4] px-2 py-1 text-xs font-semibold text-white shadow-md md:text-xs">
                           Primary
                         </span>
                       )}

@@ -69,7 +69,7 @@ export default function DetailedBlog({ blogId }: DetailedBlogProps) {
           </p>
           <Link
             href="/blogs"
-            className="group inline-flex items-center gap-2 rounded-lg border-2 border-[#0082c4] bg-[#0082c4] px-6 py-3 font-semibold text-white shadow-lg shadow-[#0082c4]/30 transition-all hover:bg-[#0099e6] hover:shadow-xl hover:shadow-[#0082c4]/40"
+            className="group inline-flex items-center gap-2 rounded-xl border-2 border-[#0082c4] bg-[#0082c4] px-6 py-3 font-semibold text-white shadow-lg shadow-[#0082c4]/30 transition-all hover:bg-[#0099e6] hover:shadow-xl hover:shadow-[#0082c4]/40"
           >
             <ArrowLeft className="h-5 w-5 transition-transform group-hover:-translate-x-1" />
             Back to Blogs
@@ -106,9 +106,7 @@ export default function DetailedBlog({ blogId }: DetailedBlogProps) {
       <div className="relative z-10 mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         {/* Code comment */}
         <div className="mb-4 font-mono text-sm text-[#64748b] dark:text-[#cbd5e1]">
-          <span className="text-[#0082c4]">
-            {'<article id="blog-detail">'}
-          </span>
+          <span className="text-[#0082c4]">{'<article id="blog-detail">'}</span>
         </div>
 
         {/* Back Button */}
@@ -119,7 +117,7 @@ export default function DetailedBlog({ blogId }: DetailedBlogProps) {
         >
           <Link
             href="/blogs"
-            className="group mb-8 inline-flex items-center gap-2 rounded-lg border border-[#0082c4]/20 bg-[#f2f2f2] px-4 py-2 font-medium text-[#64748b] transition-all hover:border-[#0082c4] hover:bg-[#0082c4]/10 hover:text-[#0082c4] dark:bg-[#11141c] dark:text-[#cbd5e1]"
+            className="group mb-8 inline-flex items-center gap-2 rounded-xl border border-[#0082c4]/20 bg-[#f2f2f2] px-4 py-2 font-medium text-[#64748b] transition-all hover:border-[#0082c4] hover:bg-[#0082c4]/10 hover:text-[#0082c4] dark:bg-[#11141c] dark:text-[#cbd5e1]"
           >
             <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
             <span className="font-mono text-sm">{'<- Back to Blogs'}</span>
@@ -208,7 +206,7 @@ export default function DetailedBlog({ blogId }: DetailedBlogProps) {
               {'// Article Content'}
             </div>
             <div className="rounded-2xl border border-[#0082c4]/20 bg-[#f2f2f2] p-6 shadow-lg sm:p-8 md:p-10 dark:bg-[#11141c]">
-              <article className="prose prose-slate max-w-none dark:prose-invert prose-headings:text-[#0082c4] prose-a:text-[#0082c4] prose-a:no-underline hover:prose-a:underline prose-strong:text-slate-800 dark:prose-strong:text-slate-200 prose-code:rounded prose-code:bg-slate-200 prose-code:px-1.5 prose-code:py-0.5 prose-code:font-mono prose-code:text-sm prose-code:before:content-[''] prose-code:after:content-[''] dark:prose-code:bg-slate-800 prose-pre:rounded-xl prose-pre:border prose-pre:border-[#0082c4]/20 prose-pre:bg-[#0d1117] prose-img:rounded-xl prose-img:border prose-img:border-[#0082c4]/20">
+              <article className="prose prose-slate dark:prose-invert prose-headings:text-[#0082c4] prose-a:text-[#0082c4] prose-a:no-underline hover:prose-a:underline prose-strong:text-slate-800 dark:prose-strong:text-slate-200 prose-code:rounded prose-code:bg-slate-200 prose-code:px-1.5 prose-code:py-0.5 prose-code:font-mono prose-code:text-sm prose-code:before:content-[''] prose-code:after:content-[''] dark:prose-code:bg-slate-800 prose-pre:rounded-xl prose-pre:border prose-pre:border-[#0082c4]/20 prose-pre:bg-[#0d1117] prose-img:rounded-xl prose-img:border prose-img:border-[#0082c4]/20 max-w-none">
                 <ReactMarkdown
                   remarkPlugins={[remarkGfm]}
                   rehypePlugins={[rehypeHighlight]}
@@ -278,7 +276,7 @@ export default function DetailedBlog({ blogId }: DetailedBlogProps) {
                     {blog.categories.map((cat) => (
                       <span
                         key={cat}
-                        className="rounded-lg border border-[#0082c4]/30 bg-[#0082c4]/10 px-3 py-1.5 font-mono text-xs font-semibold text-[#0082c4]"
+                        className="rounded-xl border border-[#0082c4]/30 bg-[#0082c4]/10 px-3 py-1.5 font-mono text-xs font-semibold text-[#0082c4]"
                       >
                         {cat}
                       </span>
@@ -300,7 +298,7 @@ export default function DetailedBlog({ blogId }: DetailedBlogProps) {
                     {blog.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="inline-flex items-center gap-1.5 rounded-lg border border-[#0082c4]/20 bg-[#f2f2f2] px-3 py-1.5 font-mono text-xs text-[#64748b] transition-all hover:border-[#0082c4] hover:text-[#0082c4] dark:bg-[#1a1a2e] dark:text-[#94a3b8]"
+                        className="inline-flex items-center gap-1.5 rounded-xl border border-[#0082c4]/20 bg-[#f2f2f2] px-3 py-1.5 font-mono text-xs text-[#64748b] transition-all hover:border-[#0082c4] hover:text-[#0082c4] dark:bg-[#1a1a2e] dark:text-[#94a3b8]"
                       >
                         <Tag className="h-3 w-3" />
                         {tag}
@@ -323,7 +321,7 @@ export default function DetailedBlog({ blogId }: DetailedBlogProps) {
                 </p>
                 <Link
                   href="/blogs"
-                  className="group inline-flex w-full items-center justify-center gap-2 rounded-lg bg-[#0082c4] px-4 py-2 font-semibold text-white transition-all hover:bg-[#0099e6] hover:shadow-lg hover:shadow-[#0082c4]/30"
+                  className="group inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#0082c4] px-4 py-2 font-semibold text-white transition-all hover:bg-[#0099e6] hover:shadow-lg hover:shadow-[#0082c4]/30"
                 >
                   <span>Browse All Blogs</span>
                   <Rss className="h-4 w-4 transition-transform group-hover:translate-x-1" />
@@ -345,7 +343,7 @@ export default function DetailedBlog({ blogId }: DetailedBlogProps) {
           </div>
           <Link
             href="/blogs"
-            className="group inline-flex items-center gap-2 rounded-lg border-2 border-[#0082c4] bg-transparent px-8 py-4 font-semibold text-[#0082c4] transition-all hover:scale-105 hover:bg-[#0082c4] hover:text-white hover:shadow-lg hover:shadow-[#0082c4]/30"
+            className="group inline-flex items-center gap-2 rounded-xl border-2 border-[#0082c4] bg-transparent px-8 py-4 font-semibold text-[#0082c4] transition-all hover:scale-105 hover:bg-[#0082c4] hover:text-white hover:shadow-lg hover:shadow-[#0082c4]/30"
           >
             <ArrowLeft className="h-5 w-5 transition-transform group-hover:-translate-x-1" />
             View All Blogs
