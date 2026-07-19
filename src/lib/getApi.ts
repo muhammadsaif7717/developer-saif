@@ -46,3 +46,11 @@ export const getBlogById = async (id: string) => {
     throw new Error(`Failed to get blog: ${err}`);
   }
 };
+
+export const incrementBlogViews = async (id: string) => {
+  try {
+    await axios.put(`${url}/blogs/view/${id}`);
+  } catch (err) {
+    console.error(`Failed to increment blog views: ${err}`);
+  }
+};

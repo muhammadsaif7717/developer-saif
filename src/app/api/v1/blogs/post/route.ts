@@ -36,8 +36,13 @@ export const POST = async (req: Request) => {
       }
     }
 
+    const wordCount = blog.content.trim().split(/\s+/).length;
+    const readTime = Math.max(1, Math.ceil(wordCount / 200));
+
     const newBlog = {
       ...blog,
+      readTime,
+      views: 0,
       createdAt: new Date(),
       updatedAt: new Date(),
     };

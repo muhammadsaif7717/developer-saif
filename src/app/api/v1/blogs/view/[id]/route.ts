@@ -25,21 +25,9 @@ export const PUT = async (
       );
     }
 
-    const updateData = await req.json();
-
-    // Prevent updating _id
-    delete updateData._id;
-
-    if (updateData.content) {
-      const wordCount = updateData.content.trim().split(/\s+/).length;
-      updateData.readTime = Math.max(1, Math.ceil(wordCount / 200));
-    }
-
-    updateData.updatedAt = new Date();
-
     const result = await blogsCollection.updateOne(
       { _id: new ObjectId(id) },
-      { $set: updateData },
+      { $inc: { views: 1 } },
     );
 
     if (result.matchedCount === 0) {
@@ -47,7 +35,7 @@ export const PUT = async (
     }
 
     return NextResponse.json(
-      { message: 'Blog updated successfully' },
+      { message: 'View count incremented successfully' },
       { status: 200 },
     );
   } catch (err) {

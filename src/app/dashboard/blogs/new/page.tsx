@@ -30,9 +30,7 @@ export default function NewBlogPage() {
   const [isUploading, setIsUploading] = useState(false);
   const [imageUrlInput, setImageUrlInput] = useState('');
 
-  const [formData, setFormData] = useState<
-    Omit<Blog, '_id' | 'createdAt' | 'updatedAt' | 'views'>
-  >({
+  const [formData, setFormData] = useState<Omit<Blog, '_id' | 'createdAt' | 'updatedAt' | 'views' | 'readTime'>>({
     title: '',
     slug: '',
     content: '',
@@ -40,7 +38,6 @@ export default function NewBlogPage() {
     categories: [],
     tags: [],
     status: 'draft',
-    readTime: 5,
   });
 
   useEffect(() => {
@@ -358,7 +355,7 @@ export default function NewBlogPage() {
           {/* Content */}
           <div>
             <label className="mb-1.5 block text-xs font-semibold text-black md:mb-2 md:text-sm dark:text-white">
-              Content (Markdown/HTML) *
+              Content (Markdown) *
             </label>
             <textarea
               name="content"
@@ -489,20 +486,7 @@ export default function NewBlogPage() {
                 <option value="published">Published</option>
               </select>
             </div>
-            <div>
-              <label className="mb-1.5 block text-xs font-semibold text-black md:mb-2 md:text-sm dark:text-white">
-                Read Time (minutes) *
-              </label>
-              <input
-                type="number"
-                name="readTime"
-                value={formData.readTime}
-                onChange={handleInputChange}
-                min="1"
-                className="w-full rounded-lg border border-[#e2e8f0] bg-white p-2.5 text-sm text-black focus:border-[#0082c4] focus:outline-none md:px-4 md:py-3 md:text-base dark:border-[#27273a] dark:bg-black dark:text-white"
-                required
-              />
-            </div>
+            {/* Read Time is now calculated dynamically on the server */}
           </div>
 
           {/* Buttons */}
