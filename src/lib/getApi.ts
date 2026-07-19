@@ -28,3 +28,21 @@ export const getProjectsById = async (id: string) => {
     throw new Error(`Failed to get results: ${err}`);
   }
 };
+
+export const getBlogs = async () => {
+  try {
+    const res = await axios.get(`${url}/blogs/get`);
+    return res.data.res;
+  } catch (err) {
+    throw new Error(`Failed to get blogs: ${err}`);
+  }
+};
+
+export const getBlogById = async (id: string) => {
+  try {
+    const res = await axios.get(`${url}/blogs/get/${id}`);
+    return res.data.res;
+  } catch (err) {
+    throw new Error(`Failed to get blog: ${err}`);
+  }
+};

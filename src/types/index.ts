@@ -16,3 +16,18 @@ export interface Project {
   currentlyWorking: boolean;
   priority: number;
 }
+
+export interface Blog {
+  _id?: string;
+  title: string;
+  slug: string;
+  content: string;
+  coverImage: string;
+  categories: string[];
+  tags: string[];
+  status: 'draft' | 'published';
+  readTime: number;
+  views: number;
+  createdAt: string;
+  updatedAt: string;
+}
