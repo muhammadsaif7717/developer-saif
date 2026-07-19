@@ -10,7 +10,10 @@ export const GET = async () => {
   }
 
   try {
-    const projects = await projectsCollection.find().toArray();
+    const projects = await projectsCollection
+      .find()
+      .sort({ priority: -1 })
+      .toArray();
     return NextResponse.json(
       { message: 'Get successfull', res: projects },
       { status: 200 },

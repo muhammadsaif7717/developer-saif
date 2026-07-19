@@ -11,7 +11,7 @@ export async function proxy(req: NextRequest) {
     const hasSessionCookie = cookies.some(
       (cookie) =>
         cookie.name.includes('next-auth.session-token') ||
-        cookie.name.includes('__Secure-next-auth.session-token')
+        cookie.name.includes('__Secure-next-auth.session-token'),
     );
 
     if (!hasSessionCookie) {

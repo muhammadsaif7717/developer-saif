@@ -53,7 +53,8 @@ export default function DetailedProject({ projectId }: DetailedProjectProps) {
             Project Not Found
           </h1>
           <p className="mb-8 text-[#64748b] dark:text-[#cbd5e1]">
-            The project you&apos;re looking for doesn&apos;t exist or has been removed.
+            The project you&apos;re looking for doesn&apos;t exist or has been
+            removed.
           </p>
           <Link
             href="/projects"

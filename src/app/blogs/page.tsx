@@ -30,7 +30,8 @@ export default function Page() {
             Blogs Not Found
           </h1>
           <p className="mb-8 text-slate-600 dark:text-slate-400">
-            Blogs you&apos;re looking for doesn&apos;t exist or has been removed.
+            Blogs you&apos;re looking for doesn&apos;t exist or has been
+            removed.
           </p>
           <Link
             href="/"

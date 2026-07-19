@@ -187,9 +187,9 @@ const About = () => {
                   exceptional user experiences.
                 </p>
                 <p>
-                  When I&apos;m not coding, you&apos;ll find me exploring emerging
-                  technologies, contributing to open-source projects, or sharing
-                  insights with the developer community. I believe in{' '}
+                  When I&apos;m not coding, you&apos;ll find me exploring
+                  emerging technologies, contributing to open-source projects,
+                  or sharing insights with the developer community. I believe in{' '}
                   <span className="font-semibold text-[#0082c4]">
                     continuous learning
                   </span>{' '}

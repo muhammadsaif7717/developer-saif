@@ -43,7 +43,10 @@ const Banner = () => {
   ];
 
   return (
-    <div id="home" className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-white py-20 md:py-0 dark:bg-black">
+    <div
+      id="home"
+      className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-white py-20 md:py-0 dark:bg-black"
+    >
       {/* Animated Grid Background */}
       <div className="absolute inset-0 overflow-hidden">
         {/* Grid Pattern */}
@@ -66,22 +69,22 @@ const Banner = () => {
         </div>
 
         {/* Floating Code Snippets - Responsive positioning (Hidden on mobile for performance) */}
-        <div className="hidden md:block [animation-duration-[15s]] absolute top-[15%] left-[5%] animate-bounce font-mono text-[10px] text-[#0082c4] opacity-30 sm:text-xs dark:opacity-40">
+        <div className="[animation-duration-[15s]] absolute top-[15%] left-[5%] hidden animate-bounce font-mono text-[10px] text-[#0082c4] opacity-30 sm:text-xs md:block dark:opacity-40">
           {'{ developer: true }'}
         </div>
-        <div className="hidden md:block [animation-duration-[17s]] absolute top-[27%] left-[16%] animate-bounce font-mono text-[10px] text-[#0082c4] opacity-30 [animation-delay:0.5s] sm:text-xs dark:opacity-40">
+        <div className="[animation-duration-[17s]] absolute top-[27%] left-[16%] hidden animate-bounce font-mono text-[10px] text-[#0082c4] opacity-30 [animation-delay:0.5s] sm:text-xs md:block dark:opacity-40">
           {'const skills = [...]'}
         </div>
-        <div className="hidden md:block [animation-duration-[19s]] absolute top-[39%] left-[27%] animate-bounce font-mono text-[10px] text-[#0082c4] opacity-30 [animation-delay:1s] sm:text-xs dark:opacity-40">
+        <div className="[animation-duration-[19s]] absolute top-[39%] left-[27%] hidden animate-bounce font-mono text-[10px] text-[#0082c4] opacity-30 [animation-delay:1s] sm:text-xs md:block dark:opacity-40">
           {'function build()'}
         </div>
-        <div className="hidden md:block [animation-duration-[21s]] absolute top-[51%] left-[38%] animate-bounce font-mono text-[10px] text-[#0082c4] opacity-30 [animation-delay:1.5s] sm:text-xs dark:opacity-40">
+        <div className="[animation-duration-[21s]] absolute top-[51%] left-[38%] hidden animate-bounce font-mono text-[10px] text-[#0082c4] opacity-30 [animation-delay:1.5s] sm:text-xs md:block dark:opacity-40">
           {'// Clean code'}
         </div>
-        <div className="hidden md:block [animation-duration-[23s]] absolute top-[63%] left-[49%] animate-bounce font-mono text-[10px] text-[#0082c4] opacity-30 [animation-delay:2s] sm:text-xs dark:opacity-30">
+        <div className="[animation-duration-[23s]] absolute top-[63%] left-[49%] hidden animate-bounce font-mono text-[10px] text-[#0082c4] opacity-30 [animation-delay:2s] sm:text-xs md:block dark:opacity-30">
           {'npm run dev'}
         </div>
-        <div className="hidden md:block [animation-duration-[25s]] absolute top-[75%] left-[60%] animate-bounce font-mono text-[10px] text-[#0082c4] opacity-30 [animation-delay:2.5s] sm:text-xs dark:opacity-40">
+        <div className="[animation-duration-[25s]] absolute top-[75%] left-[60%] hidden animate-bounce font-mono text-[10px] text-[#0082c4] opacity-30 [animation-delay:2.5s] sm:text-xs md:block dark:opacity-40">
           {'<Component />'}
         </div>
       </div>

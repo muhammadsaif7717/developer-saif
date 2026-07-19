@@ -69,7 +69,7 @@ const Navbar = () => {
     if (pathname !== '/') return;
 
     const sections = ['home', 'about', 'skills', 'projects', 'contact'];
-    
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -81,7 +81,7 @@ const Navbar = () => {
       {
         rootMargin: '-50% 0px -50% 0px',
         threshold: 0,
-      }
+      },
     );
 
     sections.forEach((id) => {

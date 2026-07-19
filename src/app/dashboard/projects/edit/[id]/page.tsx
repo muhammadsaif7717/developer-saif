@@ -1,33 +1,35 @@
 'use client';
 
-import { useSession } from 'next-auth/react';
-import { useRouter, useParams } from 'next/navigation';
-import { useEffect, useState, useRef } from 'react';
-import { motion } from 'framer-motion';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { getProjectsById } from '@/lib/getApi';
+import { Project } from '@/types';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import axios from 'axios';
+import { motion, Reorder } from 'framer-motion';
 import {
   ArrowLeft,
+  Briefcase,
+  Calendar,
+  GripVertical,
+  Link as LinkIcon,
+  Loader2,
+  Plus,
+  Save,
+  Star,
+  TrendingUp,
   Upload,
   X,
-  Plus,
-  Loader2,
-  Star,
-  Link as LinkIcon,
-  Calendar,
-  Briefcase,
-  Save,
-  TrendingUp,
 } from 'lucide-react';
-import Link from 'next/link';
+import { useSession } from 'next-auth/react';
 import Image from 'next/image';
-import { getProjectsById } from '@/lib/getApi';
-import axios from 'axios';
-import { Project } from '@/types';
+import Link from 'next/link';
+import { useParams, useRouter } from 'next/navigation';
+import { useEffect, useRef, useState } from 'react';
 
 export default function EditProjectPage() {
   const { status } = useSession();
   const router = useRouter();
   const params = useParams();
+  const queryClient = useQueryClient();
   const id = params.id as string;
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [mounted, setMounted] = useState(false);
@@ -183,6 +185,17 @@ export default function EditProjectPage() {
     setImagePreviews((prev) => prev.filter((_, i) => i !== index));
   };
 
+  const handleReorderImages = (newOrder: string[]) => {
+    // Map newOrder elements back to their old indices to reorder formData.image correctly
+    const newIndices = newOrder.map((preview) =>
+      imagePreviews.indexOf(preview),
+    );
+    const newFormDataImages = newIndices.map((i) => formData.image[i]);
+
+    setImagePreviews(newOrder);
+    setFormData((prev) => ({ ...prev, image: newFormDataImages }));
+  };
+
   // Update project mutation
   const updateProjectMutation = useMutation({
     mutationFn: async (data: Omit<Project, '_id'>) => {
@@ -190,6 +203,7 @@ export default function EditProjectPage() {
       return response.data;
     },
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['projects'] });
       router.push('/dashboard/projects');
     },
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -333,11 +347,11 @@ export default function EditProjectPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           onSubmit={handleSubmit}
-          className="space-y-6 rounded-xl border-2 border-[#e2e8f0] bg-[#f2f2f2] p-6 md:p-8 dark:border-[#27273a] dark:bg-[#11141c]"
+          className="space-y-4 rounded-xl border-2 border-[#e2e8f0] bg-[#f2f2f2] p-4 md:space-y-6 md:p-8 dark:border-[#27273a] dark:bg-[#11141c]"
         >
           {/* Title */}
           <div>
-            <label className="mb-2 block text-sm font-semibold text-black dark:text-white">
+            <label className="mb-1.5 block text-xs font-semibold text-black md:mb-2 md:text-sm dark:text-white">
               Project Title *
             </label>
             <input
@@ -346,14 +360,14 @@ export default function EditProjectPage() {
               value={formData.title}
               onChange={handleInputChange}
               placeholder="Full-Stack E-Commerce Solution"
-              className="w-full rounded-lg border border-[#e2e8f0] bg-white px-4 py-3 text-black focus:border-[#0082c4] focus:ring-2 focus:ring-[#0082c4]/20 focus:outline-none dark:border-[#27273a] dark:bg-black dark:text-white"
+              className="w-full rounded-lg border border-[#e2e8f0] bg-white p-2.5 text-sm text-black focus:border-[#0082c4] focus:ring-2 focus:ring-[#0082c4]/20 focus:outline-none md:px-4 md:py-3 md:text-base dark:border-[#27273a] dark:bg-black dark:text-white"
               required
             />
           </div>
 
           {/* Slug */}
           <div>
-            <label className="mb-2 block text-sm font-semibold text-black dark:text-white">
+            <label className="mb-1.5 block text-xs font-semibold text-black md:mb-2 md:text-sm dark:text-white">
               URL Slug *
             </label>
             <input
@@ -362,17 +376,17 @@ export default function EditProjectPage() {
               value={formData.slug}
               onChange={handleInputChange}
               placeholder="full-stack-ecommerce-solution"
-              className="w-full rounded-lg border border-[#e2e8f0] bg-white px-4 py-3 text-black focus:border-[#0082c4] focus:ring-2 focus:ring-[#0082c4]/20 focus:outline-none dark:border-[#27273a] dark:bg-black dark:text-white"
+              className="w-full rounded-lg border border-[#e2e8f0] bg-white p-2.5 text-sm text-black focus:border-[#0082c4] focus:ring-2 focus:ring-[#0082c4]/20 focus:outline-none md:px-4 md:py-3 md:text-base dark:border-[#27273a] dark:bg-black dark:text-white"
               required
             />
-            <p className="mt-1 text-xs text-[#64748b] dark:text-[#cbd5e1]">
+            <p className="mt-1 text-[10px] text-[#64748b] md:text-xs dark:text-[#cbd5e1]">
               URL-friendly version of the title. Auto-generated if left empty.
             </p>
           </div>
 
           {/* Description */}
           <div>
-            <label className="mb-2 block text-sm font-semibold text-black dark:text-white">
+            <label className="mb-1.5 block text-xs font-semibold text-black md:mb-2 md:text-sm dark:text-white">
               Description *
             </label>
             <textarea
@@ -381,22 +395,22 @@ export default function EditProjectPage() {
               onChange={handleInputChange}
               rows={4}
               placeholder="Describe your project in detail..."
-              className="w-full rounded-lg border border-[#e2e8f0] bg-white px-4 py-3 text-black focus:border-[#0082c4] focus:ring-2 focus:ring-[#0082c4]/20 focus:outline-none dark:border-[#27273a] dark:bg-black dark:text-white"
+              className="w-full rounded-lg border border-[#e2e8f0] bg-white p-2.5 text-sm text-black focus:border-[#0082c4] focus:ring-2 focus:ring-[#0082c4]/20 focus:outline-none md:px-4 md:py-3 md:text-base dark:border-[#27273a] dark:bg-black dark:text-white"
               required
             />
           </div>
 
           {/* Category & Type */}
-          <div className="grid gap-6 md:grid-cols-2">
+          <div className="grid gap-4 md:grid-cols-2 md:gap-6">
             <div>
-              <label className="mb-2 block text-sm font-semibold text-black dark:text-white">
+              <label className="mb-1.5 block text-xs font-semibold text-black md:mb-2 md:text-sm dark:text-white">
                 Category *
               </label>
               <select
                 name="category"
                 value={formData.category}
                 onChange={handleInputChange}
-                className="w-full rounded-lg border border-[#e2e8f0] bg-white px-4 py-3 text-black focus:border-[#0082c4] focus:outline-none dark:border-[#27273a] dark:bg-black dark:text-white"
+                className="w-full rounded-lg border border-[#e2e8f0] bg-white p-2.5 text-sm text-black focus:border-[#0082c4] focus:outline-none md:px-4 md:py-3 md:text-base dark:border-[#27273a] dark:bg-black dark:text-white"
                 required
               >
                 {categories.map((cat) => (
@@ -407,14 +421,14 @@ export default function EditProjectPage() {
               </select>
             </div>
             <div>
-              <label className="mb-2 block text-sm font-semibold text-black dark:text-white">
+              <label className="mb-1.5 block text-xs font-semibold text-black md:mb-2 md:text-sm dark:text-white">
                 Type *
               </label>
               <select
                 name="type"
                 value={formData.type}
                 onChange={handleInputChange}
-                className="w-full rounded-lg border border-[#e2e8f0] bg-white px-4 py-3 text-black focus:border-[#0082c4] focus:outline-none dark:border-[#27273a] dark:bg-black dark:text-white"
+                className="w-full rounded-lg border border-[#e2e8f0] bg-white p-2.5 text-sm text-black focus:border-[#0082c4] focus:outline-none md:px-4 md:py-3 md:text-base dark:border-[#27273a] dark:bg-black dark:text-white"
                 required
               >
                 {projectTypes.map((type) => (
@@ -428,9 +442,9 @@ export default function EditProjectPage() {
           </div>
 
           {/* Date, Role & Priority */}
-          <div className="grid gap-6 md:grid-cols-3">
+          <div className="grid gap-4 md:grid-cols-3 md:gap-6">
             <div>
-              <label className="mb-2 flex items-center gap-2 text-sm font-semibold text-black dark:text-white">
+              <label className="mb-1.5 flex items-center gap-2 text-xs font-semibold text-black md:mb-2 md:text-sm dark:text-white">
                 <Calendar className="h-4 w-4 text-[#0082c4]" />
                 Date *
               </label>
@@ -440,12 +454,12 @@ export default function EditProjectPage() {
                 value={formData.date}
                 onChange={handleInputChange}
                 placeholder="June 2024"
-                className="w-full rounded-lg border border-[#e2e8f0] bg-white px-4 py-3 text-black focus:border-[#0082c4] focus:outline-none dark:border-[#27273a] dark:bg-black dark:text-white"
+                className="w-full rounded-lg border border-[#e2e8f0] bg-white p-2.5 text-sm text-black focus:border-[#0082c4] focus:outline-none md:px-4 md:py-3 md:text-base dark:border-[#27273a] dark:bg-black dark:text-white"
                 required
               />
             </div>
             <div>
-              <label className="mb-2 flex items-center gap-2 text-sm font-semibold text-black dark:text-white">
+              <label className="mb-1.5 flex items-center gap-2 text-xs font-semibold text-black md:mb-2 md:text-sm dark:text-white">
                 <Briefcase className="h-4 w-4 text-[#0082c4]" />
                 Role *
               </label>
@@ -455,12 +469,12 @@ export default function EditProjectPage() {
                 value={formData.role}
                 onChange={handleInputChange}
                 placeholder="Full-Stack Developer"
-                className="w-full rounded-lg border border-[#e2e8f0] bg-white px-4 py-3 text-black focus:border-[#0082c4] focus:outline-none dark:border-[#27273a] dark:bg-black dark:text-white"
+                className="w-full rounded-lg border border-[#e2e8f0] bg-white p-2.5 text-sm text-black focus:border-[#0082c4] focus:outline-none md:px-4 md:py-3 md:text-base dark:border-[#27273a] dark:bg-black dark:text-white"
                 required
               />
             </div>
             <div>
-              <label className="mb-2 flex items-center gap-2 text-sm font-semibold text-black dark:text-white">
+              <label className="mb-1.5 flex items-center gap-2 text-xs font-semibold text-black md:mb-2 md:text-sm dark:text-white">
                 <TrendingUp className="h-4 w-4 text-[#0082c4]" />
                 Priority
               </label>
@@ -471,9 +485,9 @@ export default function EditProjectPage() {
                 onChange={handleInputChange}
                 min="0"
                 placeholder="0"
-                className="w-full rounded-lg border border-[#e2e8f0] bg-white px-4 py-3 text-black focus:border-[#0082c4] focus:outline-none dark:border-[#27273a] dark:bg-black dark:text-white"
+                className="w-full rounded-lg border border-[#e2e8f0] bg-white p-2.5 text-sm text-black focus:border-[#0082c4] focus:outline-none md:px-4 md:py-3 md:text-base dark:border-[#27273a] dark:bg-black dark:text-white"
               />
-              <p className="mt-1 text-xs text-[#64748b] dark:text-[#cbd5e1]">
+              <p className="mt-1 text-[10px] text-[#64748b] md:text-xs dark:text-[#cbd5e1]">
                 Higher number = Higher priority
               </p>
             </div>
@@ -481,33 +495,35 @@ export default function EditProjectPage() {
 
           {/* Images */}
           <div>
-            <label className="mb-2 block text-sm font-semibold text-black dark:text-white">
+            <label className="mb-1.5 block text-xs font-semibold text-black md:mb-2 md:text-sm dark:text-white">
               Images * (Multiple)
             </label>
             <div className="mb-4 flex gap-2">
               <button
                 type="button"
                 onClick={() => setUploadMethod('upload')}
-                className={`flex-1 rounded-lg px-4 py-3 transition-all ${
+                className={`flex-1 rounded-lg px-3 py-2 transition-all md:px-4 md:py-3 ${
                   uploadMethod === 'upload'
                     ? 'bg-[#0082c4] text-white'
                     : 'border border-[#e2e8f0] text-[#64748b] hover:border-[#0082c4] dark:border-[#27273a] dark:text-[#cbd5e1]'
                 }`}
               >
-                <Upload className="mx-auto h-5 w-5" />
-                <span className="mt-1 block text-xs">Upload</span>
+                <Upload className="mx-auto h-4 w-4 md:h-5 md:w-5" />
+                <span className="mt-1 block text-[10px] md:text-xs">
+                  Upload
+                </span>
               </button>
               <button
                 type="button"
                 onClick={() => setUploadMethod('url')}
-                className={`flex-1 rounded-lg px-4 py-3 transition-all ${
+                className={`flex-1 rounded-lg px-3 py-2 transition-all md:px-4 md:py-3 ${
                   uploadMethod === 'url'
                     ? 'bg-[#0082c4] text-white'
                     : 'border border-[#e2e8f0] text-[#64748b] hover:border-[#0082c4] dark:border-[#27273a] dark:text-[#cbd5e1]'
                 }`}
               >
-                <LinkIcon className="mx-auto h-5 w-5" />
-                <span className="mt-1 block text-xs">URL</span>
+                <LinkIcon className="mx-auto h-4 w-4 md:h-5 md:w-5" />
+                <span className="mt-1 block text-[10px] md:text-xs">URL</span>
               </button>
             </div>
 
@@ -525,7 +541,7 @@ export default function EditProjectPage() {
                   type="button"
                   onClick={() => fileInputRef.current?.click()}
                   disabled={isUploading}
-                  className="w-full rounded-lg border-2 border-dashed border-[#e2e8f0] bg-white p-8 transition-all hover:border-[#0082c4] disabled:opacity-50 dark:border-[#27273a] dark:bg-black"
+                  className="w-full rounded-lg border-2 border-dashed border-[#e2e8f0] bg-white p-4 transition-all hover:border-[#0082c4] disabled:opacity-50 md:p-8 dark:border-[#27273a] dark:bg-black"
                 >
                   {isUploading ? (
                     <Loader2 className="mx-auto h-12 w-12 animate-spin text-[#0082c4]" />
@@ -550,12 +566,12 @@ export default function EditProjectPage() {
                     (e.preventDefault(), handleAddImageUrl())
                   }
                   placeholder="https://example.com/image.jpg"
-                  className="flex-1 rounded-lg border border-[#e2e8f0] bg-white px-4 py-3 text-black focus:border-[#0082c4] focus:outline-none dark:border-[#27273a] dark:bg-black dark:text-white"
+                  className="flex-1 rounded-lg border border-[#e2e8f0] bg-white p-2.5 text-sm text-black focus:border-[#0082c4] focus:outline-none md:px-4 md:py-3 md:text-base dark:border-[#27273a] dark:bg-black dark:text-white"
                 />
                 <button
                   type="button"
                   onClick={handleAddImageUrl}
-                  className="rounded-lg bg-[#0082c4] px-4 py-3 text-white transition-colors hover:bg-[#0099e6]"
+                  className="rounded-lg bg-[#0082c4] px-4 py-2.5 text-white transition-colors hover:bg-[#0099e6] md:py-3"
                 >
                   <Plus className="h-5 w-5" />
                 </button>
@@ -563,38 +579,50 @@ export default function EditProjectPage() {
             )}
 
             {imagePreviews.length > 0 && (
-              <div className="mt-4 grid grid-cols-2 gap-4 md:grid-cols-3">
+              <Reorder.Group
+                axis="y"
+                values={imagePreviews}
+                onReorder={handleReorderImages}
+                className="mt-4 space-y-3"
+              >
                 {imagePreviews.map((preview, index) => (
-                  <div key={index} className="group relative">
-                    <div className="relative h-32 w-full overflow-hidden rounded-lg border-2 border-[#e2e8f0] dark:border-[#27273a]">
-                      <Image
-                        src={preview}
-                        alt={`Preview ${index + 1}`}
-                        fill
-                        className="object-cover"
-                      />
+                  <Reorder.Item
+                    key={preview}
+                    value={preview}
+                    className="flex cursor-grab items-center justify-between rounded-md border border-slate-200 bg-white p-3 shadow-sm transition-colors hover:border-[#0082c4]/40 active:cursor-grabbing dark:border-slate-800 dark:bg-[#11141c]"
+                  >
+                    <div className="flex items-center gap-4">
+                      <GripVertical className="h-4 w-4 text-slate-400" />
+                      <div className="relative h-14 w-24 overflow-hidden rounded border border-[#e2e8f0] dark:border-[#27273a]">
+                        <Image
+                          src={preview}
+                          alt={`Preview ${index + 1}`}
+                          fill
+                          className="object-cover"
+                        />
+                      </div>
+                      {index === 0 && (
+                        <span className="rounded bg-[#0082c4] px-2 py-1 text-[10px] font-semibold text-white shadow-md md:text-xs">
+                          Primary
+                        </span>
+                      )}
                     </div>
                     <button
                       type="button"
                       onClick={() => handleRemoveImage(index)}
-                      className="absolute -top-2 -right-2 rounded-full bg-red-500 p-1.5 text-white opacity-0 shadow-lg transition-opacity group-hover:opacity-100"
+                      className="p-2 text-red-500 transition-colors hover:text-red-600"
                     >
-                      <X className="h-4 w-4" />
+                      <X className="h-4 w-4 md:h-5 md:w-5" />
                     </button>
-                    {index === 0 && (
-                      <span className="absolute bottom-2 left-2 rounded bg-[#0082c4] px-2 py-1 text-xs font-semibold text-white">
-                        Primary
-                      </span>
-                    )}
-                  </div>
+                  </Reorder.Item>
                 ))}
-              </div>
+              </Reorder.Group>
             )}
           </div>
 
           {/* Technologies */}
           <div>
-            <label className="mb-2 block text-sm font-semibold text-black dark:text-white">
+            <label className="mb-1.5 block text-xs font-semibold text-black md:mb-2 md:text-sm dark:text-white">
               Technologies *
             </label>
             <div className="flex gap-2">
@@ -612,7 +640,7 @@ export default function EditProjectPage() {
                   ))
                 }
                 placeholder="Next.js, TypeScript..."
-                className="flex-1 rounded-lg border border-[#e2e8f0] bg-white px-4 py-3 text-black focus:border-[#0082c4] focus:outline-none dark:border-[#27273a] dark:bg-black dark:text-white"
+                className="flex-1 rounded-lg border border-[#e2e8f0] bg-white p-2.5 text-sm text-black focus:border-[#0082c4] focus:outline-none md:px-4 md:py-3 md:text-base dark:border-[#27273a] dark:bg-black dark:text-white"
               />
               <button
                 type="button"
@@ -623,7 +651,7 @@ export default function EditProjectPage() {
                     setTechnologyInput,
                   )
                 }
-                className="rounded-lg bg-[#0082c4] px-4 py-3 text-white transition-colors hover:bg-[#0099e6]"
+                className="rounded-lg bg-[#0082c4] px-4 py-2.5 text-white transition-colors hover:bg-[#0099e6] md:py-3"
               >
                 <Plus className="h-5 w-5" />
               </button>
@@ -651,7 +679,7 @@ export default function EditProjectPage() {
 
           {/* Features */}
           <div>
-            <label className="mb-2 block text-sm font-semibold text-black dark:text-white">
+            <label className="mb-1.5 block text-xs font-semibold text-black md:mb-2 md:text-sm dark:text-white">
               Features *
             </label>
             <div className="flex gap-2">
@@ -665,14 +693,14 @@ export default function EditProjectPage() {
                   handleAddItem('features', featureInput, setFeatureInput))
                 }
                 placeholder="Real-time updates..."
-                className="flex-1 rounded-lg border border-[#e2e8f0] bg-white px-4 py-3 text-black focus:border-[#0082c4] focus:outline-none dark:border-[#27273a] dark:bg-black dark:text-white"
+                className="flex-1 rounded-lg border border-[#e2e8f0] bg-white p-2.5 text-sm text-black focus:border-[#0082c4] focus:outline-none md:px-4 md:py-3 md:text-base dark:border-[#27273a] dark:bg-black dark:text-white"
               />
               <button
                 type="button"
                 onClick={() =>
                   handleAddItem('features', featureInput, setFeatureInput)
                 }
-                className="rounded-lg bg-[#0082c4] px-4 py-3 text-white transition-colors hover:bg-[#0099e6]"
+                className="rounded-lg bg-[#0082c4] px-4 py-2.5 text-white transition-colors hover:bg-[#0099e6] md:py-3"
               >
                 <Plus className="h-5 w-5" />
               </button>
@@ -701,9 +729,9 @@ export default function EditProjectPage() {
           </div>
 
           {/* URLs */}
-          <div className="grid gap-6 md:grid-cols-2">
+          <div className="grid gap-4 md:grid-cols-2 md:gap-6">
             <div>
-              <label className="mb-2 block text-sm font-semibold text-black dark:text-white">
+              <label className="mb-1.5 block text-xs font-semibold text-black md:mb-2 md:text-sm dark:text-white">
                 Live URL
               </label>
               <input
@@ -712,11 +740,11 @@ export default function EditProjectPage() {
                 value={formData.liveUrl}
                 onChange={handleInputChange}
                 placeholder="https://example.com"
-                className="w-full rounded-lg border border-[#e2e8f0] bg-white px-4 py-3 text-black focus:border-[#0082c4] focus:outline-none dark:border-[#27273a] dark:bg-black dark:text-white"
+                className="w-full rounded-lg border border-[#e2e8f0] bg-white p-2.5 text-sm text-black focus:border-[#0082c4] focus:outline-none md:px-4 md:py-3 md:text-base dark:border-[#27273a] dark:bg-black dark:text-white"
               />
             </div>
             <div>
-              <label className="mb-2 block text-sm font-semibold text-black dark:text-white">
+              <label className="mb-1.5 block text-xs font-semibold text-black md:mb-2 md:text-sm dark:text-white">
                 GitHub URL
               </label>
               <input
@@ -725,30 +753,13 @@ export default function EditProjectPage() {
                 value={formData.githubUrl}
                 onChange={handleInputChange}
                 placeholder="https://github.com/username/repo"
-                className="w-full rounded-lg border border-[#e2e8f0] bg-white px-4 py-3 text-black focus:border-[#0082c4] focus:outline-none dark:border-[#27273a] dark:bg-black dark:text-white"
+                className="w-full rounded-lg border border-[#e2e8f0] bg-white p-2.5 text-sm text-black focus:border-[#0082c4] focus:outline-none md:px-4 md:py-3 md:text-base dark:border-[#27273a] dark:bg-black dark:text-white"
               />
             </div>
           </div>
 
           {/* Checkboxes */}
           <div className="flex gap-6">
-            <label className="flex cursor-pointer items-center gap-2">
-              <input
-                type="checkbox"
-                checked={formData.featured}
-                onChange={(e) =>
-                  setFormData((prev) => ({
-                    ...prev,
-                    featured: e.target.checked,
-                  }))
-                }
-                className="h-5 w-5 rounded text-[#0082c4]"
-              />
-              <Star className="h-5 w-5 text-[#0082c4]" />
-              <span className="text-sm font-semibold text-black dark:text-white">
-                Featured
-              </span>
-            </label>
             <label className="flex cursor-pointer items-center gap-2">
               <input
                 type="checkbox"
@@ -772,7 +783,7 @@ export default function EditProjectPage() {
             <Link href="/dashboard/projects" className="flex-1">
               <button
                 type="button"
-                className="w-full rounded-lg border-2 border-[#e2e8f0] px-6 py-3 font-semibold hover:bg-gray-100 dark:border-[#27273a] dark:hover:bg-gray-800"
+                className="w-full rounded-lg border-2 border-[#e2e8f0] px-4 py-2.5 text-sm font-semibold hover:bg-gray-100 md:px-6 md:py-3 md:text-base dark:border-[#27273a] dark:hover:bg-gray-800"
               >
                 Cancel
               </button>
@@ -780,16 +791,16 @@ export default function EditProjectPage() {
             <button
               type="submit"
               disabled={updateProjectMutation.isPending || isUploading}
-              className="flex flex-1 items-center justify-center gap-2 rounded-lg bg-[#0082c4] px-6 py-3 font-semibold text-white hover:bg-[#0099e6] disabled:opacity-50"
+              className="flex flex-1 items-center justify-center gap-2 rounded-lg bg-[#0082c4] px-4 py-2.5 text-sm font-semibold text-white hover:bg-[#0099e6] disabled:opacity-50 md:px-6 md:py-3 md:text-base"
             >
               {updateProjectMutation.isPending ? (
                 <>
-                  <Loader2 className="h-5 w-5 animate-spin" />
+                  <Loader2 className="h-4 w-4 animate-spin md:h-5 md:w-5" />
                   Updating...
                 </>
               ) : (
                 <>
-                  <Save className="h-5 w-5" />
+                  <Save className="h-4 w-4 md:h-5 md:w-5" />
                   Update Project
                 </>
               )}

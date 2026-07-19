@@ -1,7 +1,13 @@
 'use client';
 
 import { useState } from 'react';
-import { ExternalLink, Github, Filter } from 'lucide-react';
+import {
+  ExternalLink,
+  Github,
+  Filter,
+  ChevronLeft,
+  ChevronRight,
+} from 'lucide-react';
 import Image from 'next/image';
 import { getProjects } from '@/lib/getApi';
 import { useQuery } from '@tanstack/react-query';
@@ -40,6 +46,8 @@ interface Project {
 
 const Projects = () => {
   const [activeCategory, setActiveCategory] = useState('All');
+  const [currentPage, setCurrentPage] = useState(1);
+  const ITEMS_PER_PAGE = 3;
   const router = useRouter();
 
   const { data: projects = [], isLoading } = useQuery<Project[]>({
@@ -61,6 +69,12 @@ const Projects = () => {
 
   const featuredProject = filteredProjects.find((p) => p.featured);
   const regularProjects = filteredProjects.filter((p) => !p.featured);
+
+  const totalPages = Math.ceil(regularProjects.length / ITEMS_PER_PAGE);
+  const currentRegularProjects = regularProjects.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE,
+  );
 
   return (
     <section
@@ -98,7 +112,10 @@ const Projects = () => {
           {categories.map((category) => (
             <button
               key={category}
-              onClick={() => setActiveCategory(category)}
+              onClick={() => {
+                setActiveCategory(category);
+                setCurrentPage(1);
+              }}
               className={`rounded-full border-2 px-6 py-2 font-medium transition-all duration-300 ${
                 activeCategory === category
                   ? 'border-[#0082c4] bg-[#0082c4] text-white shadow-lg shadow-[#0082c4]/30'
@@ -261,7 +278,7 @@ const Projects = () => {
 
         {/* ── Regular Project Cards ──────────────────────────────── */}
         <div className="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-          {regularProjects.map((project, index) => (
+          {currentRegularProjects.map((project, index) => (
             <Link
               href={`/projects/${project._id}`}
               key={project._id || project.slug}
@@ -379,6 +396,43 @@ const Projects = () => {
             </Link>
           ))}
         </div>
+
+        {/* ── Pagination ─────────────────────────────────────────── */}
+        {totalPages > 1 && (
+          <div className="mt-12 flex items-center justify-center gap-2">
+            <button
+              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+              disabled={currentPage === 1}
+              className="flex h-10 w-10 items-center justify-center rounded-xl border-2 border-[#e2e8f0] bg-white text-[#334155] transition-all hover:border-[#0082c4] hover:text-[#0082c4] disabled:cursor-not-allowed disabled:opacity-50 dark:border-[#27273a] dark:bg-[#11141c] dark:text-[#cbd5e1]"
+            >
+              <ChevronLeft className="h-5 w-5" />
+            </button>
+
+            {Array.from({ length: totalPages }).map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setCurrentPage(i + 1)}
+                className={`flex h-10 w-10 items-center justify-center rounded-xl font-bold transition-all ${
+                  currentPage === i + 1
+                    ? 'bg-[#0082c4] text-white shadow-lg shadow-[#0082c4]/30'
+                    : 'border-2 border-[#e2e8f0] bg-white text-[#334155] hover:border-[#0082c4] hover:text-[#0082c4] dark:border-[#27273a] dark:bg-[#11141c] dark:text-[#cbd5e1]'
+                }`}
+              >
+                {i + 1}
+              </button>
+            ))}
+
+            <button
+              onClick={() =>
+                setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+              }
+              disabled={currentPage === totalPages}
+              className="flex h-10 w-10 items-center justify-center rounded-xl border-2 border-[#e2e8f0] bg-white text-[#334155] transition-all hover:border-[#0082c4] hover:text-[#0082c4] disabled:cursor-not-allowed disabled:opacity-50 dark:border-[#27273a] dark:bg-[#11141c] dark:text-[#cbd5e1]"
+            >
+              <ChevronRight className="h-5 w-5" />
+            </button>
+          </div>
+        )}
 
         {/* Empty State */}
         {filteredProjects.length === 0 && (

@@ -1,107 +1,12 @@
 'use client';
 
-import { Code2, Database, Wrench, Cloud, Palette, Server } from 'lucide-react';
+import * as LucideIcons from 'lucide-react';
+const { Code2, Loader2, Database, Wrench, Cloud, Palette, Server } =
+  LucideIcons;
 import { useTheme } from 'next-themes';
 import Image from 'next/image';
 import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { motion, useAnimation, useInView } from 'framer-motion';
-
-// ─── Data ────────────────────────────────────────────────────────────────────
-
-const skillCategories = [
-  {
-    icon: Code2,
-    title: 'Frontend Architecture',
-    accentHex: '#0082c4',
-    skills: [
-      { label: 'Modern UI', name: 'React & Next.js' },
-      { label: 'Type Safety', name: 'TypeScript' },
-      { label: 'Styles', name: 'Tailwind CSS' },
-      { label: 'Animation', name: 'Framer Motion' },
-      { label: 'Components', name: 'shadcn/ui' },
-    ],
-  },
-  {
-    icon: Server,
-    title: 'Backend Systems',
-    accentHex: '#0099e6',
-    skills: [
-      { label: 'Runtime', name: 'Node.js' },
-      { label: 'Framework', name: 'Express.js' },
-      { label: 'API Design', name: 'REST APIs' },
-      { label: 'Auth', name: 'Authentication' },
-      { label: 'ODM', name: 'Mongoose' },
-    ],
-  },
-  {
-    icon: Database,
-    title: 'Database & Storage',
-    accentHex: '#0082c4',
-    skills: [
-      { label: 'NoSQL', name: 'MongoDB' },
-      { label: 'Realtime', name: 'Firebase' },
-      { label: 'Relational', name: 'SQL Basics' },
-      { label: 'Modeling', name: 'Database Design' },
-    ],
-  },
-  {
-    icon: Wrench,
-    title: 'Tools & Workflow',
-    accentHex: '#0099e6',
-    skills: [
-      { label: 'Version Control', name: 'Git & GitHub' },
-      { label: 'Editor', name: 'VS Code' },
-      { label: 'Pkg Manager', name: 'npm & yarn' },
-      { label: 'API Testing', name: 'Postman' },
-      { label: 'Debugging', name: 'Chrome DevTools' },
-    ],
-  },
-  {
-    icon: Palette,
-    title: 'UI/UX & Design',
-    accentHex: '#0082c4',
-    skills: [
-      { label: 'Core', name: 'Responsive Design' },
-      { label: 'Prototyping', name: 'Figma' },
-      { label: 'Component Lib', name: 'Material-UI' },
-      { label: 'Motion', name: 'Framer Motion' },
-    ],
-  },
-  {
-    icon: Cloud,
-    title: 'Cloud & Deployment',
-    accentHex: '#0099e6',
-    skills: [
-      { label: 'Hosting', name: 'Vercel' },
-      { label: 'Hosting', name: 'Netlify' },
-      { label: 'Firebase', name: 'Firebase Hosting' },
-      { label: 'Database', name: 'MongoDB Atlas' },
-    ],
-  },
-];
-
-const skillsData = [
-  { id: 1, name: 'HTML', image: 'https://skillicons.dev/icons?i=html' },
-  { id: 2, name: 'CSS', image: 'https://skillicons.dev/icons?i=css' },
-  { id: 3, name: 'Next.js', image: 'https://skillicons.dev/icons?i=nextjs' },
-  { id: 4, name: 'React', image: 'https://skillicons.dev/icons?i=react' },
-  { id: 5, name: 'TypeScript', image: 'https://skillicons.dev/icons?i=ts' },
-  { id: 6, name: 'JavaScript', image: 'https://skillicons.dev/icons?i=js' },
-  { id: 7, name: 'Tailwind', image: 'https://skillicons.dev/icons?i=tailwind' },
-  { id: 8, name: 'Node.js', image: 'https://skillicons.dev/icons?i=nodejs' },
-  { id: 9, name: 'Express', image: 'https://skillicons.dev/icons?i=express' },
-  { id: 10, name: 'MongoDB', image: 'https://skillicons.dev/icons?i=mongodb' },
-  {
-    id: 11,
-    name: 'Firebase',
-    image: 'https://skillicons.dev/icons?i=firebase',
-  },
-  { id: 12, name: 'GitHub', image: 'https://skillicons.dev/icons?i=github' },
-  { id: 13, name: 'Git', image: 'https://skillicons.dev/icons?i=git' },
-  { id: 14, name: 'npm', image: 'https://skillicons.dev/icons?i=npm' },
-  { id: 15, name: 'Figma', image: 'https://skillicons.dev/icons?i=figma' },
-  { id: 16, name: 'VS Code', image: 'https://skillicons.dev/icons?i=vscode' },
-];
 
 // ─── Sub-components ──────────────────────────────────────────────────────────
 
@@ -152,11 +57,22 @@ const SkillBadge = ({
 const CategoryBlock = ({
   category,
   index,
+  totalCategories,
 }: {
-  category: (typeof skillCategories)[0];
+  category: any;
   index: number;
+  totalCategories: number;
 }) => {
-  const Icon = category.icon;
+  const getIcon = (name: string) => {
+    if (!name) return Code2;
+    if ((LucideIcons as any)[name]) return (LucideIcons as any)[name];
+    const pascalName = name
+      .split('-')
+      .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+      .join('');
+    return (LucideIcons as any)[pascalName] || Code2;
+  };
+  const Icon = getIcon(category.icon);
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: '-80px' });
 
@@ -196,13 +112,13 @@ const CategoryBlock = ({
             color: category.accentHex,
           }}
         >
-          {category.skills.length}
+          {category.skills?.length || 0}
         </span>
       </div>
 
       {/* Skill grid */}
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
-        {category.skills.map((skill, i) => (
+        {category.skills?.map((skill: any, i: number) => (
           <SkillBadge
             key={skill.name}
             skill={skill}
@@ -213,7 +129,7 @@ const CategoryBlock = ({
       </div>
 
       {/* Separator */}
-      {index < skillCategories.length - 1 && (
+      {index < totalCategories - 1 && (
         <div
           className="mt-12 h-px"
           style={{
@@ -232,15 +148,40 @@ const Skills = () => {
   const [mounted, setMounted] = useState(false);
   const controls = useAnimation();
   const [isPaused, setIsPaused] = useState(false);
-  const doubledSkills = useMemo(() => [...skillsData, ...skillsData], []);
+
+  // Dynamic data states
+  const [skillCategories, setSkillCategories] = useState<any[]>([]);
+  const [skillsData, setSkillsData] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [skillsRes, arsenalRes] = await Promise.all([
+          fetch('/api/skills').then((r) => r.json()),
+          fetch('/api/arsenal').then((r) => r.json()),
+        ]);
+        if (skillsRes.success) setSkillCategories(skillsRes.data);
+        if (arsenalRes.success) setSkillsData(arsenalRes.data);
+      } catch (error) {
+        console.error('Failed to fetch skills data', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+
     const timer = setTimeout(() => setMounted(true), 0);
     return () => clearTimeout(timer);
   }, []);
 
+  const doubledSkills = useMemo(
+    () => [...skillsData, ...skillsData],
+    [skillsData],
+  );
+
   useEffect(() => {
-    if (!isPaused) {
+    if (!isPaused && doubledSkills.length > 0) {
       controls.start({
         x: ['0%', '-50%'],
         transition: {
@@ -255,10 +196,18 @@ const Skills = () => {
     } else {
       controls.stop();
     }
-  }, [controls, isPaused]);
+  }, [controls, isPaused, doubledSkills]);
 
   const handleMouseEnter = useCallback(() => setIsPaused(true), []);
   const handleMouseLeave = useCallback(() => setIsPaused(false), []);
+
+  if (loading) {
+    return (
+      <section className="flex min-h-[500px] items-center justify-center bg-white dark:bg-black">
+        <Loader2 className="h-8 w-8 animate-spin text-[#0082c4]" />
+      </section>
+    );
+  }
 
   return (
     <section
@@ -365,7 +314,7 @@ const Skills = () => {
               >
                 {doubledSkills.map((skill, index) => (
                   <motion.div
-                    key={`${skill.id}-${index}`}
+                    key={`${skill.name}-${index}`}
                     whileHover={{ scale: 1.1, y: -4 }}
                     transition={{ type: 'spring', stiffness: 300, damping: 20 }}
                     className="flex w-[110px] shrink-0 flex-col items-center gap-3 rounded-xl border border-slate-200/80 bg-white p-4 shadow-sm transition-colors duration-200 hover:border-[#0082c4]/50 hover:shadow-[0_4px_20px_rgba(0,130,196,0.2)] dark:border-white/[0.06] dark:bg-white/[0.04] dark:hover:border-[#0082c4]/40"
@@ -412,18 +361,24 @@ const Skills = () => {
               </p>
             </div>
             <span className="font-mono text-xs text-slate-400 dark:text-slate-600">
-              {skillCategories.length} categories
+              {skillCategories.filter((cat: any) => !cat.isHidden).length}{' '}
+              categories
             </span>
           </motion.div>
 
           <div className="space-y-12">
-            {skillCategories.map((category, idx) => (
-              <CategoryBlock
-                key={category.title}
-                category={category}
-                index={idx}
-              />
-            ))}
+            {skillCategories
+              .filter((cat: any) => !cat.isHidden)
+              .map((category, idx) => (
+                <CategoryBlock
+                  key={category.title}
+                  category={category}
+                  index={idx}
+                  totalCategories={
+                    skillCategories.filter((cat: any) => !cat.isHidden).length
+                  }
+                />
+              ))}
           </div>
         </section>
       </div>
