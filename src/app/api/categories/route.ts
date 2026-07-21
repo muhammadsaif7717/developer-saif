@@ -25,11 +25,22 @@ export async function POST(req: Request) {
       );
     }
 
+    const maxOrderDoc = await categoriesCollection
+      .find({})
+      .sort({ order: -1 })
+      .limit(1)
+      .toArray();
+    const nextOrder =
+      maxOrderDoc.length > 0 && maxOrderDoc[0].order !== undefined
+        ? maxOrderDoc[0].order + 1
+        : 0;
+
     const newCategory = {
       title,
       icon,
       accentHex,
       skills: [],
+      order: nextOrder,
     };
 
     const result = await categoriesCollection.insertOne(newCategory);

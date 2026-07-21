@@ -6,7 +6,10 @@ export async function GET() {
   try {
     const db = await connectDb();
     const categoriesCollection = db.collection('skillCategories');
-    const skills = await categoriesCollection.find({}).toArray();
+    const skills = await categoriesCollection
+      .find({})
+      .sort({ order: 1, _id: 1 })
+      .toArray();
     return NextResponse.json({ success: true, data: skills });
   } catch (error) {
     console.error('Error fetching skills:', error);

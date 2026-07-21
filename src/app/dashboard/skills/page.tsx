@@ -251,6 +251,23 @@ export default function SkillsDashboard() {
     }
   };
 
+  const handleReorderCategories = async (newCategories: any[]) => {
+    setCategories(newCategories);
+    try {
+      const orderData = newCategories.map((item, index) => ({
+        id: item._id,
+        order: index,
+      }));
+      await fetch('/api/categories/reorder', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ items: orderData }),
+      });
+    } catch (error) {
+      console.error('Failed to save category order', error);
+    }
+  };
+
   if (loading) {
     return (
       <div className="flex h-screen items-center justify-center pt-20">
@@ -344,7 +361,12 @@ export default function SkillsDashboard() {
 
               {/* Right Column: Categories List */}
               <div className="xl:col-span-2">
-                <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6">
+                <Reorder.Group
+                  axis="y"
+                  values={categories}
+                  onReorder={handleReorderCategories}
+                  className="space-y-4 md:space-y-6"
+                >
                   {categories.map((cat, i) => {
                     const getIcon = (name: string) => {
                       if (!name) return Code2;
@@ -358,12 +380,16 @@ export default function SkillsDashboard() {
                     };
                     const CatIcon = getIcon(cat.icon);
                     return (
-                      <div
-                        key={i}
+                      <Reorder.Item
+                        key={cat._id || cat.title}
+                        value={cat}
                         className={`flex flex-col justify-between rounded-xl border p-3 transition-opacity md:p-4 ${cat.isHidden ? 'border-slate-200 bg-slate-100 opacity-60 grayscale dark:border-white/[0.03] dark:bg-black' : 'border-slate-100 bg-slate-50/50 dark:border-white/[0.05] dark:bg-white/[0.02]'}`}
                       >
                         <div>
                           <div className="mb-2 flex items-center gap-2">
+                            <div className="cursor-grab text-slate-400 transition-colors hover:text-[#0082c4] active:cursor-grabbing">
+                              <GripVertical className="h-4 w-4 md:h-5 md:w-5" />
+                            </div>
                             <div
                               className="flex h-6 w-6 items-center justify-center rounded-lg md:h-8 md:w-8"
                               style={{
@@ -410,10 +436,10 @@ export default function SkillsDashboard() {
                             <Trash2 className="h-3 w-3" /> Delete
                           </button>
                         </div>
-                      </div>
+                      </Reorder.Item>
                     );
                   })}
-                </div>
+                </Reorder.Group>
               </div>
             </div>
           </motion.div>
@@ -488,15 +514,26 @@ export default function SkillsDashboard() {
 
               {/* Right Column: Categories */}
               <div className="xl:col-span-2">
-                <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6">
+                <Reorder.Group
+                  axis="y"
+                  values={categories}
+                  onReorder={handleReorderCategories}
+                  className="space-y-4 md:space-y-6"
+                >
                   {categories.map((cat, i) => (
-                    <div
-                      key={i}
+                    <Reorder.Item
+                      key={cat._id || cat.title}
+                      value={cat}
                       className="rounded-xl border border-slate-100 bg-slate-50/50 p-3 md:p-4 dark:border-white/[0.05] dark:bg-white/[0.02]"
                     >
-                      <h3 className="mb-3 text-sm font-semibold text-[#0082c4] md:text-base">
-                        {cat.title}
-                      </h3>
+                      <div className="mb-3 flex items-center gap-2">
+                        <div className="cursor-grab text-slate-400 transition-colors hover:text-[#0082c4] active:cursor-grabbing">
+                          <GripVertical className="h-4 w-4 md:h-5 md:w-5" />
+                        </div>
+                        <h3 className="text-sm font-semibold text-[#0082c4] md:text-base">
+                          {cat.title}
+                        </h3>
+                      </div>
 
                       {cat.skills && cat.skills.length > 0 ? (
                         <Reorder.Group
@@ -543,9 +580,9 @@ export default function SkillsDashboard() {
                           No skills added yet.
                         </p>
                       )}
-                    </div>
+                    </Reorder.Item>
                   ))}
-                </div>
+                </Reorder.Group>
               </div>
             </div>
           </motion.div>

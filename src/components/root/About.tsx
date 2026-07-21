@@ -56,20 +56,20 @@ const values = [
 ];
 
 const education = [
-  {
-    logo: '/uu.png',
-    degree: 'B.Sc in Computer Science & Engineering',
-    institution: 'Uttara University',
-    grade: 'Running',
-    location: 'Uttara, Dhaka',
-    mapLink: 'https://maps.app.goo.gl/mBJzobXoHXjKvzrUA',
-    website: 'https://www.uttara.ac.bd/',
-  },
+  // {
+  //   logo: '/uu.png',
+  //   degree: 'B.Sc in Computer Science & Engineering',
+  //   institution: 'Uttara University',
+  //   grade: 'Running',
+  //   location: 'Uttara, Dhaka',
+  //   mapLink: 'https://maps.app.goo.gl/mBJzobXoHXjKvzrUA',
+  //   website: 'https://www.uttara.ac.bd/',
+  // },
   {
     logo: '/dpi.png',
     degree: 'Diploma in Computer Science & Technology',
     institution: 'Dhaka Polytechnic Institute',
-    grade: 'CGPA: 3.50',
+    grade: 'CGPA: 3.66',
     location: 'Tejgaon, Dhaka',
     mapLink: 'https://maps.app.goo.gl/HTa7jZ8u9CUXeK3V9',
     website: 'http://dhaka.polytech.gov.bd/',
@@ -96,7 +96,7 @@ const certifications = [
   },
   {
     logo: '/10m.png',
-    title: 'Web Development Training',
+    title: 'Communication Secrets Course',
     issuer: '10 Minute School',
     certLink:
       'https://drive.google.com/file/d/10CrcuhJxW6f8YenmE5JDHeNZMwVht7Fh/view?usp=drive_link',
