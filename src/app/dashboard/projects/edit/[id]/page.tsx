@@ -25,6 +25,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
+import { getProjectLinksConfig } from '@/lib/projectUtils';
 
 export default function EditProjectPage() {
   const { status } = useSession();
@@ -195,6 +196,14 @@ export default function EditProjectPage() {
 
     setImagePreviews(newOrder);
     setFormData((prev) => ({ ...prev, image: newFormDataImages }));
+  };
+
+  const handleReorderTechnologies = (newOrder: string[]) => {
+    setFormData((prev) => ({ ...prev, technologies: newOrder }));
+  };
+
+  const handleReorderFeatures = (newOrder: string[]) => {
+    setFormData((prev) => ({ ...prev, features: newOrder }));
   };
 
   // Update project mutation
@@ -656,13 +665,22 @@ export default function EditProjectPage() {
               </button>
             </div>
             {formData.technologies.length > 0 && (
-              <div className="mt-3 flex flex-wrap gap-2">
-                {formData.technologies.map((tech, index) => (
-                  <span
-                    key={`${tech}-${index}`}
-                    className="flex items-center gap-2 rounded-lg bg-[#0082c4]/10 px-3 py-1.5 text-sm font-medium text-[#0082c4]"
+              <Reorder.Group
+                axis="y"
+                values={formData.technologies}
+                onReorder={handleReorderTechnologies}
+                className="mt-3 space-y-2"
+              >
+                {formData.technologies.map((tech) => (
+                  <Reorder.Item
+                    key={tech}
+                    value={tech}
+                    className="flex cursor-grab items-center justify-between rounded-lg bg-[#0082c4]/10 px-4 py-3 text-sm font-medium text-[#0082c4] active:cursor-grabbing"
                   >
-                    {tech}
+                    <div className="flex items-center gap-3">
+                      <GripVertical className="h-4 w-4 opacity-50" />
+                      <span>{tech}</span>
+                    </div>
                     <button
                       type="button"
                       onClick={() => handleRemoveItem('technologies', tech)}
@@ -670,9 +688,9 @@ export default function EditProjectPage() {
                     >
                       <X className="h-4 w-4" />
                     </button>
-                  </span>
+                  </Reorder.Item>
                 ))}
-              </div>
+              </Reorder.Group>
             )}
           </div>
 
@@ -705,15 +723,24 @@ export default function EditProjectPage() {
               </button>
             </div>
             {formData.features.length > 0 && (
-              <div className="mt-3 space-y-2">
+              <Reorder.Group
+                axis="y"
+                values={formData.features}
+                onReorder={handleReorderFeatures}
+                className="mt-3 space-y-2"
+              >
                 {formData.features.map((feature, index) => (
-                  <div
-                    key={`${feature}-${index}`}
-                    className="flex items-center justify-between rounded-lg border border-[#e2e8f0] bg-white px-4 py-3 dark:border-[#27273a] dark:bg-black"
+                  <Reorder.Item
+                    key={feature}
+                    value={feature}
+                    className="flex cursor-grab items-center justify-between rounded-lg border border-[#e2e8f0] bg-white px-4 py-3 active:cursor-grabbing dark:border-[#27273a] dark:bg-black"
                   >
-                    <span className="text-sm text-black dark:text-white">
-                      {index + 1}. {feature}
-                    </span>
+                    <div className="flex items-center gap-3">
+                      <GripVertical className="h-4 w-4 text-[#64748b] dark:text-[#cbd5e1]" />
+                      <span className="text-sm text-black dark:text-white">
+                        {index + 1}. {feature}
+                      </span>
+                    </div>
                     <button
                       type="button"
                       onClick={() => handleRemoveItem('features', feature)}
@@ -721,9 +748,9 @@ export default function EditProjectPage() {
                     >
                       <X className="h-4 w-4" />
                     </button>
-                  </div>
+                  </Reorder.Item>
                 ))}
-              </div>
+              </Reorder.Group>
             )}
           </div>
 
@@ -731,7 +758,7 @@ export default function EditProjectPage() {
           <div className="grid gap-4 md:grid-cols-2 md:gap-6">
             <div>
               <label className="mb-1.5 block text-xs font-semibold text-black md:mb-2 md:text-sm dark:text-white">
-                Live URL
+                {getProjectLinksConfig(formData.category).liveLabel}
               </label>
               <input
                 type="url"
@@ -744,7 +771,7 @@ export default function EditProjectPage() {
             </div>
             <div>
               <label className="mb-1.5 block text-xs font-semibold text-black md:mb-2 md:text-sm dark:text-white">
-                GitHub URL
+                {getProjectLinksConfig(formData.category).githubLabel}
               </label>
               <input
                 type="url"

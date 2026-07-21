@@ -14,6 +14,7 @@ import { useQuery } from '@tanstack/react-query';
 import LoadingPage from '../shared/LoadingPage';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { getProjectLinksConfig } from '@/lib/projectUtils';
 
 const categories = [
   'All',
@@ -211,7 +212,7 @@ const Projects = () => {
                           {featuredProject.title}
                         </h3>
 
-                        <p className="mb-6 text-lg leading-relaxed text-[#334155] dark:text-[#cbd5e1]">
+                        <p className="mb-6 line-clamp-3 text-lg leading-relaxed text-[#334155] dark:text-[#cbd5e1]">
                           {featuredProject.description}
                         </p>
 
@@ -254,7 +255,11 @@ const Projects = () => {
                               className="inline-flex items-center gap-2 rounded-xl bg-[#0082c4] px-6 py-3 font-semibold text-white shadow-lg shadow-[#0082c4]/30 transition-all duration-300 hover:scale-105 hover:bg-[#0099e6] hover:shadow-xl hover:shadow-[#0082c4]/40"
                             >
                               <ExternalLink className="h-5 w-5" />
-                              Live Demo
+                              {
+                                getProjectLinksConfig(
+                                  featuredProject.category || 'Web Apps',
+                                ).liveLabel
+                              }
                             </button>
                           )}
                           {featuredProject.githubUrl && (
@@ -270,7 +275,11 @@ const Projects = () => {
                               className="inline-flex items-center gap-2 rounded-xl border-2 border-[#0082c4] bg-transparent px-6 py-3 font-semibold text-[#0082c4] transition-all duration-300 hover:bg-[#0082c4] hover:text-white"
                             >
                               <Github className="h-5 w-5" />
-                              View Code
+                              {
+                                getProjectLinksConfig(
+                                  featuredProject.category || 'Web Apps',
+                                ).githubLabel
+                              }
                             </button>
                           )}
                         </div>
@@ -325,7 +334,11 @@ const Projects = () => {
                             );
                           }}
                           className="flex h-12 w-12 items-center justify-center rounded-full bg-[#0082c4] text-white shadow-lg shadow-[#0082c4]/50 transition-transform duration-300 hover:scale-110"
-                          aria-label="View live demo"
+                          title={
+                            getProjectLinksConfig(
+                              project.category || 'Web Apps',
+                            ).liveLabel
+                          }
                         >
                           <ExternalLink className="h-5 w-5" />
                         </button>
@@ -342,7 +355,11 @@ const Projects = () => {
                             );
                           }}
                           className="flex h-12 w-12 items-center justify-center rounded-full bg-white text-[#0082c4] shadow-lg transition-transform duration-300 hover:scale-110 dark:bg-[#11141c]"
-                          aria-label="View source code"
+                          title={
+                            getProjectLinksConfig(
+                              project.category || 'Web Apps',
+                            ).githubLabel
+                          }
                         >
                           <Github className="h-5 w-5" />
                         </button>
@@ -365,7 +382,7 @@ const Projects = () => {
                       {project.title}
                     </h3>
 
-                    <p className="mb-4 flex-1 text-sm leading-relaxed text-[#64748b] dark:text-[#cbd5e1]">
+                    <p className="mb-4 line-clamp-2 flex-1 text-sm leading-relaxed text-[#64748b] dark:text-[#cbd5e1]">
                       {project.description}
                     </p>
 

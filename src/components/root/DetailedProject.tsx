@@ -5,6 +5,8 @@ import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
+import { notFound } from 'next/navigation';
+import { getProjectLinksConfig } from '@/lib/projectUtils';
 import {
   ArrowLeft,
   ExternalLink,
@@ -173,7 +175,12 @@ export default function DetailedProject({ projectId }: DetailedProjectProps) {
             >
               <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
               <ExternalLink className="relative z-10 h-5 w-5" />
-              <span className="relative z-10">View Live</span>
+              <span className="relative z-10">
+                {
+                  getProjectLinksConfig(project.category || 'Web Apps')
+                    .liveLabel
+                }
+              </span>
             </a>
             <a
               href={project.githubUrl}
@@ -182,7 +189,10 @@ export default function DetailedProject({ projectId }: DetailedProjectProps) {
               className="group inline-flex items-center gap-2 rounded-xl border-2 border-[#0082c4] bg-transparent px-6 py-3 font-semibold text-[#0082c4] transition-all hover:scale-105 hover:bg-[#0082c4] hover:text-white"
             >
               <Github className="h-5 w-5 transition-transform group-hover:rotate-12" />
-              Source Code
+              {
+                getProjectLinksConfig(project.category || 'Web Apps')
+                  .githubLabel
+              }
             </a>
           </div>
         </motion.div>

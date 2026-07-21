@@ -6,6 +6,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
+import { getProjectLinksConfig } from '@/lib/projectUtils';
 import {
   Plus,
   Search,
@@ -520,7 +521,10 @@ export default function ProjectsPage() {
                         className="flex flex-1 items-center justify-center gap-2 rounded-lg border border-[#0082c4] bg-[#0082c4] px-4 py-2 text-sm font-semibold text-white transition-all hover:bg-[#0099e6]"
                       >
                         <ExternalLink className="h-4 w-4" />
-                        Live
+                        {
+                          getProjectLinksConfig(project.category || 'Web Apps')
+                            .liveLabel
+                        }
                       </a>
                     )}
                     {project.githubUrl && (
@@ -532,7 +536,10 @@ export default function ProjectsPage() {
                         className="flex flex-1 items-center justify-center gap-2 rounded-lg border border-[#e2e8f0] bg-transparent px-4 py-2 text-sm font-semibold text-black transition-all hover:border-[#0082c4] hover:bg-[#0082c4]/10 dark:border-[#27273a] dark:text-white"
                       >
                         <Github className="h-4 w-4" />
-                        Code
+                        {
+                          getProjectLinksConfig(project.category || 'Web Apps')
+                            .githubLabel
+                        }
                       </a>
                     )}
                   </div>
