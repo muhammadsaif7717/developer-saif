@@ -22,7 +22,7 @@ export const connectDb = async () => {
     });
 
     const db = client.db('DeveloperSaif');
-    console.log('Connected to MongoDB successfully');
+    // console.log('Connected to MongoDB successfully');
     return db;
   } catch (err) {
     throw new Error(`Failed to connect to MongoDB ${err}`);

@@ -28,7 +28,8 @@ const Navbar = () => {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
+    const timer = setTimeout(() => setMounted(true), 0);
+    return () => clearTimeout(timer);
   }, []);
 
   // Close mobile menu when clicking outside
@@ -62,6 +63,74 @@ const Navbar = () => {
       document.body.style.overflow = 'unset';
     };
   }, [opened]);
+
+  const handleNavClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    href: string,
+    key: string,
+  ) => {
+    setActive(key);
+    setOpened(false);
+
+    if (href.startsWith('/#') || href.startsWith('#')) {
+      const targetId = href.split('#')[1];
+      if (pathname === '/') {
+        e.preventDefault();
+        const element = document.getElementById(targetId);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+          window.history.pushState(null, '', `/#${targetId}`);
+        }
+      }
+    }
+  };
+
+  // Scroll Spy to highlight active section on the home page
+  useEffect(() => {
+    if (pathname !== '/') return;
+
+    const sections = ['home', 'about', 'skills', 'projects', 'contact'];
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActive(entry.target.id);
+          }
+        });
+      },
+      {
+        rootMargin: '-30% 0px -30% 0px',
+        threshold: 0,
+      },
+    );
+
+    sections.forEach((id) => {
+      const element = document.getElementById(id);
+      if (element) {
+        observer.observe(element);
+      }
+    });
+
+    return () => observer.disconnect();
+  }, [pathname, setActive]);
+
+  // Handle hash scroll when navigating from another page
+  useEffect(() => {
+    if (pathname === '/') {
+      const hash = window.location.hash;
+      if (hash) {
+        const id = hash.replace('#', '');
+        setTimeout(() => {
+          const element = document.getElementById(id);
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+            setActive(id);
+          }
+        }, 400); // 400ms is perfectly balanced to allow image rendering before scrolling
+      }
+    }
+  }, [pathname, setActive]);
 
   if (!mounted) {
     return (
@@ -106,7 +175,7 @@ const Navbar = () => {
               <Menu className="h-7 w-7 text-black dark:text-white" />
             </button>
             <Link
-              onClick={() => setActive('home')}
+              onClick={(e) => handleNavClick(e, '/', 'home')}
               href="/"
               className="text-lg font-bold text-black transition-colors hover:text-[#0082c4] md:text-2xl lg:text-3xl dark:text-white dark:hover:text-[#0082c4]"
             >
@@ -119,8 +188,9 @@ const Navbar = () => {
             {navLinks.map((link) => (
               <Link
                 key={link.key}
-                onClick={() => setActive(link.key)}
+                onClick={(e) => handleNavClick(e, link.href, link.key)}
                 href={link.href}
+                scroll={!link.href.includes('#')}
                 className="group relative flex items-center justify-center"
                 aria-label={link.name}
               >
@@ -171,6 +241,9 @@ const Navbar = () => {
           {/* Contact Button */}
           <motion.a
             href="/#contact"
+            onClick={(e: React.MouseEvent<HTMLAnchorElement>) =>
+              handleNavClick(e, '/#contact', 'contact')
+            }
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             className="flex items-center gap-2 rounded-lg border-2 border-[#0082c4] bg-[#0082c4] px-3 py-2 font-semibold text-white shadow-lg shadow-[#0082c4]/20 transition-all hover:shadow-xl hover:shadow-[#0082c4]/30 md:px-4"
@@ -223,10 +296,8 @@ const Navbar = () => {
                   >
                     <Link
                       href={link.href}
-                      onClick={() => {
-                        setOpened(false);
-                        setActive(link.key);
-                      }}
+                      scroll={!link.href.includes('#')}
+                      onClick={(e) => handleNavClick(e, link.href, link.key)}
                       className={`flex items-center gap-4 rounded-lg p-3 font-semibold transition-all ${
                         active === link.key
                           ? 'bg-[#0082c4] text-white shadow-lg shadow-[#0082c4]/20'

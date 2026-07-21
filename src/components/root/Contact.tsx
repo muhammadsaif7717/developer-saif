@@ -16,6 +16,56 @@ import emailjs from '@emailjs/browser';
 import { toast } from 'sonner';
 import { motion } from 'framer-motion';
 
+/* ── Floating label input ── */
+const FloatingInput = ({
+  id,
+  name,
+  type = 'text',
+  label,
+  required = false,
+  value,
+  onChange,
+  error,
+}: {
+  id: string;
+  name: string;
+  type?: string;
+  label: string;
+  required?: boolean;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  error?: string;
+}) => (
+  <div className="group relative">
+    <input
+      type={type}
+      id={id}
+      name={name}
+      value={value}
+      onChange={onChange}
+      placeholder=" "
+      className={`peer w-full rounded-xl border-2 bg-white px-4 pt-5 pb-2 text-xs text-[#334155] transition-all duration-200 focus:outline-none md:rounded-2xl md:px-4 md:pt-5 md:pb-2 md:text-sm lg:px-4 lg:pt-5 lg:pb-2 lg:text-base dark:bg-black dark:text-[#cbd5e1] ${
+        error
+          ? 'border-red-400 focus:border-red-400'
+          : 'border-[#e2e8f0] focus:border-[#0082c4] focus:shadow-[0_0_0_4px_rgba(0,130,196,0.08)] dark:border-[#27273a] dark:focus:border-[#0082c4]'
+      }`}
+    />
+    <label
+      htmlFor={id}
+      className={`pointer-events-none absolute top-3.5 left-3 text-xs transition-all duration-200 peer-not-placeholder-shown:top-1.5 peer-not-placeholder-shown:text-xs peer-not-placeholder-shown:font-semibold peer-not-placeholder-shown:tracking-wide peer-not-placeholder-shown:text-[#0082c4] peer-focus:top-1.5 peer-focus:text-xs peer-focus:font-semibold peer-focus:tracking-wide peer-focus:text-[#0082c4] md:top-4 md:left-4 md:text-sm md:peer-not-placeholder-shown:top-2 md:peer-not-placeholder-shown:text-xs md:peer-focus:top-2 md:peer-focus:text-xs lg:top-5 lg:left-5 lg:text-base lg:peer-not-placeholder-shown:top-2.5 lg:peer-not-placeholder-shown:text-xs lg:peer-focus:top-2.5 lg:peer-focus:text-xs ${error ? 'text-red-400' : 'text-[#94a3b8]'}`}
+    >
+      {label}
+      {required && <span className="ml-0.5 text-[#0082c4]">*</span>}
+    </label>
+    {error && (
+      <p className="mt-1.5 flex items-center gap-1.5 text-xs text-red-500 md:text-xs lg:text-sm">
+        <AlertCircle className="h-3.5 w-3.5 shrink-0 md:h-4 md:w-4" />
+        {error}
+      </p>
+    )}
+  </div>
+);
+
 export default function Contact() {
   const formRef = useRef<HTMLFormElement>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -100,56 +150,6 @@ export default function Contact() {
     toast.success('Copied to clipboard!');
   };
 
-  /* ── Floating label input ── */
-  const FloatingInput = ({
-    id,
-    name,
-    type = 'text',
-    label,
-    required = false,
-    value,
-    onChange,
-    error,
-  }: {
-    id: string;
-    name: string;
-    type?: string;
-    label: string;
-    required?: boolean;
-    value: string;
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    error?: string;
-  }) => (
-    <div className="group relative">
-      <input
-        type={type}
-        id={id}
-        name={name}
-        value={value}
-        onChange={onChange}
-        placeholder=" "
-        className={`peer w-full rounded-xl border-2 bg-white px-4 pt-6 pb-3 text-sm text-[#334155] transition-all duration-200 focus:outline-none dark:bg-black dark:text-[#cbd5e1] ${
-          error
-            ? 'border-red-400 focus:border-red-400'
-            : 'border-[#e2e8f0] focus:border-[#0082c4] focus:shadow-[0_0_0_4px_rgba(0,130,196,0.08)] dark:border-[#27273a] dark:focus:border-[#0082c4]'
-        }`}
-      />
-      <label
-        htmlFor={id}
-        className={`pointer-events-none absolute top-4 left-4 text-sm transition-all duration-200 peer-not-placeholder-shown:top-2 peer-not-placeholder-shown:text-[0.65rem] peer-not-placeholder-shown:font-semibold peer-not-placeholder-shown:tracking-wide peer-not-placeholder-shown:text-[#0082c4] peer-focus:top-2 peer-focus:text-[0.65rem] peer-focus:font-semibold peer-focus:tracking-wide peer-focus:text-[#0082c4] ${error ? 'text-red-400' : 'text-[#94a3b8]'}`}
-      >
-        {label}
-        {required && <span className="ml-0.5 text-[#0082c4]">*</span>}
-      </label>
-      {error && (
-        <p className="mt-1.5 flex items-center gap-1.5 text-xs text-red-500">
-          <AlertCircle className="h-3.5 w-3.5 shrink-0" />
-          {error}
-        </p>
-      )}
-    </div>
-  );
-
   return (
     <section
       id="contact"
@@ -170,52 +170,56 @@ export default function Contact() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.55 }}
-          className="mb-16 text-center"
+          transition={{ duration: 0.6 }}
+          className="mb-12 text-center md:mb-16"
         >
-          <div className="mb-5 inline-flex items-center gap-3">
+          <div className="mb-4 inline-flex items-center gap-3">
             <span className="h-px w-10 bg-gradient-to-r from-transparent to-[#0082c4]" />
-            <span className="font-mono text-xs font-bold tracking-[0.25em] text-[#0082c4] uppercase">
-              Let's Work Together
+            <span className="font-mono text-sm font-medium tracking-wider text-[#0082c4] uppercase">
+              Let&apos;s Work Together
             </span>
             <span className="h-px w-10 bg-gradient-to-l from-transparent to-[#0082c4]" />
           </div>
-          <h2 className="mb-5 text-4xl font-extrabold tracking-tight text-[#0082c4] md:text-5xl lg:text-6xl">
-            Get In Touch
+          <h2 className="mb-4 text-4xl font-bold md:text-5xl lg:text-6xl">
+            <span className="text-[#0082c4]">Get In </span>
+            <span className="text-slate-800 dark:text-white">Touch</span>
           </h2>
-          <p className="mx-auto max-w-xl text-base text-[#64748b] md:text-lg dark:text-[#cbd5e1]">
+          <p className="mx-auto max-w-2xl text-base text-[#64748b] md:text-lg dark:text-[#cbd5e1]">
             Have a project in mind or just want to chat? Drop me a message and
-            I'll get back to you within 24 hours.
+            I&apos;ll get back to you within 24 hours.
           </p>
         </motion.header>
 
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-5 lg:gap-14">
-          {/* ── Contact Form (wider) ─────────────────────────────── */}
+          {/* ── Contact Form (messaging section) ─────────────────────────────── */}
           <motion.div
             initial={{ opacity: 0, x: -24 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.55, delay: 0.1 }}
-            className="lg:col-span-3"
+            className="order-2 lg:order-1 lg:col-span-3"
           >
-            <div className="rounded-2xl border border-[#0082c4]/20 bg-[#f2f2f2] p-8 shadow-lg shadow-[#0082c4]/5 dark:bg-[#11141c]">
+            <div className="relative rounded-2xl border border-[#0082c4]/20 bg-white/40 p-5 shadow-2xl shadow-[#0082c4]/10 backdrop-blur-md transition-all duration-300 hover:border-[#0082c4]/40 hover:shadow-[#0082c4]/20 md:rounded-2xl md:p-8 lg:p-10 dark:border-white/5 dark:bg-[#11141c]/60">
+              {/* Decorative top gradient */}
+              <div className="absolute inset-x-0 -top-px h-px w-full bg-gradient-to-r from-transparent via-[#0082c4]/50 to-transparent" />
+
               {/* Form header */}
-              <div className="mb-8 flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[#0082c4] to-[#0099e6] shadow-md shadow-[#0082c4]/30">
-                  <MessageSquare className="h-5 w-5 text-white" />
+              <div className="mb-6 flex items-center gap-3 md:mb-8 md:gap-4 lg:mb-10 lg:gap-5">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[#0082c4] to-[#0099e6] shadow-lg shadow-[#0082c4]/30 md:h-12 md:w-12 md:rounded-2xl lg:h-14 lg:w-14">
+                  <MessageSquare className="h-5 w-5 text-white md:h-6 md:w-6 lg:h-7 lg:w-7" />
                 </div>
                 <div>
-                  <p className="font-mono text-[0.65rem] font-bold tracking-[0.18em] text-[#0082c4] uppercase">
+                  <h3 className="text-lg font-bold text-[#334155] md:text-xl lg:text-2xl dark:text-white">
                     Send a message
-                  </p>
-                  <p className="text-sm text-[#64748b] dark:text-[#cbd5e1]">
-                    I'll reply within 24 hours
+                  </h3>
+                  <p className="mt-0.5 text-xs text-[#64748b] md:mt-1 md:text-sm lg:text-base dark:text-[#94a3b8]">
+                    I&apos;ll reply within 24 hours
                   </p>
                 </div>
               </div>
 
-              <form ref={formRef} onSubmit={handleSubmit} className="space-y-5">
-                <div className="grid gap-5 sm:grid-cols-2">
+              <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
+                <div className="grid gap-6 sm:grid-cols-2">
                   <FloatingInput
                     id="name"
                     name="name"
@@ -254,7 +258,7 @@ export default function Contact() {
                     onChange={handleChange}
                     rows={6}
                     placeholder=" "
-                    className={`peer w-full resize-none rounded-xl border-2 bg-white px-4 pt-6 pb-3 text-sm text-[#334155] transition-all duration-200 focus:outline-none dark:bg-black dark:text-[#cbd5e1] ${
+                    className={`peer w-full resize-none rounded-xl border-2 bg-white/70 px-4 pt-5 pb-2 text-xs text-[#334155] transition-all duration-200 focus:outline-none md:rounded-2xl md:px-4 md:pt-5 md:pb-2 md:text-sm lg:px-4 lg:pt-5 lg:pb-2 lg:text-base dark:bg-black/40 dark:text-[#cbd5e1] ${
                       errors.message
                         ? 'border-red-400 focus:border-red-400'
                         : 'border-[#e2e8f0] focus:border-[#0082c4] focus:shadow-[0_0_0_4px_rgba(0,130,196,0.08)] dark:border-[#27273a]'
@@ -262,19 +266,19 @@ export default function Contact() {
                   />
                   <label
                     htmlFor="message"
-                    className={`pointer-events-none absolute top-4 left-4 text-sm transition-all duration-200 peer-not-placeholder-shown:top-2 peer-not-placeholder-shown:text-[0.65rem] peer-not-placeholder-shown:font-semibold peer-not-placeholder-shown:tracking-wide peer-not-placeholder-shown:text-[#0082c4] peer-focus:top-2 peer-focus:text-[0.65rem] peer-focus:font-semibold peer-focus:tracking-wide peer-focus:text-[#0082c4] ${errors.message ? 'text-red-400' : 'text-[#94a3b8]'}`}
+                    className={`pointer-events-none absolute top-3.5 left-3 text-xs transition-all duration-200 peer-not-placeholder-shown:top-1.5 peer-not-placeholder-shown:text-xs peer-not-placeholder-shown:font-semibold peer-not-placeholder-shown:tracking-wide peer-not-placeholder-shown:text-[#0082c4] peer-focus:top-1.5 peer-focus:text-xs peer-focus:font-semibold peer-focus:tracking-wide peer-focus:text-[#0082c4] md:top-4 md:left-4 md:text-sm md:peer-not-placeholder-shown:top-2 md:peer-not-placeholder-shown:text-xs md:peer-focus:top-2 md:peer-focus:text-xs lg:top-5 lg:left-5 lg:text-base lg:peer-not-placeholder-shown:top-2.5 lg:peer-not-placeholder-shown:text-xs lg:peer-focus:top-2.5 lg:peer-focus:text-xs ${errors.message ? 'text-red-400' : 'text-[#94a3b8]'}`}
                   >
                     Your Message<span className="ml-0.5 text-[#0082c4]">*</span>
                   </label>
                   {errors.message && (
-                    <p className="mt-1.5 flex items-center gap-1.5 text-xs text-red-500">
-                      <AlertCircle className="h-3.5 w-3.5 shrink-0" />
+                    <p className="mt-1.5 flex items-center gap-1.5 text-xs text-red-500 md:text-xs lg:text-sm">
+                      <AlertCircle className="h-3.5 w-3.5 shrink-0 md:h-4 md:w-4" />
                       {errors.message}
                     </p>
                   )}
                   {/* character count */}
                   {formData.message.length > 0 && (
-                    <p className="mt-1 text-right font-mono text-[0.65rem] text-[#94a3b8]">
+                    <p className="mt-1.5 text-right font-mono text-xs text-[#94a3b8] md:text-xs lg:text-xs">
                       {formData.message.length} chars
                     </p>
                   )}
@@ -283,19 +287,19 @@ export default function Contact() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="group relative flex w-full items-center justify-center gap-2.5 overflow-hidden rounded-xl bg-[#0082c4] px-6 py-4 font-semibold text-white shadow-lg shadow-[#0082c4]/30 transition-all duration-300 hover:bg-[#0099e6] hover:shadow-xl hover:shadow-[#0082c4]/40 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="group relative flex w-full items-center justify-center gap-2 overflow-hidden rounded-xl bg-[#0082c4] px-4 py-2.5 text-sm font-semibold text-white shadow-lg shadow-[#0082c4]/30 transition-all duration-300 hover:bg-[#0099e6] hover:shadow-xl hover:shadow-[#0082c4]/40 disabled:cursor-not-allowed disabled:opacity-50 sm:px-5 sm:py-3 sm:text-base md:px-6"
                 >
-                  <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/15 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
+                  <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
                   {isSubmitting ? (
                     <>
-                      <Loader2 className="h-5 w-5 animate-spin" />
+                      <Loader2 className="h-4 w-4 animate-spin sm:h-5 sm:w-5" />
                       <span>Sending…</span>
                     </>
                   ) : (
                     <>
-                      <Send className="h-5 w-5" />
-                      <span>Send Message</span>
-                      <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                      <Send className="relative z-10 h-4 w-4 sm:h-5 sm:w-5" />
+                      <span className="relative z-10">Send Message</span>
+                      <ArrowRight className="relative z-10 h-4 w-4 transition-transform group-hover:translate-x-1 sm:h-5 sm:w-5" />
                     </>
                   )}
                 </button>
@@ -309,19 +313,19 @@ export default function Contact() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.55, delay: 0.2 }}
-            className="flex flex-col gap-5 lg:col-span-2"
+            className="order-1 flex flex-col gap-6 lg:order-2 lg:col-span-2"
           >
             {/* Availability pill */}
-            <div className="flex items-center gap-3 rounded-2xl border-2 border-[#0082c4]/40 bg-[#f2f2f2] px-5 py-4 dark:bg-[#11141c]">
-              <span className="relative flex h-3 w-3 shrink-0">
+            <div className="flex items-center gap-3 rounded-2xl border border-[#0082c4]/20 bg-white/40 px-5 py-4 shadow-lg shadow-[#0082c4]/5 backdrop-blur-md md:gap-4 md:rounded-2xl md:px-6 md:py-5 lg:gap-5 lg:rounded-2xl lg:px-8 lg:py-6 dark:border-white/5 dark:bg-[#11141c]/60">
+              <span className="relative flex h-2.5 w-2.5 shrink-0 md:h-3 md:w-3 lg:h-4 lg:w-4">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#10b981] opacity-60" />
-                <span className="relative inline-flex h-3 w-3 rounded-full bg-[#10b981]" />
+                <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-[#10b981] md:h-3 md:w-3 lg:h-4 lg:w-4" />
               </span>
               <div>
-                <p className="text-sm font-bold text-[#0082c4]">
+                <p className="text-xs font-bold text-[#0082c4] md:text-sm lg:text-base">
                   Currently Available
                 </p>
-                <p className="text-xs text-[#64748b] dark:text-[#cbd5e1]">
+                <p className="mt-0.5 text-xs text-[#64748b] md:text-xs lg:text-sm dark:text-[#cbd5e1]">
                   Open to projects · replies in ~24h
                 </p>
               </div>
@@ -359,33 +363,33 @@ export default function Contact() {
                 viewport={{ once: true }}
                 transition={{ delay: 0.25 + i * 0.07 }}
                 whileHover={{ y: -3 }}
-                className="group relative rounded-2xl border border-[#0082c4]/20 bg-[#f2f2f2] p-5 transition-all duration-300 hover:border-[#0082c4]/50 hover:shadow-lg hover:shadow-[#0082c4]/10 dark:bg-[#11141c]"
+                className="group relative rounded-2xl border border-[#0082c4]/20 bg-white/40 p-5 shadow-lg shadow-[#0082c4]/5 backdrop-blur-md transition-all duration-300 hover:border-[#0082c4]/50 hover:shadow-xl hover:shadow-[#0082c4]/15 md:rounded-2xl md:p-6 lg:rounded-2xl lg:p-8 dark:border-white/5 dark:bg-[#11141c]/60"
               >
                 {/* Left accent */}
-                <div className="absolute top-5 bottom-5 left-0 w-[3px] rounded-full bg-[#0082c4] opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                <div className="absolute top-5 bottom-5 left-0 w-[3px] rounded-full bg-[#0082c4] opacity-0 transition-opacity duration-300 group-hover:opacity-100 md:top-6 md:bottom-6 lg:top-8 lg:bottom-8" />
 
-                <div className="flex items-start gap-4">
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white shadow-sm transition-all duration-300 group-hover:bg-[#0082c4] dark:bg-black">
-                    <item.icon className="h-5 w-5 text-[#0082c4] transition-colors duration-300 group-hover:text-white" />
+                <div className="flex items-start gap-3 md:gap-4 lg:gap-5">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white shadow-sm transition-all duration-300 group-hover:bg-gradient-to-br group-hover:from-[#0082c4] group-hover:to-[#0099e6] group-hover:shadow-lg md:h-12 md:w-12 md:rounded-2xl lg:h-14 lg:w-14 dark:bg-black/50">
+                    <item.icon className="h-4 w-4 text-[#0082c4] transition-colors duration-300 group-hover:text-white md:h-5 md:w-5 lg:h-6 lg:w-6" />
                   </div>
                   <div className="min-w-0 flex-1">
-                    <p className="mb-0.5 font-mono text-[0.6rem] font-bold tracking-[0.18em] text-[#0082c4] uppercase opacity-70">
+                    <p className="mb-0.5 font-mono text-xs font-bold tracking-[0.18em] text-[#0082c4] uppercase opacity-70 md:mb-1 md:text-xs lg:text-xs">
                       {item.label}
                     </p>
                     {item.href ? (
                       <a
                         href={item.href}
-                        className="block truncate text-sm font-semibold text-[#334155] transition-colors hover:text-[#0082c4] dark:text-[#cbd5e1]"
+                        className="block truncate text-xs font-semibold text-[#334155] transition-colors hover:text-[#0082c4] md:text-sm lg:text-base dark:text-[#cbd5e1]"
                       >
                         {item.value}
                       </a>
                     ) : (
-                      <p className="text-sm font-semibold text-[#334155] dark:text-[#cbd5e1]">
+                      <p className="text-xs font-semibold text-[#334155] md:text-sm lg:text-base dark:text-[#cbd5e1]">
                         {item.value}
                       </p>
                     )}
                     {item.sub && (
-                      <p className="mt-0.5 text-xs text-[#94a3b8]">
+                      <p className="mt-0.5 text-xs text-[#94a3b8] md:mt-1 md:text-xs lg:text-sm">
                         {item.sub}
                       </p>
                     )}
@@ -393,10 +397,10 @@ export default function Contact() {
                   {item.canCopy && (
                     <button
                       onClick={() => copyToClipboard(item.copyValue!)}
-                      className="shrink-0 rounded-lg p-1.5 text-[#94a3b8] transition-all hover:bg-white hover:text-[#0082c4] dark:hover:bg-black"
+                      className="shrink-0 rounded-xl p-1.5 text-[#94a3b8] transition-all hover:bg-white hover:text-[#0082c4] md:rounded-xl md:p-2 dark:hover:bg-black"
                       aria-label={`Copy ${item.label}`}
                     >
-                      <Copy className="h-4 w-4" />
+                      <Copy className="h-3.5 w-3.5 md:h-4 md:w-4 lg:h-5 lg:w-5" />
                     </button>
                   )}
                 </div>
@@ -404,15 +408,15 @@ export default function Contact() {
             ))}
 
             {/* Quote / personality note */}
-            <div className="mt-auto rounded-2xl border border-[#0082c4]/20 bg-gradient-to-br from-[#0082c4]/8 to-[#0099e6]/5 p-5 dark:from-[#0082c4]/10 dark:to-[#0099e6]/5">
-              <p className="mb-2 font-mono text-[0.65rem] font-bold tracking-[0.18em] text-[#0082c4] uppercase">
-                // a quick note
+            <div className="mt-auto rounded-2xl border border-[#0082c4]/20 bg-gradient-to-br from-[#0082c4]/10 to-[#0099e6]/5 p-5 shadow-lg shadow-[#0082c4]/5 backdrop-blur-md md:rounded-2xl md:p-6 lg:rounded-2xl lg:p-8 dark:border-white/5 dark:from-[#0082c4]/15 dark:to-[#0099e6]/5">
+              <p className="mb-1.5 font-mono text-xs font-bold tracking-[0.18em] text-[#0082c4] uppercase md:mb-2 md:text-xs lg:mb-3 lg:text-xs">
+                {`// a quick note`}
               </p>
-              <p className="text-sm leading-relaxed text-[#64748b] dark:text-[#cbd5e1]">
-                Whether it's a full product build, a quick fix, or just an idea
-                you want to bounce off someone —{' '}
+              <p className="text-xs leading-relaxed text-[#64748b] md:text-sm lg:text-base dark:text-[#cbd5e1]">
+                Whether it&apos;s a full product build, a quick fix, or just an
+                idea you want to bounce off someone —{' '}
                 <span className="font-semibold text-[#0082c4]">
-                  I'm all ears.
+                  I&apos;m all ears.
                 </span>
               </p>
             </div>

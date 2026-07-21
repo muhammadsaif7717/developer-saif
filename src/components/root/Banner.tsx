@@ -43,7 +43,10 @@ const Banner = () => {
   ];
 
   return (
-    <div className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-white py-20 md:py-0 dark:bg-black">
+    <div
+      id="home"
+      className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-white py-20 md:py-0 dark:bg-black"
+    >
       {/* Animated Grid Background */}
       <div className="absolute inset-0 overflow-hidden">
         {/* Grid Pattern */}
@@ -65,23 +68,23 @@ const Banner = () => {
           <div>{'</html>'}</div>
         </div>
 
-        {/* Floating Code Snippets - Responsive positioning */}
-        <div className="[animation-duration-[15s]] absolute top-[15%] left-[5%] animate-bounce font-mono text-[10px] text-[#0082c4] opacity-30 sm:text-xs dark:opacity-40">
+        {/* Floating Code Snippets - Responsive positioning (Hidden on mobile for performance) */}
+        <div className="[animation-duration-[15s]] absolute top-[15%] left-[5%] hidden animate-bounce font-mono text-xs text-[#0082c4] opacity-30 sm:text-xs md:block dark:opacity-40">
           {'{ developer: true }'}
         </div>
-        <div className="[animation-duration-[17s]] absolute top-[27%] left-[16%] animate-bounce font-mono text-[10px] text-[#0082c4] opacity-30 [animation-delay:0.5s] sm:text-xs dark:opacity-40">
+        <div className="[animation-duration-[17s]] absolute top-[27%] left-[16%] hidden animate-bounce font-mono text-xs text-[#0082c4] opacity-30 [animation-delay:0.5s] sm:text-xs md:block dark:opacity-40">
           {'const skills = [...]'}
         </div>
-        <div className="[animation-duration-[19s]] absolute top-[39%] left-[27%] animate-bounce font-mono text-[10px] text-[#0082c4] opacity-30 [animation-delay:1s] sm:text-xs dark:opacity-40">
+        <div className="[animation-duration-[19s]] absolute top-[39%] left-[27%] hidden animate-bounce font-mono text-xs text-[#0082c4] opacity-30 [animation-delay:1s] sm:text-xs md:block dark:opacity-40">
           {'function build()'}
         </div>
-        <div className="[animation-duration-[21s]] absolute top-[51%] left-[38%] animate-bounce font-mono text-[10px] text-[#0082c4] opacity-30 [animation-delay:1.5s] sm:text-xs dark:opacity-40">
+        <div className="[animation-duration-[21s]] absolute top-[51%] left-[38%] hidden animate-bounce font-mono text-xs text-[#0082c4] opacity-30 [animation-delay:1.5s] sm:text-xs md:block dark:opacity-40">
           {'// Clean code'}
         </div>
-        <div className="[animation-duration-[23s]] absolute top-[63%] left-[49%] animate-bounce font-mono text-[10px] text-[#0082c4] opacity-30 [animation-delay:2s] sm:text-xs dark:opacity-30">
+        <div className="[animation-duration-[23s]] absolute top-[63%] left-[49%] hidden animate-bounce font-mono text-xs text-[#0082c4] opacity-30 [animation-delay:2s] sm:text-xs md:block dark:opacity-30">
           {'npm run dev'}
         </div>
-        <div className="[animation-duration-[25s]] absolute top-[75%] left-[60%] animate-bounce font-mono text-[10px] text-[#0082c4] opacity-30 [animation-delay:2.5s] sm:text-xs dark:opacity-40">
+        <div className="[animation-duration-[25s]] absolute top-[75%] left-[60%] hidden animate-bounce font-mono text-xs text-[#0082c4] opacity-30 [animation-delay:2.5s] sm:text-xs md:block dark:opacity-40">
           {'<Component />'}
         </div>
       </div>
@@ -102,7 +105,7 @@ const Banner = () => {
           <div className="group relative">
             {/* Image container */}
             <div className="relative rounded-2xl border-2 border-[#0082c4] bg-white p-1.5 transition-all duration-300 hover:scale-105 hover:border-[#0099e6] sm:p-2 lg:rounded-full dark:bg-black">
-              <div className="flex h-[180px] w-[180px] items-center justify-center overflow-hidden rounded-xl bg-linear-to-br from-[#0082c4]/20 to-[#0099e6]/20 sm:h-[220px] sm:w-[220px] md:h-[260px] md:w-[260px] lg:h-[300px] lg:w-[300px] lg:rounded-full">
+              <div className="flex h-48 w-48 items-center justify-center overflow-hidden rounded-xl bg-linear-to-br from-[#0082c4]/20 to-[#0099e6]/20 sm:h-56 sm:w-56 md:h-64 md:w-64 lg:h-72 lg:w-72 lg:rounded-full">
                 <Image
                   src="/Saif.png"
                   alt="MD. Saif Islam - Full Stack Developer"
@@ -137,7 +140,7 @@ const Banner = () => {
                 <social.icon className="h-4 w-4 transition-transform group-hover:rotate-12 sm:h-5 sm:w-5" />
 
                 {/* Enhanced Tooltip */}
-                <span className="pointer-events-none absolute -top-10 left-1/2 -translate-x-1/2 rounded-lg bg-[#0082c4] px-2 py-1 font-mono text-[10px] whitespace-nowrap text-white opacity-0 transition-all group-hover:-translate-y-1 group-hover:opacity-100 sm:-top-12 sm:px-3 sm:py-1.5 sm:text-xs">
+                <span className="pointer-events-none absolute -top-10 left-1/2 -translate-x-1/2 rounded-xl bg-[#0082c4] px-2 py-1 font-mono text-xs whitespace-nowrap text-white opacity-0 transition-all group-hover:-translate-y-1 group-hover:opacity-100 sm:-top-12 sm:px-3 sm:py-1.5 sm:text-xs">
                   {social.label}
                 </span>
               </a>
@@ -193,7 +196,7 @@ const Banner = () => {
             <p className="border-l-2 border-[#0082c4] pl-3 text-xs leading-relaxed text-[#64748b] sm:pl-4 sm:text-sm md:text-base lg:text-lg dark:text-[#cbd5e1]">
               Passionate about crafting elegant, scalable web solutions with
               modern technologies. Specialized in building high-performance
-              applications that deliver exceptional user experiences. Let's
+              applications that deliver exceptional user experiences. Let&apos;s
               transform your ideas into reality.
             </p>
           </div>
@@ -230,7 +233,7 @@ const Banner = () => {
             <a
               href="https://drive.google.com/uc?export=download&id=1bI07nOE949lIj5kUNtlEAKhIqo_sMt5w"
               target="_blank"
-              className="group relative flex items-center justify-center gap-2 overflow-hidden rounded-lg bg-[#0082c4] px-4 py-2.5 text-sm font-semibold text-white shadow-lg shadow-[#0082c4]/30 transition-all duration-300 hover:scale-105 hover:bg-[#0099e6] hover:shadow-xl hover:shadow-[#0082c4]/40 sm:px-5 sm:py-3 sm:text-base md:px-6"
+              className="group relative flex items-center justify-center gap-2 overflow-hidden rounded-xl bg-[#0082c4] px-4 py-2.5 text-sm font-semibold text-white shadow-lg shadow-[#0082c4]/30 transition-all duration-300 hover:scale-105 hover:bg-[#0099e6] hover:shadow-xl hover:shadow-[#0082c4]/40 sm:px-5 sm:py-3 sm:text-base md:px-6"
             >
               <div className="absolute inset-0 -translate-x-full bg-linear-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
               <Download className="relative z-10 h-4 w-4 transition-transform group-hover:translate-y-1 sm:h-5 sm:w-5" />
@@ -240,7 +243,7 @@ const Banner = () => {
             {/* Learn More Button */}
             <a
               href="#about"
-              className="group relative flex items-center justify-center gap-2 overflow-hidden rounded-lg border-2 border-[#0082c4] bg-transparent px-4 py-2.5 text-sm font-semibold text-[#0082c4] transition-all duration-300 hover:scale-105 hover:bg-[#0082c4] hover:text-white hover:shadow-lg hover:shadow-[#0082c4]/30 sm:px-5 sm:py-3 sm:text-base md:px-6"
+              className="group relative flex items-center justify-center gap-2 overflow-hidden rounded-xl border-2 border-[#0082c4] bg-transparent px-4 py-2.5 text-sm font-semibold text-[#0082c4] transition-all duration-300 hover:scale-105 hover:bg-[#0082c4] hover:text-white hover:shadow-lg hover:shadow-[#0082c4]/30 sm:px-5 sm:py-3 sm:text-base md:px-6"
             >
               <div className="absolute inset-0 translate-y-full bg-[#0082c4] transition-transform duration-300 group-hover:translate-y-0" />
               <span className="relative z-10">Learn More</span>

@@ -6,6 +6,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
+import { getProjectLinksConfig } from '@/lib/projectUtils';
 import {
   Plus,
   Search,
@@ -29,7 +30,7 @@ import axios from 'axios';
 import { Project } from '@/types';
 
 export default function ProjectsPage() {
-  const { data: session, status } = useSession();
+  const { status } = useSession();
   const router = useRouter();
   const queryClient = useQueryClient();
   const [mounted, setMounted] = useState(false);
@@ -42,12 +43,13 @@ export default function ProjectsPage() {
   const [sortBy, setSortBy] = useState<'priority' | 'date'>('priority');
 
   useEffect(() => {
-    setMounted(true);
+    const timer = setTimeout(() => setMounted(true), 0);
+    return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {
     if (status === 'unauthenticated') {
-      router.push('/auth/signin');
+      router.push('/auth/sign-in');
     }
   }, [status, router]);
 
@@ -69,6 +71,7 @@ export default function ProjectsPage() {
           `/api/v1/projects/delete/${projectId}`,
         );
         return data;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (error: any) {
         throw new Error(
           error.response?.data?.message || 'Failed to delete project',
@@ -82,6 +85,32 @@ export default function ProjectsPage() {
     },
     onError: (error: any) => {
       alert(error.message || 'Failed to delete project. Please try again.');
+    },
+  });
+
+  const featureMutation = useMutation({
+    mutationFn: async ({ id, featured }: { id: string; featured: boolean }) => {
+      try {
+        const { data } = await axios.put(`/api/v1/projects/featured/${id}`, {
+          featured,
+        });
+        return data;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (error: any) {
+        throw new Error(
+          error.response?.data?.message || 'Failed to feature project',
+        );
+      }
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['projects'] });
+      setActiveMenu(null);
+    },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    onError: (error: any) => {
+      alert(
+        error.message || 'Failed to update feature status. Please try again.',
+      );
     },
   });
 
@@ -111,11 +140,17 @@ export default function ProjectsPage() {
     }
 
     if (sortBy === 'priority') {
-      filtered.sort((a, b) => (b.priority || 0) - (a.priority || 0));
+      filtered.sort((a, b) => {
+        if (a.featured && !b.featured) return -1;
+        if (!a.featured && b.featured) return 1;
+        return (b.priority || 0) - (a.priority || 0);
+      });
     } else if (sortBy === 'date') {
-      filtered.sort(
-        (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
-      );
+      filtered.sort((a, b) => {
+        if (a.featured && !b.featured) return -1;
+        if (!a.featured && b.featured) return 1;
+        return new Date(b.date).getTime() - new Date(a.date).getTime();
+      });
     }
 
     return filtered;
@@ -195,10 +230,10 @@ export default function ProjectsPage() {
         {/* Header */}
         <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-[#0082c4] md:text-4xl">
+            <h1 className="text-2xl font-bold text-[#0082c4] md:text-3xl md:text-4xl">
               Projects
             </h1>
-            <p className="mt-2 text-[#64748b] dark:text-[#cbd5e1]">
+            <p className="mt-1 text-sm text-[#64748b] md:mt-2 md:text-base dark:text-[#cbd5e1]">
               Manage your portfolio projects ({filteredProjects.length}{' '}
               {filteredProjects.length === 1 ? 'project' : 'projects'})
             </p>
@@ -227,7 +262,7 @@ export default function ProjectsPage() {
                 placeholder="Search by title, description, or technologies..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full rounded-lg border border-[#e2e8f0] bg-white py-3 pr-4 pl-10 text-black placeholder-[#64748b] focus:border-[#0082c4] focus:ring-2 focus:ring-[#0082c4]/20 focus:outline-none dark:border-[#27273a] dark:bg-[#11141c] dark:text-white dark:placeholder-[#cbd5e1]"
+                className="w-full rounded-lg border border-[#e2e8f0] bg-white py-2 pr-4 pl-10 text-sm text-black placeholder-[#64748b] focus:border-[#0082c4] focus:ring-2 focus:ring-[#0082c4]/20 focus:outline-none md:py-3 md:text-base dark:border-[#27273a] dark:bg-[#11141c] dark:text-white dark:placeholder-[#cbd5e1]"
               />
             </div>
 
@@ -239,7 +274,7 @@ export default function ProjectsPage() {
                 onChange={(e) =>
                   setSortBy(e.target.value as 'priority' | 'date')
                 }
-                className="rounded-lg border border-[#e2e8f0] bg-white px-4 py-3 text-black focus:border-[#0082c4] focus:ring-2 focus:ring-[#0082c4]/20 focus:outline-none dark:border-[#27273a] dark:bg-[#11141c] dark:text-white"
+                className="rounded-lg border border-[#e2e8f0] bg-white px-3 py-2 text-sm text-black focus:border-[#0082c4] focus:ring-2 focus:ring-[#0082c4]/20 focus:outline-none md:px-4 md:py-3 md:text-base dark:border-[#27273a] dark:bg-[#11141c] dark:text-white"
               >
                 <option value="priority">Sort by Priority</option>
                 <option value="date">Sort by Date</option>
@@ -257,7 +292,7 @@ export default function ProjectsPage() {
                 <button
                   key={category}
                   onClick={() => setSelectedCategory(category)}
-                  className={`rounded-lg px-4 py-2 text-sm font-medium transition-all ${
+                  className={`rounded-lg px-3 py-1.5 text-xs font-medium transition-all md:px-4 md:py-2 md:text-sm ${
                     selectedCategory === category
                       ? 'bg-[#0082c4] text-white shadow-lg shadow-[#0082c4]/20'
                       : 'border border-[#e2e8f0] text-[#64748b] hover:border-[#0082c4] hover:text-[#0082c4] dark:border-[#27273a] dark:text-[#cbd5e1]'
@@ -279,7 +314,7 @@ export default function ProjectsPage() {
                 <button
                   key={type}
                   onClick={() => setSelectedType(type)}
-                  className={`rounded-lg px-4 py-2 text-sm font-medium capitalize transition-all ${
+                  className={`rounded-lg px-3 py-1.5 text-xs font-medium capitalize transition-all md:px-4 md:py-2 md:text-sm ${
                     selectedType === type
                       ? 'bg-[#0082c4] text-white shadow-lg shadow-[#0082c4]/20'
                       : 'border border-[#e2e8f0] text-[#64748b] hover:border-[#0082c4] hover:text-[#0082c4] dark:border-[#27273a] dark:text-[#cbd5e1]'
@@ -320,7 +355,7 @@ export default function ProjectsPage() {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+            className="grid gap-4 sm:grid-cols-2 md:gap-6 lg:grid-cols-3"
           >
             {filteredProjects.map((project, index) => (
               <motion.div
@@ -344,57 +379,71 @@ export default function ProjectsPage() {
                       In Progress
                     </div>
                   )}
-                  {/* Priority Badge */}
-                  {project.priority > 0 && (
-                    <div className="flex items-center gap-1 rounded-full bg-amber-500 px-3 py-1 text-xs font-semibold text-white shadow-lg">
-                      Priority: {project.priority}
-                    </div>
-                  )}
                 </div>
 
-                {/* Menu Button */}
-                <div className="absolute top-4 right-4 z-10">
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setActiveMenu(
-                        activeMenu === project._id ? null : project._id!,
-                      );
-                    }}
-                    className="rounded-lg bg-white/90 p-2 backdrop-blur-sm transition-all hover:bg-white dark:bg-black/90 dark:hover:bg-black"
-                  >
-                    <MoreVertical className="h-5 w-5 text-black dark:text-white" />
-                  </button>
+                {/* Top Right Actions & Badges */}
+                <div className="absolute top-4 right-4 z-10 flex items-center gap-2">
+                  <div className="relative">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setActiveMenu(
+                          activeMenu === project._id ? null : project._id!,
+                        );
+                      }}
+                      className="rounded-lg bg-white/90 p-1.5 backdrop-blur-sm transition-all hover:bg-white md:p-2 dark:bg-black/90 dark:hover:bg-black"
+                    >
+                      <MoreVertical className="h-5 w-5 text-black dark:text-white" />
+                    </button>
 
-                  {/* Dropdown Menu */}
-                  <AnimatePresence>
-                    {activeMenu === project._id && (
-                      <motion.div
-                        initial={{ opacity: 0, scale: 0.95, y: -10 }}
-                        animate={{ opacity: 1, scale: 1, y: 0 }}
-                        exit={{ opacity: 0, scale: 0.95, y: -10 }}
-                        onClick={(e) => e.stopPropagation()}
-                        className="absolute top-12 right-0 w-48 overflow-hidden rounded-lg border border-[#e2e8f0] bg-white shadow-xl dark:border-[#27273a] dark:bg-[#11141c]"
-                      >
-                        <Link href={`/dashboard/projects/edit/${project._id}`}>
-                          <button className="flex w-full items-center gap-2 px-4 py-3 text-sm font-medium text-black transition-colors hover:bg-[#0082c4]/10 dark:text-white">
-                            <Edit className="h-4 w-4" />
-                            Edit
-                          </button>
-                        </Link>
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleDelete(project);
-                          }}
-                          className="flex w-full items-center gap-2 px-4 py-3 text-sm font-medium text-red-500 transition-colors hover:bg-red-500/10"
+                    {/* Dropdown Menu */}
+                    <AnimatePresence>
+                      {activeMenu === project._id && (
+                        <motion.div
+                          initial={{ opacity: 0, scale: 0.95, y: -10 }}
+                          animate={{ opacity: 1, scale: 1, y: 0 }}
+                          exit={{ opacity: 0, scale: 0.95, y: -10 }}
+                          onClick={(e) => e.stopPropagation()}
+                          className="absolute top-12 right-0 w-48 overflow-hidden rounded-lg border border-[#e2e8f0] bg-white shadow-xl dark:border-[#27273a] dark:bg-[#11141c]"
                         >
-                          <Trash2 className="h-4 w-4" />
-                          Delete
-                        </button>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
+                          <Link
+                            href={`/dashboard/projects/edit/${project._id}`}
+                          >
+                            <button className="flex w-full items-center gap-2 px-3 py-2 text-sm font-medium text-black transition-colors hover:bg-[#0082c4]/10 md:px-4 md:py-3 dark:text-white">
+                              <Edit className="h-4 w-4" />
+                              Edit
+                            </button>
+                          </Link>
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              if (project._id)
+                                featureMutation.mutate({
+                                  id: project._id,
+                                  featured: !project.featured,
+                                });
+                            }}
+                            className={`flex w-full items-center gap-2 px-3 py-2 text-sm font-medium transition-colors hover:bg-[#0082c4]/10 md:px-4 md:py-3 ${project.featured ? 'text-orange-500' : 'text-[#0082c4]'}`}
+                          >
+                            <Star className="h-4 w-4" />
+                            {project.featured
+                              ? 'Unfeature'
+                              : 'Make it featured'}
+                          </button>
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleDelete(project);
+                            }}
+                            className="flex w-full items-center gap-2 px-3 py-2 text-sm font-medium text-red-500 transition-colors hover:bg-red-500/10 md:px-4 md:py-3"
+                          >
+                            <Trash2 className="h-4 w-4" />
+                            Delete
+                          </button>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
                 </div>
 
                 {/* Project Image */}
@@ -417,6 +466,11 @@ export default function ProjectsPage() {
                     <span className="rounded-full bg-purple-500/10 px-3 py-1 text-xs font-medium text-purple-600 capitalize dark:text-purple-400">
                       {project.type.replace('-', ' ')}
                     </span>
+                    {project.priority > 0 && (
+                      <span className="rounded-full bg-amber-500/10 px-3 py-1 text-xs font-medium text-amber-600 dark:text-amber-500">
+                        Priority: {project.priority}
+                      </span>
+                    )}
                   </div>
 
                   <h3 className="mb-2 text-xl font-bold text-black dark:text-white">
@@ -467,7 +521,10 @@ export default function ProjectsPage() {
                         className="flex flex-1 items-center justify-center gap-2 rounded-lg border border-[#0082c4] bg-[#0082c4] px-4 py-2 text-sm font-semibold text-white transition-all hover:bg-[#0099e6]"
                       >
                         <ExternalLink className="h-4 w-4" />
-                        Live
+                        {
+                          getProjectLinksConfig(project.category || 'Web Apps')
+                            .liveLabel
+                        }
                       </a>
                     )}
                     {project.githubUrl && (
@@ -479,7 +536,10 @@ export default function ProjectsPage() {
                         className="flex flex-1 items-center justify-center gap-2 rounded-lg border border-[#e2e8f0] bg-transparent px-4 py-2 text-sm font-semibold text-black transition-all hover:border-[#0082c4] hover:bg-[#0082c4]/10 dark:border-[#27273a] dark:text-white"
                       >
                         <Github className="h-4 w-4" />
-                        Code
+                        {
+                          getProjectLinksConfig(project.category || 'Web Apps')
+                            .githubLabel
+                        }
                       </a>
                     )}
                   </div>

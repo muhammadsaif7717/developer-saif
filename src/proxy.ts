@@ -1,36 +1,31 @@
-import { withAuth } from 'next-auth/middleware';
 import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
+import { getToken } from 'next-auth/jwt';
 
-export default withAuth(
-  function middleware(req) {
-    const { pathname } = req.nextUrl;
+export async function proxy(req: NextRequest) {
+  const { pathname } = req.nextUrl;
+  const isAdminRoute = pathname.startsWith('/dashboard');
 
-    const isAdminRoute = pathname.startsWith('/dashboard');
+  if (isAdminRoute) {
+    const cookies = req.cookies.getAll();
+    const hasSessionCookie = cookies.some(
+      (cookie) =>
+        cookie.name.includes('next-auth.session-token') ||
+        cookie.name.includes('__Secure-next-auth.session-token'),
+    );
 
-    const userRole = req.nextauth.token?.role;
-    const notLoggedIn = req.nextauth.token;
-
-    //if unauthenticated redirect to sign-in page
-    if (notLoggedIn === null && isAdminRoute) {
-      return NextResponse.redirect(new URL('/auth/sign-in', req.url));
-    } else if (isAdminRoute && userRole !== 'admin') {
-      return NextResponse.redirect(new URL('/', req.url));
+    if (!hasSessionCookie) {
+      const url = new URL('/auth/sign-in', req.url);
+      url.searchParams.set('callbackUrl', req.nextUrl.pathname);
+      return NextResponse.redirect(url);
     }
 
-    return NextResponse.next();
-  },
-  {
-    callbacks: {
-      authorized: ({ token }) => {
-        // Only check if token exists globally; specific roles checked inside middleware
-        return !!token;
-      },
-    },
-    pages: {
-      signIn: '/auth/sign-in',
-    },
-  },
-);
+    // Role check will be handled by the layout or page components
+    // to avoid getToken issues with Next.js 16 proxy.ts RSC requests
+  }
+
+  return NextResponse.next();
+}
 
 // ✅ Protect routes
 export const config = {

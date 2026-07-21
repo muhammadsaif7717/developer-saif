@@ -1,16 +1,19 @@
 'use client';
 
 import {
-  Code2,
-  Rocket,
-  Users,
   Award,
-  Coffee,
   Brain,
-  Terminal,
+  Code2,
+  Coffee,
+  Rocket,
   Sparkles,
   Target,
-  Zap,
+  Terminal,
+  Users,
+  MapPin,
+  Globe,
+  Download,
+  ExternalLink,
 } from 'lucide-react';
 import Image from 'next/image';
 
@@ -52,6 +55,55 @@ const values = [
   },
 ];
 
+const education = [
+  // {
+  //   logo: '/uu.png',
+  //   degree: 'B.Sc in Computer Science & Engineering',
+  //   institution: 'Uttara University',
+  //   grade: 'Running',
+  //   location: 'Uttara, Dhaka',
+  //   mapLink: 'https://maps.app.goo.gl/mBJzobXoHXjKvzrUA',
+  //   website: 'https://www.uttara.ac.bd/',
+  // },
+  {
+    logo: '/dpi.png',
+    degree: 'Diploma in Computer Science & Technology',
+    institution: 'Dhaka Polytechnic Institute',
+    grade: 'CGPA: 3.66',
+    location: 'Tejgaon, Dhaka',
+    mapLink: 'https://maps.app.goo.gl/HTa7jZ8u9CUXeK3V9',
+    website: 'http://dhaka.polytech.gov.bd/',
+  },
+  {
+    logo: '/sia.png',
+    degree: 'Secondary School Certificate (Science)',
+    institution: 'Setabgonj Ideal Academy',
+    grade: 'GPA: 5.00',
+    location: 'Setabganj, Dinajpur',
+    mapLink: 'https://maps.app.goo.gl/hENY99VGHfHeuRKQ8',
+    website: 'https://setabgonjidealacademy.edu.bd/',
+  },
+];
+
+const certifications = [
+  {
+    logo: '/ph.jpeg',
+    title: 'Complete Web Development Course',
+    issuer: 'Programming Hero',
+    certLink:
+      'https://drive.google.com/file/d/1hZAPXy-lj3luuq-3qk6xbDqKhZ3fHrgE/view?usp=drive_link',
+    website: 'https://web.programming-hero.com/home',
+  },
+  {
+    logo: '/10m.png',
+    title: 'Communication Secrets Course',
+    issuer: '10 Minute School',
+    certLink:
+      'https://drive.google.com/file/d/10CrcuhJxW6f8YenmE5JDHeNZMwVht7Fh/view?usp=drive_link',
+    website: 'https://10minuteschool.com/',
+  },
+];
+
 const About = () => {
   return (
     <section
@@ -83,13 +135,10 @@ const About = () => {
       </div>
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* Section Header with Code Style */}
         <div className="mb-12 text-center md:mb-16">
-          {/* <div className="mb-3 font-mono text-sm text-[#64748b] dark:text-[#cbd5e1]">
-            <span className="text-[#0082c4]">{'<section id="about">'}</span>
-          </div> */}
-          <h2 className="mb-4 text-4xl font-bold text-[#0082c4] md:text-5xl lg:text-6xl">
-            About Me
+          <h2 className="mb-4 text-4xl font-bold md:text-5xl lg:text-6xl">
+            <span className="text-[#0082c4]">About </span>
+            <span className="text-slate-800 dark:text-white">Me</span>
           </h2>
           <p className="mx-auto max-w-2xl text-base text-[#64748b] md:text-lg dark:text-[#cbd5e1]">
             Passionate developer crafting digital experiences that make a
@@ -131,7 +180,7 @@ const About = () => {
 
             {/* Stats Grid */}
             <div className="grid grid-cols-2 gap-3 sm:gap-4">
-              {stats.map((stat, index) => (
+              {stats.map((stat) => (
                 <div
                   key={stat.label}
                   className="group relative overflow-hidden rounded-xl bg-[#f2f2f2] p-5 text-center transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-[#0082c4]/20 sm:p-6 dark:bg-[#11141c]"
@@ -163,7 +212,7 @@ const About = () => {
               </h3>
               <div className="space-y-4 border-l-2 border-[#0082c4] pl-4 text-sm leading-relaxed text-[#64748b] md:text-base dark:text-[#cbd5e1]">
                 <p>
-                  Hey there! I'm{' '}
+                  Hey there! I&apos;m{' '}
                   <span className="font-semibold text-[#0082c4]">
                     MD. Saif Islam
                   </span>
@@ -178,7 +227,7 @@ const About = () => {
                   <span className="font-semibold text-[#0082c4]">
                     5 years of hands-on experience
                   </span>
-                  , I've had the privilege of collaborating with startups,
+                  , I&apos;ve had the privilege of collaborating with startups,
                   established enterprises, and ambitious founders. I specialize
                   in the modern JavaScript ecosystem, particularly the{' '}
                   <span className="font-semibold text-[#0082c4]">
@@ -188,9 +237,9 @@ const About = () => {
                   exceptional user experiences.
                 </p>
                 <p>
-                  When I'm not coding, you'll find me exploring emerging
-                  technologies, contributing to open-source projects, or sharing
-                  insights with the developer community. I believe in{' '}
+                  When I&apos;m not coding, you&apos;ll find me exploring
+                  emerging technologies, contributing to open-source projects,
+                  or sharing insights with the developer community. I believe in{' '}
                   <span className="font-semibold text-[#0082c4]">
                     continuous learning
                   </span>{' '}
@@ -209,7 +258,7 @@ const About = () => {
                 </h4>
               </div>
               <p className="relative z-10 text-sm leading-relaxed text-[#64748b] dark:text-[#cbd5e1]">
-                I believe in writing code that's not just functional, but{' '}
+                I believe in writing code that&apos;s not just functional, but{' '}
                 <span className="font-semibold text-[#0082c4]">
                   maintainable and scalable
                 </span>
@@ -241,7 +290,7 @@ const About = () => {
           </div>
 
           <div className="grid gap-5 sm:grid-cols-2 md:gap-6 lg:grid-cols-4">
-            {values.map((value, index) => (
+            {values.map((value) => (
               <div
                 key={value.title}
                 className="group relative overflow-hidden rounded-xl border border-[#0082c4]/20 bg-[#f2f2f2] p-6 transition-all duration-300 hover:-translate-y-2 hover:border-[#0082c4]/50 hover:shadow-xl hover:shadow-[#0082c4]/20 dark:bg-[#11141c]"
@@ -265,6 +314,133 @@ const About = () => {
                 <p className="relative z-10 text-sm leading-relaxed text-[#64748b] dark:text-[#cbd5e1]">
                   {value.description}
                 </p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Education Section */}
+        <div className="mt-20 md:mt-24">
+          <div className="mb-10 text-center md:mb-12">
+            <div className="mb-3 font-mono text-sm text-[#0082c4]">
+              {'// Academic Journey'}
+            </div>
+            <h3 className="mb-3 text-3xl font-bold text-[#0082c4] md:text-4xl">
+              Education
+            </h3>
+          </div>
+
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {education.map((edu, idx) => (
+              <div
+                key={idx}
+                className="group relative flex flex-col overflow-hidden rounded-2xl border border-[#0082c4]/20 bg-[#f2f2f2] p-6 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:border-[#0082c4]/50 hover:shadow-xl hover:shadow-[#0082c4]/20 dark:bg-[#11141c]"
+              >
+                <div className="absolute inset-0 -translate-y-full bg-gradient-to-b from-[#0082c4]/5 to-transparent transition-transform duration-700 group-hover:translate-y-0" />
+                <div className="relative z-10 flex h-full flex-col">
+                  <div className="relative mb-6 h-16 w-16 shrink-0 overflow-hidden rounded-xl border-2 border-[#0082c4]/20 bg-white p-2">
+                    <Image
+                      src={edu.logo}
+                      alt={edu.institution}
+                      fill
+                      className="object-contain p-1"
+                    />
+                  </div>
+                  <div className="mb-4 flex-1 space-y-3">
+                    <div>
+                      <h4 className="text-lg leading-tight font-bold text-[#0082c4]">
+                        {edu.degree}
+                      </h4>
+                      <div className="mt-1 font-semibold text-slate-800 dark:text-white">
+                        {edu.institution}
+                      </div>
+                      <div className="mt-2 inline-block rounded-full bg-[#0082c4]/10 px-3 py-1 font-mono text-xs font-semibold text-[#0082c4]">
+                        {edu.grade}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-col gap-3 border-t border-[#0082c4]/10 pt-4">
+                    <a
+                      href={edu.mapLink}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="flex items-start gap-2 text-sm text-[#64748b] transition-colors hover:text-[#0082c4] dark:text-[#cbd5e1]"
+                    >
+                      <MapPin className="mt-0.5 h-4 w-4 shrink-0" />
+                      <span className="line-clamp-2">{edu.location}</span>
+                    </a>
+                    <a
+                      href={edu.website}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="flex items-center gap-2 text-sm text-[#64748b] transition-colors hover:text-[#0082c4] dark:text-[#cbd5e1]"
+                    >
+                      <Globe className="h-4 w-4 shrink-0" />
+                      <span>Website</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Certifications Section */}
+        <div className="mt-20 md:mt-24">
+          <div className="mb-10 text-center md:mb-12">
+            <div className="mb-3 font-mono text-sm text-[#0082c4]">
+              {'// Professional Skills'}
+            </div>
+            <h3 className="mb-3 text-3xl font-bold text-[#0082c4] md:text-4xl">
+              Certifications & Training
+            </h3>
+          </div>
+
+          <div className="grid gap-6 md:grid-cols-2">
+            {certifications.map((cert, idx) => (
+              <div
+                key={idx}
+                className="group relative flex flex-col overflow-hidden rounded-2xl border border-[#0082c4]/20 bg-[#f2f2f2] p-6 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:border-[#0082c4]/50 hover:shadow-xl hover:shadow-[#0082c4]/20 dark:bg-[#11141c]"
+              >
+                <div className="absolute inset-0 -translate-y-full bg-gradient-to-b from-[#0082c4]/5 to-transparent transition-transform duration-700 group-hover:translate-y-0" />
+                <div className="relative z-10 flex h-full flex-col">
+                  <div className="relative mb-6 h-16 w-16 shrink-0 overflow-hidden rounded-xl border-2 border-[#0082c4]/20 bg-white p-2">
+                    <Image
+                      src={cert.logo}
+                      alt={cert.issuer}
+                      fill
+                      className="object-contain p-1"
+                    />
+                  </div>
+                  <div className="mb-6 flex-1 space-y-2">
+                    <h4 className="text-lg leading-tight font-bold text-[#0082c4]">
+                      {cert.title}
+                    </h4>
+                    <div className="font-semibold text-slate-800 dark:text-white">
+                      {cert.issuer}
+                    </div>
+                  </div>
+                  <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+                    <a
+                      href={cert.certLink}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="flex w-full items-center justify-center gap-2 rounded-lg bg-[#0082c4] px-4 py-2 text-sm font-semibold text-white transition-all hover:bg-[#0099e6] hover:shadow-lg hover:shadow-[#0082c4]/30 sm:w-auto"
+                    >
+                      <Download className="h-4 w-4 shrink-0" />
+                      Certificate
+                    </a>
+                    <a
+                      href={cert.website}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="flex w-full items-center justify-center gap-2 rounded-lg border border-[#0082c4] px-4 py-2 text-sm font-semibold text-[#0082c4] transition-all hover:bg-[#0082c4]/10 sm:w-auto"
+                    >
+                      <ExternalLink className="h-4 w-4 shrink-0" />
+                      Website
+                    </a>
+                  </div>
+                </div>
               </div>
             ))}
           </div>

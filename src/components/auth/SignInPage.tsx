@@ -1,4 +1,5 @@
 'use client';
+import LoadingPage from '@/components/shared/LoadingPage';
 
 import { Suspense } from 'react';
 import { signIn } from 'next-auth/react';
