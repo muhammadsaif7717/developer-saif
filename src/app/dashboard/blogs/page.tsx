@@ -96,15 +96,14 @@ export default function BlogsPage() {
     }
 
     if (searchQuery) {
+      const lowerQuery = searchQuery.toLowerCase();
       filtered = filtered.filter(
         (b) =>
-          b.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          b.categories.some((cat) =>
-            cat.toLowerCase().includes(searchQuery.toLowerCase()),
+          b.title?.toLowerCase().includes(lowerQuery) ||
+          b.categories?.some((cat) =>
+            cat?.toLowerCase().includes(lowerQuery),
           ) ||
-          b.tags.some((tag) =>
-            tag.toLowerCase().includes(searchQuery.toLowerCase()),
-          ),
+          b.tags?.some((tag) => tag?.toLowerCase().includes(lowerQuery)),
       );
     }
 

@@ -193,14 +193,6 @@ export default function Page() {
                           </div>
                         )}
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-
-                        {/* Read Time Badge */}
-                        <div className="absolute top-3 right-3 flex items-center gap-1.5 rounded-full bg-black/60 px-3 py-1 backdrop-blur-sm">
-                          <Clock className="h-3.5 w-3.5 text-white" />
-                          <span className="font-mono text-xs font-medium text-white">
-                            {blog.readTime} min
-                          </span>
-                        </div>
                       </div>
 
                       {/* Content */}
@@ -252,6 +244,22 @@ export default function Page() {
                                   year: 'numeric',
                                 },
                               )}
+                            </span>
+                          </div>
+                          <div className="flex items-center gap-1.5">
+                            <Clock className="h-3.5 w-3.5" />
+                            <span>
+                              {blog.readTime ||
+                                (blog.content
+                                  ? Math.max(
+                                      1,
+                                      Math.ceil(
+                                        blog.content.trim().split(/\s+/)
+                                          .length / 200,
+                                      ),
+                                    )
+                                  : 5)}{' '}
+                              min read
                             </span>
                           </div>
                           <div className="flex items-center gap-1.5">

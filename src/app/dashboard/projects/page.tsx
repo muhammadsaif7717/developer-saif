@@ -129,12 +129,13 @@ export default function ProjectsPage() {
     }
 
     if (searchQuery) {
+      const lowerQuery = searchQuery.toLowerCase();
       filtered = filtered.filter(
         (p) =>
-          p.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          p.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          p.technologies.some((tech) =>
-            tech.toLowerCase().includes(searchQuery.toLowerCase()),
+          p.title?.toLowerCase().includes(lowerQuery) ||
+          p.description?.toLowerCase().includes(lowerQuery) ||
+          p.technologies?.some((tech) =>
+            tech?.toLowerCase().includes(lowerQuery),
           ),
       );
     }
